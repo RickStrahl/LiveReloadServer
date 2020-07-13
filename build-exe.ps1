@@ -27,8 +27,8 @@ copy ./LiveReloadServer/LiveReloadWebServer.json ./LiveReloadWebServer.json
 dotnet publish -c Release /p:PublishSingleFile=false /p:PublishTrimmed=false
 
 Move-Item ./SingleFileExe/LiveReloadServer.exe ./LiveReloadWebServer.exe -force
-remove-item ./SingleFileExe -Recurse -Force
+#remove-item ./SingleFileExe -Recurse -Force
 
 
 # Sign exe
-.\signtool.exe sign /v /n "West Wind Technologies" /sm  /tr "http://timestamp.digicert.com" /td SHA256 /fd SHA256 ".\LiveReloadWebServer.exe"
+.\signtool.exe sign /v /n "West Wind Technologies"   /tr "http://timestamp.digicert.com" /td SHA256 /fd SHA256 ".\LiveReloadWebServer.exe"

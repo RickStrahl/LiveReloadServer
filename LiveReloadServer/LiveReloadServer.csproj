@@ -6,7 +6,7 @@
     <!--<DefineConstants>USE_RAZORPAGES</DefineConstants>-->
 
     <!-- Build _PACKAGE or _EXE with Razor Support -->
-    <DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE</DefineConstants>
+    <DefineConstants>USE_RAZORPAGES;BUILD_EXE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;USE_RAZORPAGES</DefineConstants>
@@ -68,7 +68,7 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.3.8" />
     <PackageReference Include="Westwind.AspNetCore.LiveReload" Version="0.2.5" />
-    <PackageReference Include="Westwind.Utilities" Version="3.0.42" />
+    <PackageReference Include="Westwind.Utilities" Version="3.0.41" />
   </ItemGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains('USE_RAZORPAGES'))">
