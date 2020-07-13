@@ -9,14 +9,15 @@
 This server supports:
 
 * Generic Static File Web Server you can launch in any folder
-* Support for serving HTTPS content when using Dotnet Tool
-* Just start `LiveReloadServer` in a folder or specify `--webroot` folder
+* Just start with `LiveReloadServer --webroot <folder>`
 * Optional LiveReload functionality for change detection and browser refresh
 * Self-contained Razor Pages support with Live Reload Support
 * Themed Markdown page rendering support built in
 * Options to customize location, port, files checked etc.
 * Easily installed and updated with `dotnet tool -g install LiveReloadServer`
 * Support for locally running Blazor Applications (without Live Reload support however)
+* Cross Platform (as a Dotnet Tool only for now)
+* Serve HTTPS content (as a Dotnet Tool only for now)
 * Available as: Dotnet Tool, Chocolatey Package, or Self-Contained (Windows) Download
 
 ![](screenshot.png)
