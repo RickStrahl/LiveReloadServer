@@ -17,14 +17,20 @@ namespace LiveReloadServer
         /// <param name="color"></param>
         public static void WriteLine(string text, ConsoleColor? color = null)
         {
-            var oldColor = System.Console.ForegroundColor;
-
-            if (color != null)
-                Console.ForegroundColor = color.Value;
-
-            Console.WriteLine(text);
-
-            Console.ForegroundColor = oldColor;
+            if (color.HasValue)
+            {
+                var oldColor = System.Console.ForegroundColor;
+                if (color == oldColor)
+                    Console.WriteLine(text);
+                else
+                {
+                    Console.ForegroundColor = color.Value;
+                    Console.WriteLine(text);
+                    Console.ForegroundColor = oldColor;
+                }
+            }
+            else
+                Console.WriteLine(text);
         }
 
         /// <summary>
@@ -57,14 +63,20 @@ namespace LiveReloadServer
         /// <param name="color"></param>
         public static void Write(string text, ConsoleColor? color = null)
         {
-            var oldColor = Console.ForegroundColor;
-
-            if (color != null)
-                Console.ForegroundColor = color.Value;
-
-            Console.Write(text);
-
-            Console.ForegroundColor = oldColor;
+            if (color.HasValue)
+            {
+                var oldColor = System.Console.ForegroundColor;
+                if (color == oldColor)
+                    Console.Write(text);
+                else
+                {
+                    Console.ForegroundColor = color.Value;
+                    Console.Write(text);
+                    Console.ForegroundColor = oldColor;
+                }
+            }
+            else
+                Console.Write(text);
         }
 
         /// <summary>
