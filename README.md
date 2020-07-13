@@ -6,6 +6,8 @@
 
 **A self-contained, local, cross-platform, static file Web Server with automatic Live Reloading, Markdown rendering and loose Razor Pages support.**
 
+![](screenshot.png)
+
 This server supports:
 
 * Generic Static File Web Server you can launch in any folder
@@ -19,8 +21,6 @@ This server supports:
 * Cross Platform (as a Dotnet Tool only for now)
 * Serve HTTPS content (as a Dotnet Tool only for now)
 * Available as: Dotnet Tool, Chocolatey Package, or Self-Contained (Windows) Download
-
-![](screenshot.png)
 
 You can grab the compiled tool as:
 
