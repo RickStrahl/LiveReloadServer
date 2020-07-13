@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using Microsoft.Extensions.Configuration;
 
 namespace LiveReloadServer
@@ -102,11 +103,17 @@ namespace LiveReloadServer
                     resultValue = false;
             }
 
-            if (resultValue == null)
+            // check for --Flag or -Flag value in command line
+            if (resultValue == null || resultValue == false)
             {
-                if (Environment.CommandLine.Contains($"-{key}", StringComparison.OrdinalIgnoreCase))
-                    resultValue = true;
-                else
+                if (Regex.IsMatch(Environment.CommandLine, $@"(-{key} [T|t]rue)|(-{key}\s)|(-{key}$)", RegexOptions.Singleline))
+                {
+                    if (Regex.IsMatch(Environment.CommandLine, $@"(-{key} [F|f]alse)", RegexOptions.Singleline))
+                        resultValue = false;
+                    else
+                        resultValue = true;
+                }
+                else if (resultValue == null)
                     resultValue = defaultValue;
             }
 
