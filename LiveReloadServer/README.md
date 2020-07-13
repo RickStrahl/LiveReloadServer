@@ -17,6 +17,7 @@ This server supports:
 * Options to customize location, port, files checked etc.
 * Easily installed and updated with `dotnet tool -g install LiveReloadServer`
 * Support for locally running Blazor Applications (without Live Reload support however)
+* Available as: Dotnet Tool, Chocolatey Package, or Self-Contained (Windows) Download
 
 ![](screenshot.png)
 
