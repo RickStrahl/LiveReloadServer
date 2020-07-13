@@ -20,7 +20,7 @@ This server supports:
 * Serve HTTPS content (as a Dotnet Tool only for now)
 * Available as: Dotnet Tool, Chocolatey Package, or Self-Contained (Windows) Download
 
-![](ScreenShot.png)
+![](screenshot.png)
 
 You can grab the compiled tool as:
 
