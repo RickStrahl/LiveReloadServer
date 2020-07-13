@@ -103,12 +103,13 @@ namespace LiveReloadServer
                     resultValue = false;
             }
 
+
             // check for --Flag or -Flag value in command line
             if (resultValue == null || resultValue == false)
             {
-                if (Regex.IsMatch(Environment.CommandLine, $@"(-{key} [T|t]rue)|(-{key}\s)|(-{key}$)", RegexOptions.Singleline))
+                if (Regex.IsMatch(Environment.CommandLine, $@"(-{key} [T|t]rue)|(-{key}\s)|(-{key}$)", RegexOptions.Singleline | RegexOptions.IgnoreCase))
                 {
-                    if (Regex.IsMatch(Environment.CommandLine, $@"(-{key} [F|f]alse)", RegexOptions.Singleline))
+                    if (Regex.IsMatch(Environment.CommandLine, $@"(-{key} [F|f]alse)", RegexOptions.Singleline | RegexOptions.IgnoreCase))
                         resultValue = false;
                     else
                         resultValue = true;
