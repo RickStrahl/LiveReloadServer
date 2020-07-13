@@ -192,6 +192,7 @@ namespace LiveReloadServer
             {
                 app.UseEndpoints(endpoints =>
                 {
+                    // We need MVC Routing for Markdown to work
                     endpoints.MapDefaultControllerRoute();
                     
                 });
@@ -204,7 +205,7 @@ namespace LiveReloadServer
             //        endpoints.MapFallbackToFile("/index.html");
             //    });
             //}
-            app.Use(FallbackMiddlewareHandler);
+            //app.Use(FallbackMiddlewareHandler);
 
 
             string headerLine = new string('-', Helpers.AppHeader.Length);
