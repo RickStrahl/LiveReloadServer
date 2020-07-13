@@ -1,0 +1,37 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:63286",
+      "sslPort": 44340
+    }
+  },
+  "profiles": {
+    "LiveReloadServer - SampleSite": {
+      "commandName": "Project",
+      "commandLineArgs": "--WebRoot ..\\..\\..\\..\\SampleSite --Host 0.0.0.0 --UseRazor --CopyMarkdownResources False --useMarkdown True --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs --ShowUrls True",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "LiveReloadServer - PRA": {
+      "commandName": "Project",
+      "commandLineArgs": "--webroot C:/clients/PRA/PraMobile/PraMobileAngular_Published --Host 0.0.0.0 --UseRazor --CopyMarkdownResources False --useMarkdown True --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs --ShowUrls True",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "LiveReloadServer - AlbumViewer": {
+      "commandName": "Project",
+      "commandLineArgs": "--webroot C:\\projects\\AlbumViewerVNext\\src\\AlbumViewerNetCore\\wwwroot --Host 0.0.0.0 --ShowUrls True",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+
+  }
+}

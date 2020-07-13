@@ -1,0 +1,1 @@
+dotnet tool update -g LiveReloadServer --add-source ./nupkg
