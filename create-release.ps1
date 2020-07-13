@@ -8,7 +8,7 @@ $rawVersion = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($releaseFile)
 $version = $rawVersion.Trim().Replace(".0","") 
 "Writing Version File for: $version ($rawVersion)"
 
-$downloadUrl = "https://github.com/RickStrahl/Westwind.AspnetCore.LiveReload/raw/$version/LiveReloadServer/LiveReloadWebServer.zip"
+$downloadUrl = "https://github.com/RickStrahl/LiveReloadServer/raw/$version/LiveReloadWebServer.zip"
 
 # Create Release Zip file
 7z a -tzip $releaseZip $releaseFile ".\LiveReloadWebServer.json" 
