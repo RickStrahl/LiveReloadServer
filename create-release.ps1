@@ -42,7 +42,7 @@ git add --all
 
 git tag --delete $version
 git push --delete origin $version 
-git tag $version
 
 git commit -m "$version" 
+git tag $version
 git push origin master --tags

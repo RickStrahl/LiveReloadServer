@@ -36,9 +36,9 @@
 
     </Description>
 
-    <PackageProjectUrl>https://github.com/RickStrahl/Westwind.AspnetCore.LiveReload/tree/master/LiveReloadServer</PackageProjectUrl>
-    <PackageLicense>https://github.com/RickStrahl/Westwind.AspnetCore.LiveReload/blob/master/LICENSE.MD</PackageLicense>
-    <RepositoryUrl>https://github.com/RickStrahl/Westwind.AspnetCore.LiveReload/tree/master/LiveReloadServer</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/RickStrahl/LiveReloadServer</PackageProjectUrl>
+    <PackageLicense>https://github.com/RickStrahl/LiveReloadServer/LICENSE.MD</PackageLicense>
+    <RepositoryUrl>https://github.com/RickStrahl/LiveReloadServer</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>Westwind LiveReload Static WebServer DotnetTool</PackageTags>
     <PackageIcon>icon.png</PackageIcon>
