@@ -30,7 +30,7 @@ There are no additional dependencies for this server - just point at a folder an
 * Auto-launch browser
 * Configurable ports, TLS usage, extensions and more
 
-![](https://github.com/RickStrahl/LiveReloadServer/raw/master/sreenshot.png)
+![](https://github.com/RickStrahl/LiveReloadServer/raw/master/screenshot.png)
         </description>
         <iconUrl>https://github.com/RickStrahl/LiveReload/raw/master/icon.png</iconUrl>
         <summary>A self-contained local static Web Server for Windows that includes Live Reload functionality for automatic browser refresh on changes of static resources.</summary>
