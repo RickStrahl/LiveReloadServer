@@ -9,7 +9,7 @@
         <licenseUrl>https://github.com/RickStrahl/LiveReloadServer/LICENSE.MD</licenseUrl>
         <projectUrl>https://github.com/RickStrahl/LiveReloadServer</projectUrl>
         <projectSourceUrl>https://github.com/RickStrahl/LiveReloadServer</projectSourceUrl>
-        <packageSourceUrl>https://github.com/RickStrahl/LiveReloadServer/Chocolatey</packageSourceUrl>
+        <packageSourceUrl>https://github.com/RickStrahl/LiveReloadServer/tree/master/Chocolatey</packageSourceUrl>
         <docsUrl>https://github.com/RickStrahl/LiveReloadServer</docsUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>

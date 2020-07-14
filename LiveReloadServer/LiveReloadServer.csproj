@@ -37,11 +37,11 @@
     </Description>
 
     <PackageProjectUrl>https://github.com/RickStrahl/LiveReloadServer</PackageProjectUrl>
-    <PackageLicense>https://github.com/RickStrahl/LiveReloadServer/LICENSE.MD</PackageLicense>
+    <PackageLicense>https://github.com/RickStrahl/LiveReloadServer/tree/master/LICENSE.MD</PackageLicense>
     <RepositoryUrl>https://github.com/RickStrahl/LiveReloadServer</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>Westwind LiveReload Static WebServer DotnetTool</PackageTags>
-    <PackageIcon>icon.png</PackageIcon>
+    <PackageIcon>icon.png</PackageIcon>    
     <NoWarn>1591</NoWarn>
     <ApplicationIcon>LiveReload.ico</ApplicationIcon>
   </PropertyGroup>
