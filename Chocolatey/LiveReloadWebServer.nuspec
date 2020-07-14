@@ -9,6 +9,7 @@
         <licenseUrl>https://github.com/RickStrahl/LiveReloadServer/LICENSE.MD</licenseUrl>
         <projectUrl>https://github.com/RickStrahl/LiveReloadServer</projectUrl>
         <projectSourceUrl>https://github.com/RickStrahl/LiveReloadServer</projectSourceUrl>
+        <packageSourceUrl>https://github.com/RickStrahl/LiveReloadServer/Chocolatey</packageSourceUrl>
         <docsUrl>https://github.com/RickStrahl/LiveReloadServer</docsUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>
@@ -31,10 +32,10 @@ There are no additional dependencies for this server - just point at a folder an
 
 ![](https://github.com/RickStrahl/LiveReloadServer/raw/master/ScreenShot.png)
         </description>
-        <iconUrl>https://github.com/RickStrahl/Westwind.AspnetCore.LiveReload/raw/master/icon.png</iconUrl>
+        <iconUrl>https://github.com/RickStrahl/LiveReload/raw/master/icon.png</iconUrl>
         <summary>A self-contained local static Web Server for Windows that includes Live Reload functionality for automatic browser refresh on changes of static resources.</summary>
         <releaseNotes></releaseNotes>
-        <copyright>West Wind Technologies, 2019</copyright>
+        <copyright>West Wind Technologies, 2019-2020</copyright>
         <tags>web-server live-reload web development</tags>
     </metadata>
     <files>
