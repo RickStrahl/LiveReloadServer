@@ -6,10 +6,10 @@
         <title>Live Reload Local Web Server for Windows</title>
         <authors>Rick Strahl,West Wind Technologies</authors>
         <owners>West Wind Technologies</owners>
-        <licenseUrl>https://github.com/RickStrahl/Westwind.AspnetCore.LiveReload/tree/master/LICENSE.MD</licenseUrl>
-        <projectUrl>https://github.com/RickStrahl/Westwind.AspnetCore.LiveReload/tree/master/LiveReloadServer</projectUrl>
-        <projectSourceUrl>https://github.com/RickStrahl/Westwind.AspnetCore.LiveReload/tree/master/LiveReloadServer</projectSourceUrl>
-        <docsUrl>https://github.com/RickStrahl/Westwind.AspnetCore.LiveReload/tree/master/LiveReloadServer</docsUrl>
+        <licenseUrl>https://github.com/RickStrahl/LiveReloadServer/LICENSE.MD</licenseUrl>
+        <projectUrl>https://github.com/RickStrahl/LiveReloadServer</projectUrl>
+        <projectSourceUrl>https://github.com/RickStrahl/LiveReloadServer</projectSourceUrl>
+        <docsUrl>https://github.com/RickStrahl/LiveReloadServer</docsUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>
 Live Reload Web Server is a local, static file Web Server that has built-in Live Reload functionality for static Web content, Markdown rendering support and can dynamically execute self-contained C# based Razor templates. It's a quick access development server you can use to fire up static Web content or run  SPA applications locally. 
