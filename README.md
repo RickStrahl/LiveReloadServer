@@ -24,11 +24,11 @@ This server supports:
 
 You can grab the compiled tool as:
 
-* [Dotnet Tool](https://www.nuget.org/packages/LiveReloadServer/)   
+* [Dotnet Tool](https://www.nuget.org/packages/LiveReloadServer/)  <small>(windows, mac, linux)</small>  
   `dotnet tool install -g LiveReloadServer`
 * [Chocolatey Package](https://chocolatey.org/packages/LiveReloadWebServer)   
- `choco install LiveReloadWebServer`
-* [Direct Single File Download Windows Executable (zipped)](https://github.com/RickStrahl/Westwind.AspnetCore.LiveReload/raw/master/LiveReloadServer/LiveReloadWebServer.zip)
+ `choco install LiveReloadWebServer` <small>(windows)</small>
+* [Direct Single File Download Windows Executable (zipped)](https://github.com/RickStrahl/Westwind.AspnetCore.LiveReload/raw/master/LiveReloadServer/LiveReloadWebServer.zip) <small>(windows)</small>
 
 > All three versions have the same features and interface, just the delivery mechanism and the executable name is different. The EXE uses `LiveReloadWebServer` while the Dotnet Tool uses `LiveReloadServer`.
   
