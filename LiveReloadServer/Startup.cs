@@ -55,7 +55,7 @@ namespace LiveReloadServer
 
                     if (ServerConfig.UseMarkdown && !opt.ClientFileExtensions.Contains(".md", StringComparison.OrdinalIgnoreCase))
                     {
-                        opt.ClientFileExtensions += ",.md,.mkdown";
+                        opt.ClientFileExtensions += ",.md,.markdown";
                     }
                 });
             }

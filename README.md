@@ -136,13 +136,17 @@ The Web Server automatically serves all static files and Live Reload is automati
 You can specify explicit file extensions to monitor using the `--Extensions` switch. The default is: `".cshtml,.css,.js,.htm,.html,.ts,.md"`.
 
 ## Markdown File Rendering
-You can enable Markdown support in this server by setting `--UseMarkdown True`. This serves HTML content directly off any `.md` or `.mkdown` files in the Web root. The server provides default templates for the HTML styling, but you can override the rendering behavior with a **custom Razor template** that provides the chrome around the rendered Markdown, additional styling and syntax coloring.
+You can enable Markdown support in this server by setting `--UseMarkdown True`. This serves HTML content directly off any `.md` or `.markdown` files in the Web root. The server provides default templates for the HTML styling, but you can override the rendering behavior with a **custom Razor template** that provides the chrome around the rendered Markdown, additional styling and syntax coloring.
 
-Markdown pages are rendered as HTML and like other resources are tracked for changes. If you make a change to the Markdown document, the browser is refreshed and immediately shows that change. If you create a custom Razor template, changes in that are also detected and cause an immediate refresh.
+This can be very useful if you are building documentation Web sites, so you can easily 'run' the documentation and see the Markdown rendered. Because `.md` files are effectively mapped you can even navigate naturally between Markdown pages if they are linked in the Markdown as is often the case for GitHub doc. 
 
-For this feature to work with the default templates all you do is set the `--UseMarkdown True` command line switch. Then access any `.md` in the browser either by the `.md` or simply without an extension.
+And a real useful feature: **Changes in Markdown also auto-refresh as soon as you change the markdown**.
+
+If you make a change to the Markdown document, the browser is refreshed and immediately shows that change if you are viewing the Markdown page. If you create a custom Markdown Razor template, changes in that template (or the original if you use that) are also detected and cause an immediate refresh.
+
+Markdown support is not enabled by default and has to be turned on via the `--UseMarkdown True` command line switch. Once set any `.md` in the browser either by the `.md` or simply without an extension. Additional Markdown extensions to monitor can also be added.
   
-To access `README.md` in the WebRoot you would access:
+To access `README.md` in the WebRoot you can use:
 
 * https://localhost:5200/README.md  
 * https://localhost:5200/README
@@ -153,7 +157,7 @@ Default styling for Markdown comes from a Razor template that is provided as par
 There are several ways you can customize the Markdown styling and supporting resources:
 
 * Copy the existing `markdown-themes` folder into your Web root and modify
-* Create a custom Razor template
+* Create and point to a custom Razor template in your site
 
 ### Copy the Existing `markdown-themes` Folder
 You can copy the `markdown-themes` folder into your Website either manually or more easily via the `--CopyMarkdownResources True` command line flag. When you use this flag, the `markdown-themes` folder will be copied from the launch root into your Web root **if it doesn't exist already**. 
@@ -171,9 +175,9 @@ You can override the template used by using the `--MarkdownPageTemplate` command
 LiveReloadServer --WebRoot ./website/site1 -UseMarkdown --MarkdownPageTemplate ~/MyMarkdownTemplate.cshtml
 ```
 
-> Note although you can use a completely separate template, keep in mind that there's a bit of styling and scripts are required in order to render Markdown. For example, code snippets coloring needs a JavaScript library and text styling may require custom CSS. It'll render without but it won't look pretty without a bit of styling.
+> Note although you can completely replace the stock template, keep in mind that there's a bit of styling and scripts are required in order to render Markdown. For example, code snippets coloring needs a JavaScript library and text styling may require some custom CSS. It'll render without but it won't look pretty without a bit of styling.
 
-To give you an idea what a template should look like, here's what the default template looks like:
+To give you an idea what a template should look like, here's the default template:
 
 ```html
 @model Westwind.AspNetCore.Markdown.MarkdownModel

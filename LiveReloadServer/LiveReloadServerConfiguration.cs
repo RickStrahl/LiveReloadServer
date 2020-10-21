@@ -140,6 +140,13 @@ namespace LiveReloadServer
 
             WebRoot = Configuration["WebRoot"];
             if (string.IsNullOrEmpty(WebRoot))
+            {
+                // if not set but the first arg does not start with the - it's the folder
+                var args = Environment.GetCommandLineArgs();
+                if (args.Length > 1 && !args[1].StartsWith("-"))
+                    WebRoot = args[1];
+            }
+            if (string.IsNullOrEmpty(WebRoot))
                 WebRoot = Environment.CurrentDirectory;
             else
                 WebRoot = Path.GetFullPath(WebRoot, Environment.CurrentDirectory);
