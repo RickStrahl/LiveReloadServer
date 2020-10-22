@@ -93,7 +93,9 @@ namespace LiveReloadServer
 
                 // we have to force MVC in order for the controller routing to work
                 mvcBuilder = services
-                    .AddMvc();
+                    .AddMvc()
+                    // have to let MVC know we have a dynamically loaded controller
+                    .AddApplicationPart(typeof(MarkdownPageProcessorMiddleware).Assembly);
 
                 // copy Markdown Template and resources if it doesn't exist
                 if (ServerConfig.CopyMarkdownResources)
@@ -109,8 +111,6 @@ namespace LiveReloadServer
                         opt.FileProviders.Clear();
                         opt.FileProviders.Add(new PhysicalFileProvider(ServerConfig.WebRoot));
                         opt.FileProviders.Add(new PhysicalFileProvider(Path.Combine(Startup.StartupPath, "templates")));
-
-
                     });
 
                 LoadPrivateBinAssemblies(mvcBuilder);

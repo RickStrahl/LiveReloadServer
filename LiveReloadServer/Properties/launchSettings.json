@@ -25,6 +25,16 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
+
+    "LiveReloadServer - MarkdownFolder": {
+      "commandName": "Project",
+      "commandLineArgs": "--webroot C:\\temp\\MarkdownProject --UseRazor --UseMarkdown --CopyMarkdownResources True --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs  --Host 0.0.0.0 --ShowUrls True",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+
     "LiveReloadServer - AlbumViewer": {
       "commandName": "Project",
       "commandLineArgs": "--webroot C:\\projects\\AlbumViewerVNext\\src\\AlbumViewerNetCore\\wwwroot --Host 0.0.0.0 --ShowUrls True",
