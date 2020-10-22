@@ -57,6 +57,9 @@ namespace LiveReloadServer
                     {
                         opt.ClientFileExtensions += ",.md,.markdown";
                     }
+                    
+                    if (ServerConfig.UseMarkdown && !ServerConfig.DefaultFiles.Contains(".md"))
+                        ServerConfig.DefaultFiles = (ServerConfig.DefaultFiles  + ",README.md,index.md").TrimStart(',');
                 });
             }
 
@@ -90,6 +93,8 @@ namespace LiveReloadServer
                     folderConfig.RenderTheme = ServerConfig.MarkdownTheme;
                     folderConfig.SyntaxTheme = ServerConfig.MarkdownSyntaxTheme;
                 });
+
+
 
                 // we have to force MVC in order for the controller routing to work
                 mvcBuilder = services
@@ -139,15 +144,15 @@ namespace LiveReloadServer
                 app.Use(DisplayRequestInfoMiddlewareHandler);
             }
 
-            if (ServerConfig.UseMarkdown)
-                app.UseMarkdown();
-
             app.UseDefaultFiles(new DefaultFilesOptions
             {
                 FileProvider = new PhysicalFileProvider(ServerConfig.WebRoot),
                 DefaultFileNames = new List<string>(ServerConfig.DefaultFiles.Split(',', ';'))
             });
 
+            if (ServerConfig.UseMarkdown)
+                app.UseMarkdown();
+            
             // add static files to WebRoot and our templates folder which provides markdown templates
             // and potentially other library resources in the future
 
@@ -156,6 +161,7 @@ namespace LiveReloadServer
 
             var extensionProvider = new FileExtensionContentTypeProvider();
             extensionProvider.Mappings.Add(".dll", "application/octet-stream");
+            
             if (ServerConfig.AdditionalMimeMappings != null)
             {
                 foreach (var map in ServerConfig.AdditionalMimeMappings)
