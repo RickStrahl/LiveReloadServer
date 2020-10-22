@@ -28,7 +28,7 @@
 
     "LiveReloadServer - MarkdownFolder": {
       "commandName": "Project",
-      "commandLineArgs": "--webroot C:\\temp\\MarkdownProject --UseRazor --UseMarkdown --CopyMarkdownResources True --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs  --Host 0.0.0.0 --ShowUrls True",
+      "commandLineArgs": "C:\\temp\\MarkdownProject --UseMarkdown --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs  --Host 0.0.0.0 --ShowUrls True",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

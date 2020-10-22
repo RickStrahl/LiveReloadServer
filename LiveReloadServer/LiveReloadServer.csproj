@@ -15,7 +15,7 @@
   <PropertyGroup> 
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>0.2.15</Version>
+    <Version>0.2.15.2</Version>
     <RazorCompileOnPublish>false</RazorCompileOnPublish>
 
     <Authors>Rick Strahl</Authors>
@@ -39,7 +39,7 @@
     <PackageLicense>https://github.com/RickStrahl/LiveReloadServer/tree/master/LICENSE.MD</PackageLicense>
     <RepositoryUrl>https://github.com/RickStrahl/LiveReloadServer</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
-    <PackageTags>Westwind LiveReload Static WebServer DotnetTool</PackageTags>
+    <PackageTags>WebServer LiveReload AutoRefresh StaticWebServer DotnetTool</PackageTags>
     <PackageIcon>icon.png</PackageIcon>    
     <NoWarn>1591</NoWarn>
     <ApplicationIcon>LiveReload.ico</ApplicationIcon>
@@ -56,8 +56,8 @@
 
   <!-- Build Standalone Exe -->
   <PropertyGroup Condition="$(DefineConstants.Contains('BUILD_EXE'))">
-    <PublishSingleFile>true</PublishSingleFile>
-    <PublishTrimmed>true</PublishTrimmed>
+    <PublishSingleFile>false</PublishSingleFile>
+    <PublishTrimmed>false</PublishTrimmed>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
  
