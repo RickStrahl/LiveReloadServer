@@ -187,6 +187,7 @@ Syntax:
 
 --ShowUrls               True|False*
 --OpenBrowser            True*|False
+--DetailedErrors         True*|False
 --Environment            Production*|Development
 
 Razor Pages:

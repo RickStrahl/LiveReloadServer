@@ -69,6 +69,7 @@ namespace LiveReloadServer
         /// </summary>
         public bool ShowUrls {get; set; } = true;
 
+        public bool DetailedErrors {get; set; } = true;
 
         #region Markdown Settings
 
@@ -162,6 +163,7 @@ namespace LiveReloadServer
             UseRazor = Helpers.GetLogicalSetting("UseRazor", Configuration);
             ShowUrls = Helpers.GetLogicalSetting("ShowUrls", Configuration, ShowUrls);
             OpenBrowser = Helpers.GetLogicalSetting("OpenBrowser", Configuration, OpenBrowser);
+            DetailedErrors = Helpers.GetLogicalSetting("DetailedErrors", Configuration, DetailedErrors);
 
             FolderNotFoundFallbackPath = Helpers.GetStringSetting("FolderNotFoundFallbackPath",Configuration,null);
 

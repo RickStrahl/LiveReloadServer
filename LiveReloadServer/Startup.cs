@@ -131,13 +131,14 @@ namespace LiveReloadServer
         {
 
             if (ServerConfig.UseLiveReload)
+            {
                 app.UseLiveReload();
+            }
 
-            ////if (env.IsDevelopment())
-            ////    app.UseDeveloperExceptionPage();
-            ////else
-
-            app.UseExceptionHandler("/Error");
+            if (ServerConfig.DetailedErrors)
+                app.UseDeveloperExceptionPage();
+            else
+                app.UseExceptionHandler("/Error");
 
             if (ServerConfig.ShowUrls)
             {
@@ -255,6 +256,7 @@ namespace LiveReloadServer
             Console.WriteLine($"Show Urls    : {ServerConfig.ShowUrls}");
             Console.WriteLine($"Open Browser : {ServerConfig.OpenBrowser}");
             Console.WriteLine($"Default Pages: {ServerConfig.DefaultFiles}");
+            Console.WriteLine($"Detail Errors: {ServerConfig.DetailedErrors}");
             Console.WriteLine($"Environment  : {env.EnvironmentName}");
 
             Console.WriteLine();

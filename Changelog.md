@@ -1,11 +1,12 @@
 ﻿# Live Reload Server Change Log
 
-### Version 0.2.6
+### Version 0.2.16
+
+* **Add Support for DeveloperErrorPage**  
+Since this server is meant primarily for development scenarios, we've added support for the `--DetailedErrors` which when set uses the default ASP.NET Developer error page which provides lots of error detail. Note: You have to provide an `/error.cshtml` page with specific code in the file for this to work ([see docs](https://github.com/RickStrahl/LiveReloadServer##developer-error-page)).
 
 * **Break out LiveReloadServer into a separate Github Project**  
 Removed the LiveReloadServer project from the Westwind.AspNetCore.LiveReload Github project and moved into its own separate GitHub repository.
-
-### Version 0.2.4
 
 * **Add --Host Configuration Value**  
 You can now specify the host IP Address or domain to bind the server to. Previously the server was bound to localhost which didn't allow for external network access. Using `--Host` as a parameter or configuration value you can now specify `0.0.0.0` for example to bind to all IP addresses and allow external access. The default is still `localhost` but you can now explicitly add external access via `--Host 0.0.0.0` or using a specific IP Address to bind to.
