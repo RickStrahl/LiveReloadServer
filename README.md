@@ -251,6 +251,80 @@ However, there's **no support for code behind razor models** or  **loose C# .cs 
 ### External Assembly Support
 You can however add **external assemblies** to support external code in your site, by adding final dependent assemblies (not NuGet packages!) into a `./privatebin` folder below your WebRoot. Assemblies in this folder will be loaded when the site is launched and become available for access in your Razor page code.
 
+## Error Page Display
+There are two ways you can display error information:
+
+* Use the default ASP.NET Developer Error Page
+* Use a custom Error Page
+
+Both require that you explicitly create a `/Error.cshtml` file.
+
+LiveReloadServer by default use ASP.NET Developer error page as this server is primarily meant as a dev server. You can disable that behavior by  using the `--DetailedErrors False` flag. 
+
+> Note: If you don't have an `/Errors.cshtml` file any compilation or runtime errors in the server will result in a `404` error as it tries to redirect to the `/error` route that doesn't exist.
+
+### Developer Error Page
+The developer error page is internal to ASP.NET, but unfortunately it still requires a physical `/Error.cshtml` in order for the routing to fire properly.
+
+A minimal page looks like this (or you can copy the code from a stock Razor Pages application by combining everything into a single file.)
+
+The minimal error page looks like this:
+
+```html
+@page
+<h1>An error occurred</h1>
+@function {
+   // IMPORTANT: must have a function block in order for error page to work!
+}
+```
+
+> This page is never actually displayed, but **it has to have that `@function { }` section** in order to work.
+
+The default error page is very detailed and works well for development environments, but if you plan on using LiveReloadServer for some sort of production app you probably want to run with `--DetailedErrors False`.
+
+### Custom Error Page
+If you want to create custom error page you can create a custom `Error.cshtml` page which uses the standard ASP.NET error behavior.
+
+You can create an error page and return error information like this using the HttpContext features to retrieve an `IExceptionHandlerPathFeature`
+
+```html
+@page
+
+<html>
+<body>
+<h1>Razor Pages Error Page</h1>
+<hr/>
+<div style="font-size: 1.2em;margin: 20px;">
+    Yikes. Something went wrong...
+</div>
+@{
+            var errorHandler = HttpContext
+                .Features
+                .Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>();
+}
+<hr/>
+@if(errorHandler != null )
+{
+            var error = errorHandler.Error;
+            var message = error?.Message;
+            if (message == null)
+              message = "No Errors found.";
+
+            <text>            
+            @message     
+            </text>
+
+            <pre>
+            @error?.StackTrace
+            </pre>
+}
+</body>
+</html>
+```
+
+> @icon-info-circle Set Development Environment
+> Note you can set the Development Environment by setting the `LIVERELOADWEBSERVER_ENVIRONMENT` variable to `Production` or `Development`. In Development mode it will show the error information above. The default is production.
+
 ## Using Razor Features
 To serve a Razor page create a page that uses some .NET code using C# Razor syntax. For example here's a `hello.cshtml`:
 
@@ -298,48 +372,6 @@ I want to stress though, that this is a limited Razor Pages implementation that 
 ### Files and Folder Support
 As mentioned above you can use most Razor Pages file based constructs like _Layout and Partial pages, ViewStart as well as shared folders etc. The root folder works like any other Razor Pages folder or Area in ASP.NET Core and so all the relative linking and child page access are available.
 
-### Error Page
-When an error occurs errors are fired into an `Error.cshtml` page. You have to create this page as the tool uses a folder that you provide. 
-
-You can create an error page and return error information like this using the HttpContext features to retrieve an `IExceptionHandlerPathFeature`
-
-```html
-@page
-
-<html>
-<body>
-<h1>Razor Pages Error Page</h1>
-<hr/>
-<div style="font-size: 1.2em;margin: 20px;">
-    Yikes. Something went wrong...
-</div>
-@{
-            var errorHandler = HttpContext
-                .Features
-                .Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>();
-}
-<hr/>
-@if(errorHandler != null )
-{
-            var error = errorHandler.Error;
-            var message = error?.Message;
-            if (message == null)
-              message = "No Errors found.";
-
-            <text>            
-            @message     
-            </text>
-
-            <pre>
-            @error?.StackTrace
-            </pre>
-}
-</body>
-</html>
-```
-
-> @icon-info-circle Set Development Environment
-> Note you can set the Development Environment by setting the `LIVERELOADWEBSERVER_ENVIRONMENT` variable to `Production` or `Development`. In Development mode it will show the error information above. The default is production.
 
 ### Non-Razor Page Code is not supported
 The following code execution features are not available:
@@ -416,8 +448,69 @@ https://albumviewer.west-wind.com/albums
 If fired on the server automatically serves the content of `/index.html`. This allows the client side application to run **and** maintain the original client side path of `/albums` so that it can route to the correct page.
 
 
+## Running LiveReloadServer in a Web Server
+LiveReloadServer is essentially an ASP.NET Core application and as such can also run behind a live Web Server like IIS or nginX. LiveReloadServer is distributed as a `dotnet tool` or a standalone exe, but we also provide a hostable package you run like any other ASP.NET Core application. This can be useful if you need to simple Razor Page content or Markdown display features.
 
-### More Features?
+To do this:
+
+* Download the integrated server [binaries from GitHub](https://github.com/RickStrahl/Westwind.AspnetCore.LiveReload/raw/master/LiveReloadServer/LiveReloadWebServer.zip)
+* Install the files into a new folder
+* Use Environment variables or config settings  
+to specify the folder to serve and options to use
+
+### Installing on IIS
+Let's go through this with IIS which uses the ASP.NET Core Hosting module. Make sure whatever server you're using .NET Core 3.1 or later is installed. On IIS you need Windows Server Hosting package or SDK.
+
+Start by downloading the hosted binaries and unzip into a folder. I'm going to use:
+
+```txt
+c:\web sites\antitrustalbum
+```
+
+You should end up with two folders: Your Web site content and the Server binaries which are seperate (although you can put them into the same folder structure if you like).
+
+![](Assets/HostedServerAndWebSiteFolders.png)
+
+Next set up a new Web Site (or virtual in IIS) and point it at this new folder. You'll want to use a separate Application Pool as IIS can only host a single .NET Core app in an Application Pool. Remove ASP.NET Framework support from the AppPool to reduce overhead.
+
+![](Assets/IISSiteFolder.png)
+
+Finally you need to configure the site to point at the Web folder and set any custom settings you want to run the site, like enabling Markdown and Razor etc. For IIS you do this via the `web.config` file in the Web folder:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <location path="." inheritInChildApplications="false">
+    <system.webServer>
+      <handlers>
+        <add name="aspNetCore" path="*" verb="*" modules="AspNetCoreModuleV2" resourceType="Unspecified" />
+      </handlers>
+      <aspNetCore processPath="dotnet" arguments="../AntiTrustServer/LiveReloadServer.dll" stdoutLogEnabled="true" stdoutLogFile=".\logs\stdout" hostingModel="inprocess">
+        <environmentVariables>
+          <environmentVariable name="ASPNET_ENVIRONMENT" value="Development" />
+          <environmentVariable name="LIVERELOADSERVER_WEBROOT" value="C:\Web Sites\anti-trust.rocks" />
+          <environmentVariable name="LIVERELOADSERVER_USERAZOR" value="True" />          
+          <environmentVariable name="LIVERELOADSERVER_USELIVERELOAD" value="False" /> 
+        </environmentVariables>
+      </aspNetCore>
+
+    </system.webServer>
+  </location>
+</configuration>
+```
+
+Notice that I'm using a relative path for Server application - you can also specify a full path if necessary. Note that multiple Web sites can share the single server instance.
+
+
+
+
+
+
+
+
+
+
+## More Features?
 The primary goal of LiveReload server is as a local server, not a hosted do-it-all solution. Other features may be explored but at the moment the feature set is well suited to the stated usage scenario I intended it for.
 
 More features like dynamic compilation of loose C# code files at runtime might be possible in this generic server, but currently that has not been explored. Personally I think this goes against the simplicity of this solution. If you really have a need for complex code that requires breaking out of Razor Page script code, it's time to build a full ASP.NET Core RazorPages application instead of using this server. 
