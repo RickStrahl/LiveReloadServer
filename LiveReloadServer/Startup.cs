@@ -107,7 +107,6 @@ namespace LiveReloadServer
                     CopyMarkdownTemplateResources();
             }
 
-            // If Razor or Markdown are enabled we need custom folders
             if (mvcBuilder != null)
             {
                 mvcBuilder.AddRazorRuntimeCompilation(
@@ -115,7 +114,8 @@ namespace LiveReloadServer
                     {
                         opt.FileProviders.Clear();
                         opt.FileProviders.Add(new PhysicalFileProvider(ServerConfig.WebRoot));
-                        opt.FileProviders.Add(new PhysicalFileProvider(Path.Combine(Startup.StartupPath, "templates")));
+                        opt.FileProviders.Add(
+                            new PhysicalFileProvider(Path.Combine(Startup.StartupPath, "templates")));
                     });
 
                 LoadPrivateBinAssemblies(mvcBuilder);
@@ -131,9 +131,7 @@ namespace LiveReloadServer
         {
 
             if (ServerConfig.UseLiveReload)
-            {
                 app.UseLiveReload();
-            }
 
             if (ServerConfig.DetailedErrors)
                 app.UseDeveloperExceptionPage();
@@ -141,9 +139,7 @@ namespace LiveReloadServer
                 app.UseExceptionHandler("/Error");
 
             if (ServerConfig.ShowUrls)
-            {
                 app.Use(DisplayRequestInfoMiddlewareHandler);
-            }
 
             app.UseDefaultFiles(new DefaultFilesOptions
             {
@@ -191,7 +187,6 @@ namespace LiveReloadServer
                 app.UseEndpoints(endpoints =>
                 {
                     endpoints.MapRazorPages();
-
                 });
             }
 #endif
@@ -201,7 +196,6 @@ namespace LiveReloadServer
                 {
                     // We need MVC Routing for Markdown to work
                     endpoints.MapDefaultControllerRoute();
-                    
                 });
             }
 
@@ -257,7 +251,7 @@ namespace LiveReloadServer
             Console.WriteLine($"Open Browser : {ServerConfig.OpenBrowser}");
             Console.WriteLine($"Default Pages: {ServerConfig.DefaultFiles}");
             Console.WriteLine($"Detail Errors: {ServerConfig.DetailedErrors}");
-            Console.WriteLine($"Environment  : {env.EnvironmentName}");
+            ColorConsole.WriteEmbeddedColorLine($"Environment  : [darkgreen]{env.EnvironmentName}[/darkgreen]  {System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}" ) ; 
 
             Console.WriteLine();
             ColorConsole.Write(Helpers.ExeName + " --help", ConsoleColor.DarkCyan);
@@ -271,7 +265,7 @@ namespace LiveReloadServer
             foreach (var assmbly in LoadedPrivateAssemblies)
             {
                 var fname = Path.GetFileName(assmbly);
-                ColorConsole.WriteEmbeddedColorLine("Additional Assembly: [green]" + fname + "[/green]" );
+                ColorConsole.WriteEmbeddedColorLine("Additional Assembly: [darkgreen]" + fname + "[/darkgreen]" );
             }
 
             foreach (var assmbly in FailedPrivateAssemblies)
@@ -385,7 +379,7 @@ namespace LiveReloadServer
             await next();
 
             // ignore Web socket requests
-            if (context.Request.Path.Value == LiveReloadConfiguration.Current.WebSocketUrl)
+            if (context.Request.Path.Value == LiveReloadConfiguration.Current?.WebSocketUrl)
                 return;
 
             // need to ensure this happens all at once otherwise multiple threads

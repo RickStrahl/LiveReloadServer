@@ -47,29 +47,26 @@ namespace LiveReloadServer
             }
             catch (IOException ex)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\r\nUnable to start the Web Server.");
-                Console.ResetColor();
+                
+                ColorConsole.WriteWarning("\r\nUnable to start the Web Server.");
                 Console.WriteLine("------------------------------");
 
 
-                Console.WriteLine("The server port is already in use by another application.");
+                Console.WriteLine("Most likely the server port is already in use by another application.");
                 Console.WriteLine("Please try and choose another port with the `--port` switch. And try again.");
                 Console.WriteLine("\r\n\r\nException Info:");
-                Console.WriteLine(ex.Message);
+                ColorConsole.WriteError(ex.Message);
                 Console.WriteLine("---------------------------------------------------------------------------");
             }
             catch (SocketException ex)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\r\nUnable to start the Web Server.");
-                Console.ResetColor();
+                ColorConsole.WriteError("\r\nUnable to start the Web Server.");
                 Console.WriteLine("------------------------------");
 
                 Console.WriteLine("The server Host IP address is invalid.");
                 Console.WriteLine("Please try and choose another host IP address with the `--host` switch. And try again.");
                 Console.WriteLine("\r\n\r\nException Info:");
-                Console.WriteLine(ex.Message);
+                ColorConsole.WriteError(ex.Message);
                 Console.WriteLine("---------------------------------------------------------------------------");
             }
             catch (Exception ex)
@@ -102,6 +99,11 @@ namespace LiveReloadServer
 
                     var serverConfig = new LiveReloadServerConfiguration();
                     serverConfig.LoadFromConfiguration(config);
+                    var webRoot = serverConfig.WebRoot;
+                    if (!Directory.Exists(webRoot))
+                    {
+                        throw new ApplicationException($"Launch Error: WebRoot '{webRoot}' is not a valid directory.");
+                    }
 
                     // Custom Logging
                     webBuilder
@@ -113,7 +115,6 @@ namespace LiveReloadServer
                         })
                         .UseConfiguration(config);
 
-                    var webRoot = serverConfig.WebRoot;
                     if (!string.IsNullOrEmpty(webRoot))
                         webBuilder.UseWebRoot(webRoot);
                   
@@ -133,15 +134,13 @@ namespace LiveReloadServer
             Console.WriteLine(Helpers.AppHeader);
             Console.WriteLine(headerLine);
 
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("\r\nYikes. That wasn't supposed to happen. Something went wrong!");
+            ColorConsole.WriteWarning("\r\nSomething went wrong during server startup!");
             Console.WriteLine();
-            Console.ResetColor();
 
             Console.WriteLine("The Live Reload Server has run into a problem and has stopped working.");
-            Console.WriteLine("Here's some more information...");
-            Console.WriteLine("\r\n\r\nException Info:");
-            Console.WriteLine(message);
+            Console.WriteLine("Here's additional information:");
+            ColorConsole.WriteLine("\r\n\r\nException Info:");
+            ColorConsole.WriteError(message);
 
             if (!string.IsNullOrEmpty(stackTrace))
             {
