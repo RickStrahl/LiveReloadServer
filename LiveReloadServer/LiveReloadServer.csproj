@@ -69,10 +69,12 @@
     <PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.5.0" />
     <PackageReference Include="Westwind.AspNetCore.LiveReload" Version="0.3.0" />
     <PackageReference Include="Westwind.Utilities" Version="3.0.48" />
+    
+    
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains('USE_RAZORPAGES'))">
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>

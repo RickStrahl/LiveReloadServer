@@ -1,7 +1,6 @@
 West Wind Live Reload Web Server
 ================================
 
-
 MIT License
 -----------
 
