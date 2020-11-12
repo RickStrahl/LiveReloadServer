@@ -10,8 +10,8 @@
   "profiles": {
     "LiveReloadServer - SampleSite": {
       "commandName": "Project",
-      "commandLineArgs": "..\\..\\..\\..\\SampleSite --Host 0.0.0.0 --UseRazor --UseMarkdown  --CopyMarkdownResources False --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs --ShowUrls True",
-      "xcommandLineArgs": "--WebRoot ..\\..\\..\\..\\SampleSite --Host 0.0.0.0 --UseRazor --UseMarkdown  --CopyMarkdownResources False --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs --ShowUrls True",
+      "commandLineArgs": "..\\..\\..\\..\\SampleSite --Host 0.0.0.0 -UseRazor -UseMarkdown  --CopyMarkdownResources False --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs --ShowUrls True",
+      "xcommandLineArgs": "--WebRoot ..\\..\\..\\..\\SampleSite --Host 0.0.0.0 -UseRazor -UseMarkdown  --CopyMarkdownResources False --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs --ShowUrls True",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -19,7 +19,7 @@
     },
     "LiveReloadServer - PRA": {
       "commandName": "Project",
-      "commandLineArgs": "--webroot C:/clients/PRA/PraMobile/PraMobileAngular_Published --Host 0.0.0.0 --UseRazor --UseMarkdown --CopyMarkdownResources False --useMarkdown True --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs --ShowUrls True",
+      "commandLineArgs": "--webroot C:/clients/PRA/PraMobile/PraMobileAngular_Published --Host 0.0.0.0 -UseRazor -UseMarkdown --CopyMarkdownResources False --useMarkdown True --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs --ShowUrls True",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -28,7 +28,7 @@
 
     "LiveReloadServer - MarkdownFolder": {
       "commandName": "Project",
-      "commandLineArgs": "C:\\temp\\MarkdownProject --UseMarkdown --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs  --Host 0.0.0.0 --ShowUrls True",
+      "commandLineArgs": "C:\\temp\\MarkdownProject -UseMarkdown --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs  --Host 0.0.0.0 ",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -37,7 +37,7 @@
 
     "LiveReloadServer - Anti-Trust": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\Web Sites\\anti-trust.rocks\" --UseRazor --Host 0.0.0.0 --ShowUrls True",
+      "commandLineArgs": "\"C:\\Web Sites\\anti-trust.rocks\" -UseRazor --UseLiveReload False --Host localhost -ShowUrls",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -46,7 +46,7 @@
 
     "LiveReloadServer - AlbumViewer": {
       "commandName": "Project",
-      "commandLineArgs": "--webroot C:\\projects\\AlbumViewerVNext\\src\\AlbumViewerNetCore\\wwwroot --Host 0.0.0.0 --ShowUrls True",
+      "commandLineArgs": "--webroot C:\\projects\\AlbumViewerVNext\\src\\AlbumViewerNetCore\\wwwroot --Host 0.0.0.0",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

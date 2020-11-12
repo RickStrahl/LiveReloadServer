@@ -6,7 +6,7 @@ if (test-path ./nupkg) {
 dotnet build -c Release
 
 # $filename = 'LiveReloadServer.0.2.4.nupkg'
-$filename = gci "./nupkg/*.nupkg" | sort LastWriteTime | select -last 1 | select -ExpandProperty "Name"
+$filename = gci "./build/nupkg/*.nupkg" | sort LastWriteTime | select -last 1 | select -ExpandProperty "Name"
 Write-host $filename
 
 $len = $filename.length
@@ -14,6 +14,6 @@ Write-host $len
 
 if ($len -gt 0) {
     Write-Host "signing..."
-    nuget sign  ".\nupkg\$filename"   -CertificateSubject "West Wind Technologies" -timestamper " http://timestamp.comodoca.com"
-    nuget push  ".\nupkg\$filename" -source nuget.org
+    nuget sign  ".\build\nupkg\$filename"   -CertificateSubject "West Wind Technologies" -timestamper " http://timestamp.comodoca.com"
+    # nuget push  ".\build\nupkg\$filename" -source nuget.org
 }

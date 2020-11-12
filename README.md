@@ -36,7 +36,7 @@ You can grab the compiled tool as:
   `dotnet tool install -g LiveReloadServer`
 * [Chocolatey Package](https://chocolatey.org/packages/LiveReloadWebServer) <small>(windows)</small>   
  `choco install LiveReloadWebServer` 
-* [Direct Single File Download Windows Executable (zipped)](https://github.com/RickStrahl/Westwind.AspnetCore.LiveReload/raw/master/LiveReloadServer/LiveReloadWebServer.zip) <small>(windows)</small>
+* [Self Contained Windows Executable Folder (zipped)](https://github.com/RickStrahl/Westwind.AspnetCore.LiveReload/raw/master/LiveReloadServer/LiveReloadWebServer-SelfContained.zip) <small>(windows)</small>
 * [Hostable Package (requires runtime installed)]()
 
 

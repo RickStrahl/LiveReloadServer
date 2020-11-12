@@ -7,6 +7,8 @@
 LiveReloadWebServer.exe
 LiveReloadWebServer.json
 
+build/
+
 # User-specific files
 *.rsuser
 *.suo

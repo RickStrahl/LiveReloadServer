@@ -16,19 +16,23 @@
 # with this LiveReloadServer, you can set /p:PublishTrimmed=true
 # to cut the size of the exe in half.
 
-if (test-path './LiveReloadWebServer.exe' -PathType Leaf) { remove-item ./LiveReloadWebServer.exe }
-if (test-path './SingleFileExe' -PathType Container) { remove-item ./SingleFileExe -Recurse -Force }
+# if (test-path './LiveReloadWebServer.exe' -PathType Leaf) { remove-item ./LiveReloadWebServer.exe }
+if (test-path './build/SelfContained' -PathType Container) { remove-item ./build/SelfContained -Recurse -Force }
+if (test-path './build/Hosted' -PathType Container) { remove-item ./build/Hosted -Recurse -Force }
 
 # Single File Exe output
-dotnet publish -c Release /p:PublishSingleFile=true /p:PublishTrimmed=false -r win-x64 --output SingleFileExe
-copy ./LiveReloadServer/LiveReloadWebServer.json ./LiveReloadWebServer.json
+Copy-Item ./LiveReloadServer/LiveReloadWebServer.json ./LiveReloadWebServer.json
 
 # Make sure hosted project gets built (in default project output folder)
-dotnet publish -c Release /p:PublishSingleFile=false /p:PublishTrimmed=false
+dotnet publish -c Release /p:PublishSingleFile=false /p:PublishTrimmed=false -o ./build/Hosted
+Rename-Item ./build/Hosted/LiveReloadServer.exe LiveReloadWebServer.exe
 
-Move-Item ./SingleFileExe/LiveReloadServer.exe ./LiveReloadWebServer.exe -force
-#remove-item ./SingleFileExe -Recurse -Force
-
+dotnet publish -c Release /p:PackAsTool=false -r win-x64  -o ./build/SelfContained
+Rename-Item ./build/SelfContained/LiveReloadServer.exe LiveReloadWebServer.exe
 
 # Sign exe
-.\signtool.exe sign /v /n "West Wind Technologies"   /tr "http://timestamp.digicert.com" /td SHA256 /fd SHA256 ".\LiveReloadWebServer.exe"
+.\signtool.exe sign /v /n "West Wind Technologies"   /tr "http://timestamp.digicert.com" /td SHA256 /fd SHA256 ".\SelfContained\LiveReloadWebServer.exe"
+
+
+7z a -tzip -r ".\LiveReloadWebServer-Hosted.zip" "./build/Hosted/*.*"
+7z a -tzip -r ".\LiveReloadWebServer-SelfContained.zip" "./build/SelfContained/*.*"
