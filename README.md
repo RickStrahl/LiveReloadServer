@@ -22,6 +22,14 @@ This server supports:
 * Serve HTTPS content (as a Dotnet Tool only for now)
 * Available as: Dotnet Tool, Chocolatey Package, or Self-Contained (Windows) Download
 
+### Requirements:
+
+* Dotnet Tool: .NET 5.0 SDK
+* Hosting: .NET 5.0 Runtime or SDK
+* Standalone Exe (Window): self-contained
+
+> If you are not .NET 5.0 versions prior to `v0.2.20` use .NET Core 3.1.
+
 You can grab the compiled tool as:
 
 * [Dotnet Tool](https://www.nuget.org/packages/LiveReloadServer/)  <small>(windows, mac, linux)</small>  
@@ -29,6 +37,8 @@ You can grab the compiled tool as:
 * [Chocolatey Package](https://chocolatey.org/packages/LiveReloadWebServer) <small>(windows)</small>   
  `choco install LiveReloadWebServer` 
 * [Direct Single File Download Windows Executable (zipped)](https://github.com/RickStrahl/Westwind.AspnetCore.LiveReload/raw/master/LiveReloadServer/LiveReloadWebServer.zip) <small>(windows)</small>
+* [Hostable Package (requires runtime installed)]()
+
 
 > All three versions have the same features and interface, just the delivery mechanism and the executable name is different. The EXE uses `LiveReloadWebServer` while the Dotnet Tool uses `LiveReloadServer`.
   
@@ -458,6 +468,15 @@ To do this:
 * Use Environment variables or config settings  
 to specify the folder to serve and options to use
 
+**Note**: You can also run the server binaries **directly from the NuGet Package Folder** if you want to dig deep:
+
+ ```xml
+ <aspNetCore processPath="dotnet" hostingModel="inprocess"
+   arguments="C:\Users\rick\.dotnet\tools\.store\livereloadserver\0.2.15.2\livereloadserver\0.2.15.2\tools\netcoreapp3.1\any\LiveReloadServer.dll" 
+   stdoutLogEnabled="true" stdoutLogFile=".\logs\stdout">
+```   
+
+
 ### Installing on IIS
 Let's go through this with IIS which uses the ASP.NET Core Hosting module. Make sure whatever server you're using .NET Core 3.1 or later is installed. On IIS you need Windows Server Hosting package or SDK.
 
@@ -467,7 +486,7 @@ Start by downloading the hosted binaries and unzip into a folder. I'm going to u
 c:\web sites\antitrustalbum
 ```
 
-You should end up with two folders: Your Web site content and the Server binaries which are seperate (although you can put them into the same folder structure if you like).
+You should end up with two folders: Your Web site content and the Server binaries which are separate (although you can put them into the same folder structure if you like).
 
 ![](Assets/HostedServerAndWebSiteFolders.png)
 
