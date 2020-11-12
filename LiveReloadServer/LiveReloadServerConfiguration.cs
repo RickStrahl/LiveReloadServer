@@ -157,7 +157,8 @@ namespace LiveReloadServer
             Host = Helpers.GetStringSetting("Host", Configuration, Host);
             DefaultFiles = Helpers.GetStringSetting("DefaultFiles", Configuration, DefaultFiles);
             Extensions = Helpers.GetStringSetting("Extensions", Configuration, Extensions);
-
+            
+            
 
             UseLiveReload = Helpers.GetLogicalSetting("UseLiveReload", Configuration, UseLiveReload);
             UseRazor = Helpers.GetLogicalSetting("UseRazor", Configuration);
@@ -177,6 +178,22 @@ namespace LiveReloadServer
             MarkdownTemplate = Helpers.GetStringSetting("MarkdownTemplate", Configuration, MarkdownTemplate);
             MarkdownTheme = Helpers.GetStringSetting("MarkdownTheme", Configuration, MarkdownTheme);
             MarkdownSyntaxTheme = Helpers.GetStringSetting("MarkdownSyntaxTheme", Configuration, MarkdownSyntaxTheme);
+
+
+            // Fix ups
+            if (Extensions is null)
+                Extensions = string.Empty;
+
+            if (UseMarkdown)
+            {
+                if (!Extensions.Contains(".md"))
+                    Extensions += ",.md";
+                if (!Extensions.Contains(".markdown"))
+                    Extensions += ",.markdown";
+
+                if (!DefaultFiles.Contains(".md"))
+                    DefaultFiles = DefaultFiles.Trim(',') + ",README.md,index.md";
+            }
 
             return true;
         }

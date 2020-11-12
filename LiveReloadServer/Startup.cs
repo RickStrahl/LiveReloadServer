@@ -41,7 +41,7 @@ namespace LiveReloadServer
             ServerConfig = new LiveReloadServerConfiguration();
             ServerConfig.LoadFromConfiguration(Configuration);
 
-
+            
 
             if (ServerConfig.UseLiveReload)
             {
@@ -52,14 +52,7 @@ namespace LiveReloadServer
 
                     if (!string.IsNullOrEmpty(ServerConfig.Extensions))
                         opt.ClientFileExtensions = ServerConfig.Extensions;
-
-                    if (ServerConfig.UseMarkdown && !opt.ClientFileExtensions.Contains(".md", StringComparison.OrdinalIgnoreCase))
-                    {
-                        opt.ClientFileExtensions += ",.md,.markdown";
-                    }
                     
-                    if (ServerConfig.UseMarkdown && !ServerConfig.DefaultFiles.Contains(".md"))
-                        ServerConfig.DefaultFiles = (ServerConfig.DefaultFiles  + ",README.md,index.md").TrimStart(',');
                 });
             }
 
@@ -93,7 +86,6 @@ namespace LiveReloadServer
                     folderConfig.RenderTheme = ServerConfig.MarkdownTheme;
                     folderConfig.SyntaxTheme = ServerConfig.MarkdownSyntaxTheme;
                 });
-
 
 
                 // we have to force MVC in order for the controller routing to work
