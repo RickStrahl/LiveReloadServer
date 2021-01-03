@@ -37,7 +37,7 @@
 
     "LiveReloadServer - Anti-Trust": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\Web Sites\\anti-trust.rocks\" -useRazor -useMarkdown --useLiveReload True --Host localhost -showUrls - useSsl",
+      "commandLineArgs": "\"C:\\Web Sites\\anti-trust.rocks\" -useRazor -useMarkdown --useLiveReload True --Host localhost -showUrls - useSsl -openEditor",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

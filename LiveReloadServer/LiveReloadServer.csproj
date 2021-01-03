@@ -15,13 +15,13 @@
   <PropertyGroup> 
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <Version>0.2.20</Version>
+    <Version>0.2.22</Version>
     <RazorCompileOnPublish>false</RazorCompileOnPublish>
 
     <Authors>Rick Strahl</Authors>
     <Company>West Wind Technolologies</Company>
     <Product>Westwind.AspnetCore.LiveReload</Product>
-    <Copyright>© Rick Strahl - West Wind Technologies, 2019-2020</Copyright>
+    <Copyright>© Rick Strahl - West Wind Technologies, 2019-2021</Copyright>
 
     <Description>
       LiveReloadServer provides a generic Web Server with configurable Live Reload functionality for static files, Markdown files and loose, self-contained Razor  Pages in any local folder. Simply point the `--webroot` at a folder or start it out of a Web folder and go. Commandline options let you customize the path, port, add Razor and Markdown support, add extensions to monitor and more. Live Reload provides the ability to change static, Markdown and Razor files and automatically refresh the active page in the browser when changed.
@@ -67,11 +67,11 @@
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.5.0" />
-    <PackageReference Include="Westwind.AspNetCore.LiveReload" Version="0.3.0" />
-    <PackageReference Include="Westwind.Utilities" Version="3.0.48" />
+    <PackageReference Include="Westwind.AspNetCore.LiveReload" Version="0.3.1" />
+    <PackageReference Include="Westwind.Utilities" Version="3.0.49.5" />
     
     
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.1" />
   </ItemGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains('USE_RAZORPAGES'))">

@@ -98,14 +98,25 @@ Syntax:
 -------
 LiveReloadServer  <options>
 
---WebRoot               <path>  (current Path if not provided)
---Port                  5200*
---UseSsl                True|False*{razorFlag}
---ShowUrls              True|False*
---OpenBrowser           True*|False
---DefaultFiles          ""index.html,default.htm""*
---Extensions            "".cshtml,.css,.js,.htm,.html,.ts,.md""*
---Environment           Production*|Development
+--WebRoot                <path>  (current Path if not provided)
+--Port                   5200*
+--Host                   0.0.0.0*|localhost|custom Ip - 0.0.0.0 allows external access
+--UseSsl                 True|False*{razorFlag}
+
+--UseLiveReload          True*|False
+--Extensions             ".css,.js,.htm,.html,.ts"*
+--DefaultFiles           "index.html,default.htm"*
+
+--ShowUrls               True|False*
+--OpenBrowser            True*|False
+--OpenEditor             True|False*
+--EditorLaunchCommand    'code "%1"'*
+--DetailedErrors         True*|False
+--Environment            Production*|Development
+
+Razor Pages:
+------------
+--UseRazor              True|False*
 
 Razor Pages:
 ------------
@@ -114,8 +125,10 @@ Razor Pages:
 Markdown Options:
 -----------------
 --UseMarkdown           True|False*  
---MarkdownTemplate      ""~/markdown-themes/__MarkdownTestmplatePage.cshtml""*
---CopyMarkdownResources True|False*
+--CopyMarkdownResources True|False*  
+--MarkdownTemplate      "~/markdown-themes/__MarkdownTestmplatePage.cshtml"*
+--MarkdownTheme         github*|dharkan|medium|blackout|westwind
+--MarkdownSyntaxTheme   github*|vs2015|vs|monokai|monokai-sublime|twilight
 
 
 Configuration options can be specified in:
@@ -539,6 +552,17 @@ But that won't stop some from asking or trying to hook it up anyway I bet :smile
 If that's of interest to you or you want to contribute, please file an issue to discuss and explore the use cases and what might be possible.
 
 ## Version History
+
+### Version 0.2.22
+
+* **Add `-openEditor` and `--editorLaunchCommand` Config Options**  
+The new `-openEditor` command allows opening an editor when a site is opened. This is useful if you just start working on a site and you can both launch the site and the editor at the same time. By default VS Code is launched via `code "%1"` which can be overridden with a custom editor launch command.
+
+* **Externalized Script**  
+Remove inline script from rendered HTML content pages and use `<script>` tag to pull in the JavaScript code to reload the page from script.
+
+* **Improved WebSocket Disconnected Handling**  
+Updated client code to more cleanly handle WebSocket disconnected errors by polling for reconnections less frequently.
 
 ### Version 0.2.4
 

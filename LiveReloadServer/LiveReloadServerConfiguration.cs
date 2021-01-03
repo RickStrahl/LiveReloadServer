@@ -57,12 +57,23 @@ namespace LiveReloadServer
         /// <summary>
         /// Default page files to redirect to in extensionless URLs if the files exist in folder
         /// </summary>
-        public string DefaultFiles { get; set; } = "index.html,default.htm";
+        public string DefaultFiles { get; set; } = "index.html,index.htm,default.htm";
 
         /// <summary>
         /// Determines whether the browser is opened
         /// </summary>
         public bool OpenBrowser { get; set; } = true;
+
+
+        /// <summary>
+        /// If true starts up the configured editor. Default editor is Vs Code
+        /// </summary>
+        public bool OpenEditor {get; set; } = false;
+
+        /// <summary>
+        /// Launch Command used to launch an editor when using -OpenEditor switch
+        /// </summary>
+        public string EditorLaunchCommand { get; set; } = "code \"%1\"";
 
         /// <summary>
         /// Determines whether the server console window shows the URLs
@@ -152,18 +163,22 @@ namespace LiveReloadServer
             else
                 WebRoot = Path.GetFullPath(WebRoot, Environment.CurrentDirectory);
 
+            
             Port = Helpers.GetIntegerSetting("Port", Configuration, Port);
             UseSsl = Helpers.GetLogicalSetting("UseSsl", Configuration, UseSsl);
             Host = Helpers.GetStringSetting("Host", Configuration, Host);
             DefaultFiles = Helpers.GetStringSetting("DefaultFiles", Configuration, DefaultFiles);
             Extensions = Helpers.GetStringSetting("Extensions", Configuration, Extensions);
             
-            
-
             UseLiveReload = Helpers.GetLogicalSetting("UseLiveReload", Configuration, UseLiveReload);
             UseRazor = Helpers.GetLogicalSetting("UseRazor", Configuration);
             ShowUrls = Helpers.GetLogicalSetting("ShowUrls", Configuration, ShowUrls);
+            
             OpenBrowser = Helpers.GetLogicalSetting("OpenBrowser", Configuration, OpenBrowser);
+            OpenEditor =Helpers.GetLogicalSetting("OpenEditor", Configuration, OpenEditor);
+            EditorLaunchCommand = Helpers.GetStringSetting("EditorLaunchCommand", Configuration, EditorLaunchCommand);
+
+
             DetailedErrors = Helpers.GetLogicalSetting("DetailedErrors", Configuration, DetailedErrors);
 
             FolderNotFoundFallbackPath = Helpers.GetStringSetting("FolderNotFoundFallbackPath",Configuration,null);

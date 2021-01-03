@@ -186,6 +186,8 @@ Syntax:
 
 --ShowUrls               True|False*
 --OpenBrowser            True*|False
+--OpenEditor             True|False*
+--EditorLaunchCommand    ""code \""%1\""""
 --DetailedErrors         True*|False
 --Environment            Production*|Development
 

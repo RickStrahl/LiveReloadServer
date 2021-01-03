@@ -240,7 +240,8 @@ namespace LiveReloadServer
             }
 
             Console.WriteLine($"Show Urls    : {ServerConfig.ShowUrls}");
-            Console.WriteLine($"Open Browser : {ServerConfig.OpenBrowser}");
+            Console.Write($"Open Browser : {ServerConfig.OpenBrowser}");
+
             Console.WriteLine($"Default Pages: {ServerConfig.DefaultFiles}");
             Console.WriteLine($"Detail Errors: {ServerConfig.DetailedErrors}");
             ColorConsole.WriteEmbeddedColorLine($"Environment  : [darkgreen]{env.EnvironmentName}[/darkgreen]  {System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}" ) ; 
@@ -271,6 +272,22 @@ namespace LiveReloadServer
             if (ServerConfig.OpenBrowser)
             {
                 Helpers.OpenUrl(ServerConfig.GetHttpUrl());
+            }
+
+            if (ServerConfig.OpenEditor)
+            {
+                string cmdLine = null;
+                try
+                {
+                    cmdLine = ServerConfig.EditorLaunchCommand.Replace("%1", ServerConfig.WebRoot);
+                    Westwind.Utilities.ShellUtils.ExecuteCommandLine(cmdLine);
+                }
+                catch(Exception ex)
+                {
+                    ColorConsole.WriteError("Failed to launch editor with: " + cmdLine);
+                    ColorConsole.WriteError("-- " + ex.Message);
+                }
+
             }
         }
 
@@ -346,8 +363,7 @@ namespace LiveReloadServer
                 return false;
 
             FileUtils.CopyDirectory(Path.Combine(Startup.StartupPath, "templates", "markdown-themes"),
-                templatePath,
-                deepCopy: true);
+                templatePath, recursive: true);
 
             return true;
         }
