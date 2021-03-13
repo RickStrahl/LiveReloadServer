@@ -50,11 +50,11 @@ namespace LiveReloadServer
                 
                 ColorConsole.WriteWarning("\r\nUnable to start the Web Server.");
                 Console.WriteLine("------------------------------");
-
+                ColorConsole.WriteWrappedHeader("\r\nUnable to start the Web Server.",headerColor: ConsoleColor.DarkYellow);
 
                 Console.WriteLine("Most likely the server port is already in use by another application.");
                 Console.WriteLine("Please try and choose another port with the `--port` switch. And try again.");
-                Console.WriteLine("\r\n\r\nException Info:");
+                Console.WriteLine("\r\n\r\n");
                 ColorConsole.WriteError(ex.Message);
                 Console.WriteLine("---------------------------------------------------------------------------");
             }
@@ -65,7 +65,7 @@ namespace LiveReloadServer
 
                 Console.WriteLine("The server Host IP address is invalid.");
                 Console.WriteLine("Please try and choose another host IP address with the `--host` switch. And try again.");
-                Console.WriteLine("\r\n\r\nException Info:");
+                Console.WriteLine("\r\n\r\n");
                 ColorConsole.WriteError(ex.Message);
                 Console.WriteLine("---------------------------------------------------------------------------");
             }
@@ -137,17 +137,15 @@ namespace LiveReloadServer
             ColorConsole.WriteWarning("\r\nSomething went wrong during server startup!");
             Console.WriteLine();
 
-            Console.WriteLine("The Live Reload Server has run into a problem and has stopped working.");
-            Console.WriteLine("Here's additional information:");
-            ColorConsole.WriteLine("\r\n\r\nException Info:");
+            Console.WriteLine("The Live Reload Server has run into a problem and has stopped working.\r\n");
             ColorConsole.WriteError(message);
 
             if (!string.IsNullOrEmpty(stackTrace))
             {
-                Console.WriteLine("---");
+                Console.WriteLine("----- Error Info -----");
                 Console.WriteLine(stackTrace);
                 Console.WriteLine(source);
-                Console.WriteLine("---------------------------------------------------------------------------");
+                Console.WriteLine("----------------------");
             }
         }
 
@@ -187,7 +185,7 @@ Syntax:
 --ShowUrls               True|False*
 --OpenBrowser            True*|False
 --OpenEditor             True|False*
---EditorLaunchCommand    ""code \""%1\""""
+--EditorLaunchCommand    ""code \""%1\""""*
 --DetailedErrors         True*|False
 --Environment            Production*|Development
 

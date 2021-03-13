@@ -1,12 +1,34 @@
 ﻿# Live Reload Server Change Log
 
+### Version 1.0
+
+* **Environment Variable Path Fixups**  
+The WebRoot path can now include Environment variables as well as root path `~` markers to resolve to a fully qualified launch path.
+
+* **Improved Server Hosting Functionality**  
+Provide default `web.config` for IIS hosting and updated documentation to allow you to host a shared instance of this server on a Web site. Great for hosting simple 'mostly' static sites that also need a few dynamic features, without having to install and deploy a full ASP.NET Core application. You can install one 'runtime' and use it for many sites.
+
+* **Add `-openEditor` and `--editorLaunchCommand` Config Options**  
+The new `-openEditor` command allows opening an editor when a site is opened. This is useful if you just start working on a site and you can both launch the site and the editor at the same time. By default VS Code is launched via `code "%1"` which can be overridden with a custom editor launch command.
+
+* **Improved Retry Handling in Browser if Server is Stopped**  
+Retry attempts are minimized if the server is shut down which will reduce initial hits if the server is restarted after a break which should improve startup speed.
+
+* **Externalized Script**  
+Remove inline script from rendered HTML content pages and use `<script>` tag to pull in the JavaScript code to reload the page from script.
+
 ### Version 0.2.16
 
 * **Add Support for DeveloperErrorPage**  
 Since this server is meant primarily for development scenarios, we've added support for the `--DetailedErrors` which when set uses the default ASP.NET Developer error page which provides lots of error detail. Note: You have to provide an `/error.cshtml` page with specific code in the file for this to work ([see docs](https://github.com/RickStrahl/LiveReloadServer##developer-error-page)).
 
-* **Break out LiveReloadServer into a separate Github Project**  
-Removed the LiveReloadServer project from the Westwind.AspNetCore.LiveReload Github project and moved into its own separate GitHub repository.
+* **Break out LiveReloadServer into a separate GitHub Project**  
+Removed the LiveReloadServer project from the Westwind.AspNetCore.LiveReload GitHub project and moved into its own separate GitHub repository.
+
+* **Add --Host Configuration Value**  
+You can now specify the host IP Address or domain to bind the server to. Previously the server was bound to localhost which didn't allow for external network access. Using `--Host` as a parameter or configuration value you can now specify `0.0.0.0` for example to bind to all IP addresses and allow external access. The default is still `localhost` but you can now explicitly add external access via `--Host 0.0.0.0` or using a specific IP Address to bind to.
+
+### Version 0.2.4
 
 * **Add --Host Configuration Value**  
 You can now specify the host IP Address or domain to bind the server to. Previously the server was bound to localhost which didn't allow for external network access. Using `--Host` as a parameter or configuration value you can now specify `0.0.0.0` for example to bind to all IP addresses and allow external access. The default is still `localhost` but you can now explicitly add external access via `--Host 0.0.0.0` or using a specific IP Address to bind to.

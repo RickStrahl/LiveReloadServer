@@ -1,4 +1,4 @@
-# Live Reload Web Server 
+# Live Reload Web Server
 
 [![NuGet](https://img.shields.io/nuget/v/LiveReloadServer.svg)](https://www.nuget.org/packages/LiveReloadServer/)
 [![](https://img.shields.io/nuget/dt/LiveReloadServer.svg)](https://www.nuget.org/packages/LiveReloadServer/) &nbsp; &nbsp; &nbsp; &nbsp;
@@ -11,15 +11,17 @@
 This server supports:
 
 * Generic Static File Web Server you can launch in any folder
-* Just start with `LiveReloadServer --webroot <folder>`
-* Optional LiveReload functionality for change detection and browser refresh
+* Just start with `LiveReloadServer <folder>`
+* LiveReload functionality for change detection and browser refresh
 * Self-contained Razor Pages support with Live Reload Support
 * Themed Markdown page rendering support built in
 * Options to customize location, port, files checked etc.
 * Easily installed and updated with `dotnet tool -g install LiveReloadServer`
-* Support for locally running Blazor Applications (without Live Reload support however)
-* Cross Platform (as a Dotnet Tool only for now)
-* Serve HTTPS content (as a Dotnet Tool only for now)
+* Run local SPA applications (Angular, VueJs, React etc.)
+* Run Blazor Applications (without Live Reload support however)
+* Cross Platform - Windows, Mac, Linux (dotnet tool only)
+* Serve HTTPS content (dotnet tool only)
+* Hostable ASP.NET Core app that can be used by multiple sites on a server
 * Available as: Dotnet Tool, Chocolatey Package, or Self-Contained (Windows) Download
 
 ### Requirements:
@@ -28,14 +30,16 @@ This server supports:
 * Hosting: .NET 5.0 Runtime or SDK
 * Standalone Exe (Window): self-contained
 
-> If you are not .NET 5.0 versions prior to `v0.2.20` use .NET Core 3.1.
-
 You can grab the compiled tool as:
 
 * [Dotnet Tool](https://www.nuget.org/packages/LiveReloadServer/)  <small>(windows, mac, linux)</small>  
-  `dotnet tool install -g LiveReloadServer`
+  ```ps
+  dotnet tool install -g LiveReloadServer`
+  ```
 * [Chocolatey Package](https://chocolatey.org/packages/LiveReloadWebServer) <small>(windows)</small>   
- `choco install LiveReloadWebServer` 
+  ```ps
+  choco install LiveReloadWebServer
+  ```
 * [Self Contained Windows Executable Folder (zipped)](https://github.com/RickStrahl/Westwind.AspnetCore.LiveReload/raw/master/LiveReloadServer/LiveReloadWebServer-SelfContained.zip) <small>(windows)</small>
 * [Hostable Package (requires runtime installed)]()
 
@@ -68,7 +72,7 @@ To use it, navigate to a folder that you want to serve HTTP files out of:
 LiveReloadServer
 
 # specify a folder instead of current folder and a different port
-LiveReloadServer --webroot "c:/temp/My Local WebSite" --port 5350 -UseSsl
+LiveReloadServer "c:/temp/My Local WebSite" --port 5350 -UseSsl
 
 # Customize some options
 LiveReloadServer --LiveReloadEnabled False --OpenBrowser False -UseSsl -UseRazor
@@ -88,7 +92,7 @@ You can use the command line to customize how the server runs. By default files 
 Use commandlines to customize:
 
 ```ps
-LiveReloadServer --WebRoot "c:/temp/My Web Site" --port 5200 -useSsl
+LiveReloadServer "c:/temp/My Web Site" --port 5200 -useSsl -openEditor
 ```
 
 There are a number of Configuration options available:
@@ -96,47 +100,42 @@ There are a number of Configuration options available:
 ```text
 Syntax:
 -------
-LiveReloadServer  <options>
+LiveReloadServer <path> <options>
 
 --WebRoot                <path>  (current Path if not provided)
 --Port                   5200*
 --Host                   0.0.0.0*|localhost|custom Ip - 0.0.0.0 allows external access
---UseSsl                 True|False*{razorFlag}
+--UseSsl                 True|False*
+--UseRazor          	 True|False*
 
 --UseLiveReload          True*|False
---Extensions             ".css,.js,.htm,.html,.ts"*
+--Extensions             ".cshtml,.css,.js,.htm,.html,.ts"*
 --DefaultFiles           "index.html,default.htm"*
 
 --ShowUrls               True|False*
 --OpenBrowser            True*|False
 --OpenEditor             True|False*
---EditorLaunchCommand    'code "%1"'*
+--EditorLaunchCommand    "code \"%1\""*
 --DetailedErrors         True*|False
 --Environment            Production*|Development
 
 Razor Pages:
 ------------
---UseRazor              True|False*
-
-Razor Pages:
-------------
---UseRazor              True|False*
+--UseRazor               True|False*
 
 Markdown Options:
 -----------------
---UseMarkdown           True|False*  
---CopyMarkdownResources True|False*  
---MarkdownTemplate      "~/markdown-themes/__MarkdownTestmplatePage.cshtml"*
+--UseMarkdown           True|False*
+--CopyMarkdownResources True|False*
+--MarkdownTemplate      ~/markdown-themes/__MarkdownTestmplatePage.cshtml*
 --MarkdownTheme         github*|dharkan|medium|blackout|westwind
 --MarkdownSyntaxTheme   github*|vs2015|vs|monokai|monokai-sublime|twilight
-
 
 Configuration options can be specified in:
 
 * Command Line options as shown above
-* Logical Command Line Flags for true can be set with -UseSsl or -UseRazor
-* Environment Variables with `LiveReloadServer_` prefix. Example: 'LiveReloadServer_Port'
-* You use -UseSsl without True or False to set a logical value to true
+* Logical Command Line Flags for true can be set like: -UseSsl or -UseRazor or -OpenBrowser
+* Environment Variables with 'LIVERELOADSERVER_' prefix. Example: 'LIVERELOADSERVER_PORT'
 
 Examples:
 ---------
@@ -144,17 +143,17 @@ LiveReloadServer --WebRoot "c:\temp\My Site" --port 5500 -useSsl -useRazor --ope
 
 $env:LiveReloadServer_Port 5500
 $env:LiveReloadServer_WebRoot c:\mySites\Site1\Web
-LiveReloadServer -UseMarkdown -UseRazor
+LiveReloadServer
 ```
 
 You can also use Environment variables to set these save options by using a `LiveReloadServer_` prefix:
 
 ```ps
-$env:LiveReload_Port 5500
+$env:LiveReloadServer_Port 5500
 LiveReload
 ```
 ## Static Files
-The Web Server automatically serves all static files and Live Reload is automatically enabled unless explicitly turned off. HTML pages, CSS and scripts, and any other specific files with extensions you add are autoamtically reloaded whenever you make a change to the files.
+The Web Server automatically serves all static files and Live Reload is automatically enabled unless explicitly turned off. HTML pages, CSS and scripts, and any other specific files with extensions you add are automatically reloaded whenever you make a change to the files.
 
 You can specify explicit file extensions to monitor using the `--Extensions` switch. The default is: `".cshtml,.css,.js,.htm,.html,.ts,.md"`.
 
@@ -195,7 +194,7 @@ The template used for Markdown rendering is an MVC View template that is passed 
 You can override the template used by using the `--MarkdownPageTemplate` command line switch:
 
 ```ps
-LiveReloadServer --WebRoot ./website/site1 -UseMarkdown --MarkdownPageTemplate ~/MyMarkdownTemplate.cshtml
+LiveReloadServer ./website/site1 -UseMarkdown --MarkdownPageTemplate ~/MyMarkdownTemplate.cshtml
 ```
 
 > Note although you can completely replace the stock template, keep in mind that there's a bit of styling and scripts are required in order to render Markdown. For example, code snippets coloring needs a JavaScript library and text styling may require some custom CSS. It'll render without but it won't look pretty without a bit of styling.
@@ -423,6 +422,7 @@ Some things you can do that are useful:
 * Update a Copyright notice year with `2017-@DateTime.Now.Year`
 * Read authentication values
 * Check versions of files on disk to display version number for downloads
+* Implement Server Side SEO Friendly Page Routing
 * Download content from other Web sites to retrieve information or text
 
 All these things use intrinsic built-in features of .NET or ASP.NET which, while limited to generic functionality, are still very useful for simple scripting scenarios.
@@ -462,7 +462,7 @@ You can do this with:
 }
 ```
 
-or by starting with the `--FolderNotFoundFallbackPath=/index.html` command line switch. With this flag in place a URL like this:
+or by starting with the `--FolderNotFoundFallbackPath /index.html` command line switch. With this flag in place a URL like this:
 
 ```text
 https://albumviewer.west-wind.com/albums
@@ -472,38 +472,24 @@ If fired on the server automatically serves the content of `/index.html`. This a
 
 
 ## Running LiveReloadServer in a Web Server
-LiveReloadServer is essentially an ASP.NET Core application and as such can also run behind a live Web Server like IIS or nginX. LiveReloadServer is distributed as a `dotnet tool` or a standalone exe, but we also provide a hostable package you run like any other ASP.NET Core application. This can be useful if you need to simple Razor Page content or Markdown display features.
+If you are working strictly with static files on your Web site, there's no need to have a deploy LiveReloadServer. However, if you're using the dynamic features of the LiveReloadServer - RazorPages or Markdown Rendering - these features require that LiveReloadServer is available for processing requests on a production server.
+
+LiveReloadServer is an ASP.NET Core application and as such can also run behind a live Web Server like IIS or nginX. LiveReloadServer is distributed as a `dotnet tool` or a standalone exe, but we also provide a hostable package you run like any other ASP.NET Core application. This can be useful if you need to simple Razor Page content or Markdown display features.
 
 To do this:
 
-* Download the integrated server [binaries from GitHub](https://github.com/RickStrahl/Westwind.AspnetCore.LiveReload/raw/master/LiveReloadServer/LiveReloadWebServer.zip)
+* Download the integrated server [binaries from GitHub](https://github.com/RickStrahl/LiveReloadServer/blob/master/LiveReloadWebServer-Hosted.zip)
 * Install the files into a new folder
-* Use Environment variables or config settings  
-to specify the folder to serve and options to use
-
-**Note**: You can also run the server binaries **directly from the NuGet Package Folder** if you want to dig deep:
-
- ```xml
- <aspNetCore processPath="dotnet" hostingModel="inprocess"
-   arguments="C:\Users\rick\.dotnet\tools\.store\livereloadserver\0.2.15.2\livereloadserver\0.2.15.2\tools\netcoreapp3.1\any\LiveReloadServer.dll" 
-   stdoutLogEnabled="true" stdoutLogFile=".\logs\stdout">
-```   
-
+* Configure Web site's `web.config` to point .NET Core binary
 
 ### Installing on IIS
-Let's go through this with IIS which uses the ASP.NET Core Hosting module. Make sure whatever server you're using .NET Core 3.1 or later is installed. On IIS you need Windows Server Hosting package or SDK.
+Let's go through this with IIS which uses the ASP.NET Core Hosting module. Make sure whatever server you're using .NET Core 5.x or later is installed. On IIS you need [ASP.NET Core Windows Server Hosting Bundle](https://dotnet.microsoft.com/download/dotnet/5.0).
 
-Start by downloading the hosted binaries and unzip into a folder. I'm going to use:
-
-```txt
-c:\web sites\antitrustalbum
-```
-
-You should end up with two folders: Your Web site content and the Server binaries which are separate (although you can put them into the same folder structure if you like).
+Start by downloading the hosted binaries and unzip into a folder - I use `LiveReloadServer` in my `Web Sites` folder. The Web Site goes into a separate folder `anti-trust.rocks` using only the static files that make up the Web site's content.
 
 ![](Assets/HostedServerAndWebSiteFolders.png)
 
-Next set up a new Web Site (or virtual in IIS) and point it at this new folder. You'll want to use a separate Application Pool as IIS can only host a single .NET Core app in an Application Pool. Remove ASP.NET Framework support from the AppPool to reduce overhead.
+Next set up a new Web Site (or virtual in IIS) and point it at this new folder. You'll want to use a separate Application Pool as IIS can only host a single .NET Core app in an Application Pool. Remove ASP.NET Framework support from the Application Pool to reduce overhead.
 
 ![](Assets/IISSiteFolder.png)
 
@@ -517,30 +503,20 @@ Finally you need to configure the site to point at the Web folder and set any cu
       <handlers>
         <add name="aspNetCore" path="*" verb="*" modules="AspNetCoreModuleV2" resourceType="Unspecified" />
       </handlers>
-      <aspNetCore processPath="dotnet" arguments="../AntiTrustServer/LiveReloadServer.dll" stdoutLogEnabled="true" stdoutLogFile=".\logs\stdout" hostingModel="inprocess">
+      <aspNetCore processPath="dotnet" arguments="../LiveReloadServer/LiveReloadServer.dll" stdoutLogEnabled="true" stdoutLogFile=".\logs\stdout" hostingModel="inprocess">
         <environmentVariables>
-          <environmentVariable name="ASPNET_ENVIRONMENT" value="Development" />
+          <environmentVariable name="ASPNET_ENVIRONMENT" value="Production" />
           <environmentVariable name="LIVERELOADSERVER_WEBROOT" value="C:\Web Sites\anti-trust.rocks" />
           <environmentVariable name="LIVERELOADSERVER_USERAZOR" value="True" />          
           <environmentVariable name="LIVERELOADSERVER_USELIVERELOAD" value="False" /> 
         </environmentVariables>
       </aspNetCore>
-
     </system.webServer>
   </location>
 </configuration>
 ```
 
 Notice that I'm using a relative path for Server application - you can also specify a full path if necessary. Note that multiple Web sites can share the single server instance.
-
-
-
-
-
-
-
-
-
 
 ## More Features?
 The primary goal of LiveReload server is as a local server, not a hosted do-it-all solution. Other features may be explored but at the moment the feature set is well suited to the stated usage scenario I intended it for.
@@ -553,40 +529,4 @@ If that's of interest to you or you want to contribute, please file an issue to 
 
 ## Version History
 
-### Version 0.2.22
-
-* **Add `-openEditor` and `--editorLaunchCommand` Config Options**  
-The new `-openEditor` command allows opening an editor when a site is opened. This is useful if you just start working on a site and you can both launch the site and the editor at the same time. By default VS Code is launched via `code "%1"` which can be overridden with a custom editor launch command.
-
-* **Externalized Script**  
-Remove inline script from rendered HTML content pages and use `<script>` tag to pull in the JavaScript code to reload the page from script.
-
-* **Improved WebSocket Disconnected Handling**  
-Updated client code to more cleanly handle WebSocket disconnected errors by polling for reconnections less frequently.
-
-### Version 0.2.4
-
-* **Add --Host Configuration Value**  
-You can now specify the host IP Address or domain to bind the server to. Previously the server was bound to localhost which didn't allow for external network access. Using `--Host` as a parameter or configuration value you can now specify `0.0.0.0` for example to bind to all IP addresses and allow external access. The default is still `localhost` but you can now explicitly add external access via `--Host 0.0.0.0` or using a specific IP Address to bind to.
-
-### Version 0.2.3
-
-* **Add Blazor Viewing Support**  
-Added support for reading custom extensions like the required `.dll` extension for .NET assemblies in Blazor applications. Also added Refresh Fallback support for client side navigation URLs by allowing to redirect to the `/index.html` page on the client for server side refreshes.
-
-### Version 0.2.2
-
-* **Add Markdown File Support**  
-Added support for optionally serving Markdown files as HTML from the local site. Markdown files are loaded as `.md`,`.markdown`, `.mkdown` or as extensionless URLs from the Web site and can participate in Live Reload functionality.
-
-* **Add Console Application Icon** 
-Added Console Application icon so application is easier to identify in the Task list and when running on the Desktop. 
-
-* **Update the Sample Application**  
-Updated the .NET Core 3.1 Sample application to properly display reference links. Add Markdown Example.
-
-* **Fix: Server Timeout not respected**   
-The server timeout was not respected previously and has been fixed to properly wait for the configured period before refreshing the browser instance.
-
-* **Fix: Command Line Parsing for Logical Switches**  
-Fix issue with logical switches like `-UseSSL` which were not properly working when configuration was present in the configuration file. Settings of the command line now properly override configuration setting in the config file.
+[Live Reload Server Change Log](Changelog.md)
