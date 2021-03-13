@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Extensions.Configuration;
+using Westwind.Utilities;
 
 namespace LiveReloadServer
 {
@@ -161,8 +162,10 @@ namespace LiveReloadServer
             if (string.IsNullOrEmpty(WebRoot))
                 WebRoot = Environment.CurrentDirectory;
             else
-                WebRoot = Path.GetFullPath(WebRoot, Environment.CurrentDirectory);
-
+            {
+                var expandedPath = FileUtils.ExpandPathEnvironmentVariables(WebRoot);
+                WebRoot = Path.GetFullPath(expandedPath, Environment.CurrentDirectory);
+            }
             
             Port = Helpers.GetIntegerSetting("Port", Configuration, Port);
             UseSsl = Helpers.GetLogicalSetting("UseSsl", Configuration, UseSsl);
