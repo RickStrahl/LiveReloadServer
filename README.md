@@ -41,7 +41,7 @@ You can grab the compiled tool as:
   choco install LiveReloadWebServer
   ```
 * [Self Contained Windows Executable Folder (zipped)](https://github.com/RickStrahl/Westwind.AspnetCore.LiveReload/raw/master/LiveReloadServer/LiveReloadWebServer-SelfContained.zip) <small>(windows)</small>
-* [Hostable Package (requires runtime installed)]()
+* [Hostable Package (requires runtime installed)](https://github.com/RickStrahl/LiveReloadServer/blob/master/LiveReloadServer-Hosted.zip)
 
 
 > All three versions have the same features and interface, just the delivery mechanism and the executable name is different. The EXE uses `LiveReloadWebServer` while the Dotnet Tool uses `LiveReloadServer`.
@@ -478,7 +478,7 @@ LiveReloadServer is an ASP.NET Core application and as such can also run behind 
 
 To do this:
 
-* Download the integrated server [binaries from GitHub](https://github.com/RickStrahl/LiveReloadServer/blob/master/LiveReloadWebServer-Hosted.zip)
+* Download the integrated server [binaries from GitHub](https://github.com/RickStrahl/LiveReloadServer/blob/master/LiveReloadServer-Hosted.zip)
 * Install the files into a new folder
 * Configure Web site's `web.config` to point .NET Core binary
 
