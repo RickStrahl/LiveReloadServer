@@ -30,6 +30,8 @@ $content = $content.Replace("{{version}}",$version)
 # Write-Host $content
 out-file -filepath $chocoNuSpec.Replace(".template","")  -inputobject $content -Encoding utf8
 
+Exit-PSHostProcess
+
 # Commit  current changes and add a tag
 git add --all
 
