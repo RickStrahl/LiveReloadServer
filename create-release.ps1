@@ -1,7 +1,6 @@
-$releaseFolder = "$PSScriptRoot\."
+$releaseFolder = "$PSScriptRoot\build\SelfContained"
 $releaseFile = "$releaseFolder\LiveReloadWebServer.exe"
 $releaseZip = "$releaseFolder\LiveReloadWebServer.zip"
-$hostedZip = "$releaseFolder\LiveReloadWebServer-Hosted.zip"
 
 $rawVersion = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($releaseFile).FileVersion
 
@@ -9,12 +8,6 @@ $version = $rawVersion.Trim().Replace(".0","")
 "Writing Version File for: $version ($rawVersion)"
 
 $downloadUrl = "https://github.com/RickStrahl/LiveReloadServer/raw/$version/LiveReloadWebServer.zip"               
-
-# Create Release Zip file
-7z a -tzip $releaseZip $releaseFile ".\LiveReloadWebServer.json" 
-
-# Created Hosted Zip file
-7z a -tzip $hostedZip "$releaseFolder\LiveReloadServer\bin\release\netcoreapp3.1\publish\*.*" -r
 
 # Write out Verification.txt
 $sha = get-filehash -path $releaseZip -Algorithm SHA256  | select -ExpandProperty "Hash"

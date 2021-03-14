@@ -34,7 +34,7 @@ You can grab the compiled tool as:
 
 * [Dotnet Tool](https://www.nuget.org/packages/LiveReloadServer/)  <small>(windows, mac, linux)</small>  
   ```ps
-  dotnet tool install -g LiveReloadServer`
+  dotnet tool install -g LiveReloadServer
   ```
 * [Chocolatey Package](https://chocolatey.org/packages/LiveReloadWebServer) <small>(windows)</small>   
   ```ps

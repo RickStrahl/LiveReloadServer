@@ -2,11 +2,11 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>LiveReloadWebServer</id>
-        <version>0.2.20</version>
+        <version>1</version>
         <title>Live Reload Local Web Server for Windows</title>
         <authors>Rick Strahl,West Wind Technologies</authors>
         <owners>West Wind Technologies</owners>
-        <licenseUrl>https://github.com/RickStrahl/LiveReloadServer/blob/master/LICENSE.MD</licenseUrl>
+        <licenseUrl>https://github.com/RickStrahl/LiveReloadServer/LICENSE.MD</licenseUrl>
         <projectUrl>https://github.com/RickStrahl/LiveReloadServer</projectUrl>
         <projectSourceUrl>https://github.com/RickStrahl/LiveReloadServer</projectSourceUrl>
         <packageSourceUrl>https://github.com/RickStrahl/LiveReloadServer/tree/master/Chocolatey</packageSourceUrl>

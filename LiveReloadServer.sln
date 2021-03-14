@@ -7,8 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiveReloadServer", "LiveRel
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{C94D1360-A854-4834-8B3A-A9BC29A4F14A}"
 	ProjectSection(SolutionItems) = preProject
+		build-chocolatey.ps1 = build-chocolatey.ps1
+		build-exe.ps1 = build-exe.ps1
+		build-hosted.ps1 = build-hosted.ps1
 		Changelog.md = Changelog.md
+		create-release.ps1 = create-release.ps1
 		LICENSE.MD = LICENSE.MD
+		Chocolatey\LiveReloadWebServer.template.nuspec = Chocolatey\LiveReloadWebServer.template.nuspec
 		publish-nuget.ps1 = publish-nuget.ps1
 		README.md = README.md
 	EndProjectSection

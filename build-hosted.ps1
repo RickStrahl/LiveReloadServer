@@ -19,15 +19,19 @@
 
 
 # Single File Exe output
-dotnet publish -c Release -o ./Hosted
+dotnet publish -c Release -o ./build/Hosted
 copy ./LiveReloadServer/LiveReloadWebServer.json ./LiveReloadWebServer.json
 
 # Make sure hosted project gets built (in default project output folder)
-dotnet publish -c Release /p:PublishSingleFile=false /p:PublishTrimmed=false
+dotnet publish -c Release /p:PublishSingleFile=false /p:PublishTrimmed=false 
 
-Move-Item ./SingleFileExe/LiveReloadServer.exe ./LiveReloadWebServer.exe -force
+#Move-Item ./SingleFileExe/LiveReloadServer.exe ./LiveReloadWebServer.exe -force
 #remove-item ./SingleFileExe -Recurse -Force
 
 
 # Sign exe
-.\signtool.exe sign /v /n "West Wind Technologies"   /tr "http://timestamp.digicert.com" /td SHA256 /fd SHA256 ".\LiveReloadWebServer.exe"
+.\signtool.exe sign /v /n "West Wind Technologies"   /tr "http://timestamp.digicert.com" /td SHA256 /fd SHA256 ".\build\Hosted\LiveReloadServer.exe"
+
+
+del  ".\LiveReloadServer-Hosted.zip"
+7z a -tzip -r ".\LiveReloadServer-Hosted.zip" "./build/Hosted/*.*"
