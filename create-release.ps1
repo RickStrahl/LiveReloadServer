@@ -4,7 +4,7 @@ $releaseZip = "$releaseFolder\LiveReloadWebServer.zip"
 
 $rawVersion = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($releaseFile).FileVersion
 
-$version = "1.0" # $rawVersion.Trim().Replace(".0","") 
+$version = $rawVersion.Trim().Replace(".0","") 
 "Writing Version File for: $version ($rawVersion)"
 
 $downloadUrl = "https://github.com/RickStrahl/LiveReloadServer/raw/$version/LiveReloadWebServer-SelfContained.zip"               
