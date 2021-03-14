@@ -7,7 +7,7 @@ $rawVersion = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($releaseFile)
 $version = $rawVersion.Trim().Replace(".0","") 
 "Writing Version File for: $version ($rawVersion)"
 
-$downloadUrl = "https://github.com/RickStrahl/LiveReloadServer/raw/$version/LiveReloadWebServer.zip"               
+$downloadUrl = "https://github.com/RickStrahl/LiveReloadServer/raw/$version/LiveReloadWebServer-SelfContained.zip"               
 
 # Write out Verification.txt
 $sha = get-filehash -path $releaseZip -Algorithm SHA256  | select -ExpandProperty "Hash"
