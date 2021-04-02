@@ -1,7 +1,13 @@
 ﻿# Live Reload Server Change Log
 
-### Version 1.0
+### Version 1.1 
+<small>ongoing release</small>
 
+* **Add `BrowserUrl` Configuration Switch**  
+You can now optionally specify an explicit startup URL when launching LiveReloadServer. The url specified in `BrowserUrl` can either be absolute (`https://localhost:5200/test.html` or a relative site path (ie. `/test.html` or `/subfolder/test.thml`). If not specified the root URL site URL is used.
+
+### Version 1.0
+<small>March 8, 2021</small>
 * **Environment Variable Path Fixups**  
 The WebRoot path can now include Environment variables as well as root path `~` markers to resolve to a fully qualified launch path.
 

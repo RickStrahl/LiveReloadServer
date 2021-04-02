@@ -184,6 +184,7 @@ Syntax:
 
 --ShowUrls               True|False*
 --OpenBrowser            True*|False
+--BrowserUrl             optional startup URL (relative or absolute)
 --OpenEditor             True|False*
 --EditorLaunchCommand    ""code \""%1\""""*
 --DetailedErrors         True*|False

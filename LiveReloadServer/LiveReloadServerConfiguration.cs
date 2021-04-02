@@ -67,6 +67,13 @@ namespace LiveReloadServer
 
 
         /// <summary>
+        /// Optional browser URL that can be used to open an explict page in the browser.
+        /// Can be actual URL or relative (ie `/testpage.html`)
+        /// </summary>
+        public string BrowserUrl {get; set; } = null;
+
+
+        /// <summary>
         /// If true starts up the configured editor. Default editor is Vs Code
         /// </summary>
         public bool OpenEditor {get; set; } = false;
@@ -178,6 +185,7 @@ namespace LiveReloadServer
             ShowUrls = Helpers.GetLogicalSetting("ShowUrls", Configuration, ShowUrls);
             
             OpenBrowser = Helpers.GetLogicalSetting("OpenBrowser", Configuration, OpenBrowser);
+            BrowserUrl = Helpers.GetStringSetting("BrowserUrl", Configuration, BrowserUrl);
             OpenEditor =Helpers.GetLogicalSetting("OpenEditor", Configuration, OpenEditor);
             EditorLaunchCommand = Helpers.GetStringSetting("EditorLaunchCommand", Configuration, EditorLaunchCommand);
 
@@ -213,6 +221,7 @@ namespace LiveReloadServer
                     DefaultFiles = DefaultFiles.Trim(',') + ",README.md,index.md";
             }
 
+           
             return true;
         }
 

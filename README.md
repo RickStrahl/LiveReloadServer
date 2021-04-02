@@ -114,6 +114,7 @@ LiveReloadServer <path> <options>
 
 --ShowUrls               True|False*
 --OpenBrowser            True*|False
+--BrowserUrl             optional startup url (site relative or absolute)
 --OpenEditor             True|False*
 --EditorLaunchCommand    "code \"%1\""*
 --DetailedErrors         True*|False
@@ -156,6 +157,8 @@ LiveReload
 The Web Server automatically serves all static files and Live Reload is automatically enabled unless explicitly turned off. HTML pages, CSS and scripts, and any other specific files with extensions you add are automatically reloaded whenever you make a change to the files.
 
 You can specify explicit file extensions to monitor using the `--Extensions` switch. The default is: `".cshtml,.css,.js,.htm,.html,.ts,.md"`.
+
+`BrowserUrl` is an optional flag that allows you to specify a specific URL to open on launch. By default the root site is opened - by specifying a URL you can open a specific page. The `BrowserUrl` can be an absolute URL (`https://localhost:5200/test.html`) or a relative URL (`/test.html` or `test.html` or `/subfolder/test.html`).
 
 ## Markdown File Rendering
 You can enable Markdown support in this server by setting `--UseMarkdown True`. This serves HTML content directly off any `.md` or `.markdown` files in the Web root. The server provides default templates for the HTML styling, but you can override the rendering behavior with a **custom Razor template** that provides the chrome around the rendered Markdown, additional styling and syntax coloring.

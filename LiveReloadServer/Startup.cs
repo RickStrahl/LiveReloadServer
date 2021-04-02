@@ -271,7 +271,22 @@ namespace LiveReloadServer
 
             if (ServerConfig.OpenBrowser)
             {
-                Helpers.OpenUrl(ServerConfig.GetHttpUrl());
+                var rootUrl = ServerConfig.GetHttpUrl();
+
+                if (!string.IsNullOrEmpty(ServerConfig.BrowserUrl))
+                {
+                    if (ServerConfig.BrowserUrl.StartsWith("http://") || ServerConfig.BrowserUrl.StartsWith("https://"))
+                        rootUrl = ServerConfig.BrowserUrl;
+                    else
+                    {
+                        var url = "/" + ServerConfig.BrowserUrl.TrimStart('/'); // force leading slash
+                        rootUrl = rootUrl.TrimEnd('/') + url
+                                .Replace("~", "")
+                                .Replace("\\","/")
+                                .Replace("//", "/");
+                    }
+                }
+                Helpers.OpenUrl(rootUrl);
             }
 
             if (ServerConfig.OpenEditor)
