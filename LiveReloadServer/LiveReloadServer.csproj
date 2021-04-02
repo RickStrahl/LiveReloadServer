@@ -22,13 +22,19 @@
     <Copyright>© Rick Strahl - West Wind Technologies, 2019-2021</Copyright>
 
     <Description>
-      LiveReloadServer provides a generic Web Server with configurable Live Reload functionality for static files, Markdown files and loose, self-contained Razor Pages in any local folder. Simply point the `--webroot` at a folder or start it out of a Web folder and go. Commandline options let you customize the path, port, add Razor and Markdown support, add extensions to monitor and more. Live Reload provides the ability to change static, Markdown and Razor files and automatically refresh the active page in the browser when changed.
+      LiveReloadServer is a local, static file Web Server with optional, built-in Live Reload functionality, Markdown rendering support and the ability to run self-contained Razor Pages out of any local folder. Simply point at a local folder with `--webroot` and start serving the folder as a Web site. 
+      
+      Commandline options let you customize the path, port, add Razor and Markdown features support, add extensions to monitor and more. Convenience features can launch a browser, optionally launch an editor and can start on a specific page.
+      
+      Live Reload lets you change any content, code and stying files and immediately see the content refreshed in a Web browser - very useful for local development tasks or editing content sites.
+
+      This tool also provides an ASP.NET Core runtime, that can be hosted on a server to provide the dynamic dynamic features used by the Razor and Markdown functionality. This is useful for mostly content driven WebSites that a need a little extra functionality beyond plain static content. 
 
       LiveReloadServer works with:
 
       * Static HTML, CSS, JavaScript etc. files
       * Loose, single-file Razor Pages including assembly dependencies
-      * Markdown Files - .md files rendered to HTML with Theming and Page Template
+      * Markdown Files - .md files rendered to HTML with customizable themes and page template
       * Options to configure extensions to monitor, port, folder and more.
 
     </Description>
