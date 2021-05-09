@@ -99,6 +99,14 @@ namespace LiveReloadServer
 
                     var serverConfig = new LiveReloadServerConfiguration();
                     serverConfig.LoadFromConfiguration(config);
+
+                    if (!serverConfig.ShowConsoleOutput)
+                    {
+                        Console.SetError(TextWriter.Null);
+                        Console.SetOut(TextWriter.Null);
+                    }
+
+
                     var webRoot = serverConfig.WebRoot;
                     if (!Directory.Exists(webRoot))
                     {
@@ -110,7 +118,8 @@ namespace LiveReloadServer
                         .ConfigureLogging(logging =>
                         {
                             logging.ClearProviders();
-                            logging.AddConsole();
+                            if (serverConfig.ShowConsoleOutput)
+                                logging.AddConsole();
                             logging.AddConfiguration(config);
                         })
                         .UseConfiguration(config);
@@ -188,6 +197,7 @@ Syntax:
 --OpenEditor             True|False*
 --EditorLaunchCommand    ""code \""%1\""""*
 --DetailedErrors         True*|False
+--ShowConsoleOutput      True*|False (turn off for production)
 --Environment            Production*|Development
 
 Razor Pages:

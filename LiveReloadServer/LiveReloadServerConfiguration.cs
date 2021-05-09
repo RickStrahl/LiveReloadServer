@@ -88,6 +88,16 @@ namespace LiveReloadServer
         /// </summary>
         public bool ShowUrls {get; set; } = true;
 
+
+        /// <summary>
+        /// Console output should be turned off for production
+        /// </summary>
+        public bool ShowConsoleOutput { get; set; } = true;
+
+        /// <summary>
+        /// Determines if detailed error information is shown in
+        /// the console display.
+        /// </summary>
         public bool DetailedErrors {get; set; } = true;
 
         #region Markdown Settings
@@ -183,6 +193,8 @@ namespace LiveReloadServer
             UseLiveReload = Helpers.GetLogicalSetting("UseLiveReload", Configuration, UseLiveReload);
             UseRazor = Helpers.GetLogicalSetting("UseRazor", Configuration);
             ShowUrls = Helpers.GetLogicalSetting("ShowUrls", Configuration, ShowUrls);
+            ShowConsoleOutput = Helpers.GetLogicalSetting("ShowConsoleOutput", Configuration, ShowConsoleOutput);
+
             
             OpenBrowser = Helpers.GetLogicalSetting("OpenBrowser", Configuration, OpenBrowser);
             BrowserUrl = Helpers.GetStringSetting("BrowserUrl", Configuration, BrowserUrl);

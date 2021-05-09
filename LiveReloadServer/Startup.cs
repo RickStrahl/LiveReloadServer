@@ -15,6 +15,7 @@ using Westwind.AspNetCore.LiveReload;
 using Westwind.AspNetCore.Markdown;
 using Westwind.Utilities;
 using Microsoft.Extensions.FileProviders.Physical;
+using Microsoft.AspNetCore.Hosting;
 
 namespace LiveReloadServer
 {
@@ -40,8 +41,6 @@ namespace LiveReloadServer
         {
             ServerConfig = new LiveReloadServerConfiguration();
             ServerConfig.LoadFromConfiguration(Configuration);
-
-            
 
             if (ServerConfig.UseLiveReload)
             {
@@ -69,11 +68,6 @@ namespace LiveReloadServer
             {
                 services.AddMarkdown(config =>
                 {
-
-                    //var templatePath = Path.Combine(WebRoot, "markdown-themes/__MarkdownPageTemplate.cshtml");
-                    //if (!File.Exists(templatePath))
-                    //    templatePath = Path.Combine(Environment.CurrentDirectory,"markdown-themes/__MarkdownPageTemplate.cshtml");
-                    //else
                     var templatePath = ServerConfig.MarkdownTemplate;
                     templatePath = templatePath.Replace("\\", "/");
 
@@ -141,7 +135,7 @@ namespace LiveReloadServer
 
             if (ServerConfig.UseMarkdown)
                 app.UseMarkdown();
-            
+
             // add static files to WebRoot and our templates folder which provides markdown templates
             // and potentially other library resources in the future
 
@@ -150,7 +144,7 @@ namespace LiveReloadServer
 
             var extensionProvider = new FileExtensionContentTypeProvider();
             extensionProvider.Mappings.Add(".dll", "application/octet-stream");
-            
+
             if (ServerConfig.AdditionalMimeMappings != null)
             {
                 foreach (var map in ServerConfig.AdditionalMimeMappings)
@@ -199,8 +193,48 @@ namespace LiveReloadServer
             //    });
             //}
             //app.Use(FallbackMiddlewareHandler);
+            
+            DisplayServerSettings(env);
 
+            if (ServerConfig.OpenBrowser)
+            {
+                var rootUrl = ServerConfig.GetHttpUrl();
 
+                if (!string.IsNullOrEmpty(ServerConfig.BrowserUrl))
+                {
+                    if (ServerConfig.BrowserUrl.StartsWith("http://") || ServerConfig.BrowserUrl.StartsWith("https://"))
+                        rootUrl = ServerConfig.BrowserUrl;
+                    else
+                    {
+                        var url = "/" + ServerConfig.BrowserUrl.TrimStart('/'); // force leading slash
+                        rootUrl = rootUrl.TrimEnd('/') + url
+                                .Replace("~", "")
+                                .Replace("\\", "/")
+                                .Replace("//", "/");
+                    }
+                }
+                Helpers.OpenUrl(rootUrl);
+            }
+
+            if (ServerConfig.OpenEditor)
+            {
+                string cmdLine = null;
+                try
+                {
+                    cmdLine = ServerConfig.EditorLaunchCommand.Replace("%1", ServerConfig.WebRoot);
+                    Westwind.Utilities.ShellUtils.ExecuteCommandLine(cmdLine);
+                }
+                catch (Exception ex)
+                {
+                    ColorConsole.WriteError("Failed to launch editor with: " + cmdLine);
+                    ColorConsole.WriteError("-- " + ex.Message);
+                }
+
+            }
+        }
+
+        private void DisplayServerSettings(IWebHostEnvironment env)
+        {
             string headerLine = new string('-', Helpers.AppHeader.Length);
             Console.WriteLine(headerLine);
             ColorConsole.WriteLine(Helpers.AppHeader, ConsoleColor.Yellow);
@@ -242,9 +276,9 @@ namespace LiveReloadServer
             Console.WriteLine($"Show Urls    : {ServerConfig.ShowUrls}");
             Console.Write($"Open Browser : {ServerConfig.OpenBrowser}");
 
-            Console.WriteLine($"Default Pages: {ServerConfig.DefaultFiles}");
+            Console.WriteLine($"   Default Pages: {ServerConfig.DefaultFiles}");
             Console.WriteLine($"Detail Errors: {ServerConfig.DetailedErrors}");
-            ColorConsole.WriteEmbeddedColorLine($"Environment  : [darkgreen]{env.EnvironmentName}[/darkgreen]  {System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}" ) ; 
+            ColorConsole.WriteEmbeddedColorLine($"Environment  : [darkgreen]{env.EnvironmentName}[/darkgreen]  {System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}");
 
             Console.WriteLine();
             ColorConsole.Write(Helpers.ExeName + " --help", ConsoleColor.DarkCyan);
@@ -258,7 +292,7 @@ namespace LiveReloadServer
             foreach (var assmbly in LoadedPrivateAssemblies)
             {
                 var fname = Path.GetFileName(assmbly);
-                ColorConsole.WriteEmbeddedColorLine("Additional Assembly: [darkgreen]" + fname + "[/darkgreen]" );
+                ColorConsole.WriteEmbeddedColorLine("Additional Assembly: [darkgreen]" + fname + "[/darkgreen]");
             }
 
             foreach (var assmbly in FailedPrivateAssemblies)
@@ -268,46 +302,7 @@ namespace LiveReloadServer
             }
 
             Console.ForegroundColor = oldColor;
-
-            if (ServerConfig.OpenBrowser)
-            {
-                var rootUrl = ServerConfig.GetHttpUrl();
-
-                if (!string.IsNullOrEmpty(ServerConfig.BrowserUrl))
-                {
-                    if (ServerConfig.BrowserUrl.StartsWith("http://") || ServerConfig.BrowserUrl.StartsWith("https://"))
-                        rootUrl = ServerConfig.BrowserUrl;
-                    else
-                    {
-                        var url = "/" + ServerConfig.BrowserUrl.TrimStart('/'); // force leading slash
-                        rootUrl = rootUrl.TrimEnd('/') + url
-                                .Replace("~", "")
-                                .Replace("\\","/")
-                                .Replace("//", "/");
-                    }
-                }
-                Helpers.OpenUrl(rootUrl);
-            }
-
-            if (ServerConfig.OpenEditor)
-            {
-                string cmdLine = null;
-                try
-                {
-                    cmdLine = ServerConfig.EditorLaunchCommand.Replace("%1", ServerConfig.WebRoot);
-                    Westwind.Utilities.ShellUtils.ExecuteCommandLine(cmdLine);
-                }
-                catch(Exception ex)
-                {
-                    ColorConsole.WriteError("Failed to launch editor with: " + cmdLine);
-                    ColorConsole.WriteError("-- " + ex.Message);
-                }
-
-            }
         }
-
-
-
 
         public static Type GetTypeFromName(string TypeName)
         {

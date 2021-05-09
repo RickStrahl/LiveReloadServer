@@ -37,7 +37,7 @@
 
     "LiveReloadServer - Anti-Trust": {
       "commandName": "Project",
-      "commandLineArgs": "\"~/OneDrive/Web Sites/anti-trust.rocks\" -useRazor -useSsl",
+      "commandLineArgs": "\"~/DropBox/Web Sites/anti-trust.rocks\" -useRazor -useMarkdown -useSsl --openEditor False --MarkdownTheme blackout",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
