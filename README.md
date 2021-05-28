@@ -40,7 +40,7 @@ You can grab the compiled tool as:
   ```ps
   choco install LiveReloadWebServer
   ```
-* [Self Contained Windows Executable Folder (zipped)](https://github.com/RickStrahl/Westwind.AspnetCore.LiveReload/raw/master/LiveReloadServer/LiveReloadWebServer-SelfContained.zip) <small>(windows)</small>
+* [Self Contained Windows Executable Folder (zipped)](https://github.com/RickStrahl/LiveReloadServer/raw/master/LiveReloadWebServer-SelfContained.zip) <small>(windows)</small>
 * [Hostable Package (requires runtime installed)](https://github.com/RickStrahl/LiveReloadServer/blob/master/LiveReloadServer-Hosted.zip)
 
 
