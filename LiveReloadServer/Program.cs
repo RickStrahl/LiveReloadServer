@@ -195,7 +195,8 @@ Syntax:
 --OpenBrowser            True*|False
 --BrowserUrl             optional startup URL (relative or absolute)
 --OpenEditor             True|False*
---EditorLaunchCommand    ""code \""%1\""""*
+--EditorLaunchCommand    ""code \""%1\""""* (win)
+                         ""open -a \""Visual Studio Code\"" \""%1\""""* (mac)
 --DetailedErrors         True*|False
 --ShowConsoleOutput      True*|False (turn off for production)
 --Environment            Production*|Development

@@ -5,7 +5,7 @@
     <!-- Exe with Razor Support -->
     <!--<DefineConstants>USE_RAZORPAGES</DefineConstants>-->
     <!-- Build _PACKAGE or _EXE with Razor Support -->
-    <DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE</DefineConstants>
+    <DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE;</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;</DefineConstants>

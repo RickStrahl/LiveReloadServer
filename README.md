@@ -116,7 +116,8 @@ LiveReloadServer <path> <options>
 --OpenBrowser            True*|False
 --BrowserUrl             optional startup url (site relative or absolute)
 --OpenEditor             True|False*
---EditorLaunchCommand    "code \"%1\""*
+--EditorLaunchCommand    "code \"%1\""* (Win) or 
+                         "open -a \"Visual Studio Code\" \"%1\""* (Mac)
 --DetailedErrors         True*|False
 --Environment            Production*|Development
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using Microsoft.Extensions.Configuration;
 using Westwind.Utilities;
 
@@ -81,7 +82,10 @@ namespace LiveReloadServer
         /// <summary>
         /// Launch Command used to launch an editor when using -OpenEditor switch
         /// </summary>
-        public string EditorLaunchCommand { get; set; } = "code \"%1\"";
+        public string EditorLaunchCommand { get; set; } = 
+            RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? 
+                "open -a \"Visual Studio Code\" \"%1\"" :
+                "code \"%1\"";  
 
         /// <summary>
         /// Determines whether the server console window shows the URLs
