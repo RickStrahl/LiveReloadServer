@@ -10,8 +10,8 @@
   "profiles": {
     "LiveReloadServer - SampleSite": {
       "commandName": "Project",
-      "commandLineArgs": "..\\..\\..\\..\\SampleSite --Host 0.0.0.0 -UseRazor -UseMarkdown  --CopyMarkdownResources False --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs --ShowUrls True",
-      "xcommandLineArgs": "--WebRoot ..\\..\\..\\..\\SampleSite --Host 0.0.0.0 -UseRazor -UseMarkdown  --CopyMarkdownResources False --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs --ShowUrls True",
+      "commandLineArgs": "../../../../SampleSite --Host 0.0.0.0 -UseRazor -UseMarkdown  --CopyMarkdownResources True --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs --ShowUrls True",
+      "xcommandLineArgs": "--WebRoot ../../../../SampleSite --Host 0.0.0.0 -UseRazor -UseMarkdown  --CopyMarkdownResources False --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs --ShowUrls True",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -37,7 +37,7 @@
 
     "LiveReloadServer - Anti-Trust": {
       "commandName": "Project",
-      "commandLineArgs": "\"~/DropBox/Web Sites/anti-trust.rocks\" -useRazor -useMarkdown -useSsl --openEditor False --MarkdownTheme blackout",
+      "commandLineArgs": "\"~/DropBox/Web Sites/anti-trust.rocks\" -useRazor -useMarkdown -useSsl --openEditor True --MarkdownTheme blackout",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
