@@ -6,6 +6,12 @@
 * **Add `BrowserUrl` Configuration Switch**  
 You can now optionally specify an explicit startup URL when launching LiveReloadServer. The url specified in `BrowserUrl` can either be absolute (`https://localhost:5200/test.html` or a relative site path (ie. `/test.html` or `/subfolder/test.thml`). If not specified the root URL site URL is used.
 
+* **Fix -OpenEditor Option for Mac**  
+Fix -OpenEditor on Mac for opening VS Code by default in the WebRoot folder if specified. Find a x-plat way to open both on Windows and Mac (and likely also on Linux).
+
+* **Better Handling of LiveReload when Pages are manually Refreshed**  
+Added better support for disconnecting WebSocket when a page is navigated away from or refreshed. In those scenarios sometimes the WebSocket would still fire after the page has already unloaded resulting in multiple immmediate requests on a reloaded page. This should remove some of the request clutter that can 'pile' up, especially when many windows are open at the same time with the same monitored site.
+
 ### Version 1.0
 <small>March 8, 2021</small>
 * **Environment Variable Path Fixups**  
