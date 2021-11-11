@@ -20,7 +20,7 @@
 
     <RazorCompileOnPublish>false</RazorCompileOnPublish>
 		<Title>Live Reload Server</Title>
-	  <Product>Live Reload Server</Product>
+	  <Product>Live ReloadServer</Product>
 	  <Authors>Rick Strahl</Authors>
     <Company>West Wind Technolologies</Company>
     <Copyright>© Rick Strahl - West Wind Technologies, 2019-2021</Copyright>
