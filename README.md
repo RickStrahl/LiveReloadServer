@@ -163,7 +163,7 @@ You can specify explicit file extensions to monitor using the `--Extensions` swi
 `BrowserUrl` is an optional flag that allows you to specify a specific URL to open on launch. By default the root site is opened - by specifying a URL you can open a specific page. The `BrowserUrl` can be an absolute URL (`https://localhost:5200/test.html`) or a relative URL (`/test.html` or `test.html` or `/subfolder/test.html`).
 
 ## Markdown File Rendering
-You can enable Markdown support in this server by setting `--UseMarkdown True`. This serves HTML content directly off any `.md` or `.markdown` files in the Web root. The server provides default templates for the HTML styling, but you can override the rendering behavior with a **custom Razor template** that provides the chrome around the rendered Markdown, additional styling and syntax coloring.
+You can enable Markdown support in this server by setting `-UseMarkdown`. This serves HTML content directly off any `.md` or `.markdown` files in the Web root. The server provides default templates for the HTML styling, but you can override the rendering behavior with a **custom Razor template** that provides the chrome around the rendered Markdown, additional styling and syntax coloring.
 
 This can be very useful if you are building documentation Web sites, so you can easily 'run' the documentation and see the Markdown rendered. Because `.md` files are effectively mapped you can even navigate naturally between Markdown pages if they are linked in the Markdown as is often the case for GitHub doc. 
 
@@ -267,16 +267,17 @@ If you stick with the default theming you can override:
 You can create any HTML and CSS to render your Markdown of course if you prefer. The `markdown-themes` themes can give you a good start of things that you typically have to support in Markdown content so they offer a good starting point for your own themes. Pick a theme and customize, or if you are keen - go ahead and start completely clean.
 
 ## Razor Files
-LiveReloadServer has **basic Razor Pages support**, which means you can create **single file, inline Razor content in Razor pages** as well as use Layout, Partials, ViewStart etc. in the traditional Razor Pages project hierarchy. As long as **all code** is inside of `.cshtml` Razor pages it should work.
+LiveReloadServer has **basic Razor Pages support**, which means you can create **single file, inline Razor content in Razor pages** as well as use Layout, Partials, ViewStart etc. in the traditional Razor Pages project hierarchy. As long as **all code is inside of `.cshtml` Razor pages** all of Razor's features are supported.
 
 > #### Slow First Time Razor Startup
 > First time Razor Page startup can be slow. Cold start requires the Razor Runtime to load the compiler and related resources so the very first page hit can take a few seconds before the Razor page renders. Subsequent page compilation is faster but still 'laggy' (few hundred ms), and previously compiled pages run very fast at pre-compiled speed.
 
 ### No Compiled C# Code
-However, there's **no support for code behind razor models** or  **loose C# .cs compilation** as runtime compilation outside of Razor is not supported. All dynamic compilable code has to live in Razor `.shtml` content.
+However, there's **no support for code behind razor models** or  **loose C# `.cs` file compilation** as runtime compilation outside of Razor is not supported. All dynamic compilable code has to live in Razor `.shtml` content.
 
 ### External Assembly Support
-You can however add **external assemblies** to support external code in your site, by adding final dependent assemblies (not NuGet packages!) into a `./privatebin` folder below your WebRoot. Assemblies in this folder will be loaded when the site is launched and become available for access in your Razor page code.
+It is possible to use external code by explicitly important external .NET assemblies.
+You can add **external assemblies** by adding final dependent assemblies (not NuGet packages!) into a `./privatebin` folder below your WebRoot folder. Assemblies in this folder will be loaded when the site is launched and become available for access in your Razor page code.
 
 ## Error Page Display
 There are two ways you can display error information:
