@@ -48,11 +48,11 @@ You can grab the compiled tool as:
 > All three versions have the same features and interface, just the delivery mechanism and the executable name is different. The EXE uses `LiveReloadWebServer` while the Dotnet Tool uses `LiveReloadServer`.
   
 ### What does it do?
-This tool is a generic **local Web Server** that you can start in **any folder** to provide simple and quick HTTP access to HTML and other Web resources. You can serve any static resources - HTML, CSS, JS etc. - as well as loose Razor Pages that don't require any code behind or dependent source code. 
+This tool is a generic **local Web Server** that you can start in **any folder** to provide simple and quick HTTP access to HTML and other Web resources. You can serve any static resources - HTML, CSS, JS etc. - as well as loose Razor Pages that don't require any code behind or dependent source code. There's also optional support for rendering Markdown Pages as themed HTML directly from Markdown files.
 
 Live Reload is enabled by default and checks for changes to common static files. If a checked file is changed, the browser's current page is refreshed. You can map additional extensions that trigger the LiveReload.
 
-You can also use this 'generic' server behind a live Web Server by using installing the main project as a deployed Web application.
+You can also use this 'generic' server behind a live Web Server (like IIS, nginx etc.) by installing the main project as a deployed Web application. A single installation can serve many Web sites using the same static, Razor and Markdown resources which can be ideal for mostly static content sites that need 'a little extra' beyond plain static pages (examples [here](https://anti-trust.rocks) and [here](https://markdownmonster.west-wind.com)).
 
 ### Requirements
 * Dotnet Tool: Dotnet Core SDK 3.0+
