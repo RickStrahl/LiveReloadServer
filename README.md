@@ -1,4 +1,4 @@
-﻿# Live Reload Web Server
+# Live Reload Web Server
 
 [![NuGet](https://img.shields.io/nuget/v/LiveReloadServer.svg)](https://www.nuget.org/packages/LiveReloadServer/)
 [![](https://img.shields.io/nuget/dt/LiveReloadServer.svg)](https://www.nuget.org/packages/LiveReloadServer/) &nbsp; &nbsp; &nbsp; &nbsp;
@@ -25,9 +25,10 @@ This server supports:
 * Available as: Dotnet Tool, Chocolatey Package, or Self-Contained (Windows) Download
 
 ### Requirements:
+Version 1.1 and later switches to .NET 6.0. Prior versions run on .NET 5.0. If you're using the .NET tool, `dotnet tool install -g` should pick the correct version for your SDK version (ie. 1.0.x for 5.0 and 1.1+  for 6.0).
 
-* Dotnet Tool: .NET 5.0 SDK
-* Hosting: .NET 5.0 Runtime or SDK
+* Dotnet Tool: .NET 6.0 or 5.0 SDK
+* Hosting: .NET 6.0 or 5.0 Runtime or SDK
 * Standalone Exe (Window): self-contained
 
 You can grab the compiled tool as:
