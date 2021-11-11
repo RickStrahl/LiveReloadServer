@@ -522,10 +522,12 @@ Finally you need to configure the site to point at the Web folder and set any cu
 </configuration>
 ```
 
-Notice that I'm using a relative path for Server application - you can also specify a full path if necessary. Note that multiple Web sites can share the single server instance.
+Notice that I'm using a relative path for Server application - you can also specify a full path if necessary. Note that multiple Web sites can share the single server instance, with each pointing their private `web.config` at the shared `LiveReloadServer` folder and `dll`.
 
 ## More Features?
-The primary goal of LiveReload server is as a local server, not a hosted do-it-all solution. Other features may be explored but at the moment the feature set is well suited to the stated usage scenario I intended it for.
+The primary goal of LiveReload server is as a local server, not a hosted do-it-all Web Server solution, but for 'static site with privileges' scenarios it works very well.
+
+Other features may be explored but at the moment the feature set is well suited to the stated usage scenario I intended it for.
 
 More features like dynamic compilation of loose C# code files at runtime might be possible in this generic server, but currently that has not been explored. Personally I think this goes against the simplicity of this solution. If you really have a need for complex code that requires breaking out of Razor Page script code, it's time to build a full ASP.NET Core RazorPages application instead of using this server. 
 
