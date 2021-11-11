@@ -12,13 +12,17 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>1.0.6</Version> 
+    <Version>1.0.8</Version> 
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <RazorCompileOnPublish>false</RazorCompileOnPublish>  
+
+		<RollForward>Major</RollForward>
+
+    <RazorCompileOnPublish>false</RazorCompileOnPublish>
+		<Title>Live Reload Server</Title>
+	  <Product>Live Reload Server</Product>
 	  <Authors>Rick Strahl</Authors>
     <Company>West Wind Technolologies</Company>
-    <Product>Westwind.AspnetCore.LiveReload</Product>
     <Copyright>© Rick Strahl - West Wind Technologies, 2019-2021</Copyright>
 
     <Description>
@@ -47,7 +51,6 @@
     <PackageIcon>icon.png</PackageIcon>    
     <NoWarn>1591</NoWarn>
     <ApplicationIcon>LiveReload.ico</ApplicationIcon>
-	  <RollForward>Major</RollForward>
   </PropertyGroup>
 
   <!-- Build NuGet Tool Package -->
