@@ -22,9 +22,8 @@
 	  <Authors>Rick Strahl</Authors>
     <Company>West Wind Technolologies</Company>
     <Copyright>© Rick Strahl - West Wind Technologies, 2019-2022</Copyright>
-		
-
-    <Description>
+		<Summary>LiveReloadServer is a local, static file Web Server with built-in Live Reload functionality, Markdown rendering support and the ability to run self-contained Razor Pages out of any local folder.</Summary>
+	  <Description>
       LiveReloadServer is a local, static file Web Server with optional, built-in Live Reload functionality, Markdown rendering support and the ability to run self-contained Razor Pages out of any local folder. Simply point at a local folder with `--webroot` and start serving the folder as a Web site. 
       
       Commandline options let you customize the path, port, add Razor and Markdown features support, add extensions to monitor and more. Convenience features can launch a browser, optionally launch an editor and can start on a specific page.
