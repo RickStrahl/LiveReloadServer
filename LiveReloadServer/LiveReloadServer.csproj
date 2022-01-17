@@ -5,7 +5,7 @@
     <!-- Exe with Razor Support -->
     <!--<DefineConstants>USE_RAZORPAGES</DefineConstants>-->
     <!-- Build _PACKAGE or _EXE with Razor Support -->
-    <DefineConstants>USE_RAZORPAGES;BUILD_EXE;</DefineConstants>
+    <DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE;</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE;TRACE;DEBUG</DefineConstants>
@@ -68,6 +68,11 @@
     <PublishTrimmed>false</PublishTrimmed>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="nupkg\**" />
+    <EmbeddedResource Remove="nupkg\**" />
+    <None Remove="nupkg\**" />
+  </ItemGroup>
  
 
 
@@ -85,6 +90,7 @@
 
   <ItemGroup>
     <None Include="icon.png" Pack="true" PackagePath="" />
+    <None Include="license.md" Pack="true" PackagePath="" />
     <None Update="LiveReloadWebServer.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -93,10 +99,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
       </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="nupkg" />
-  </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
