@@ -1,6 +1,6 @@
 $releaseFolder = "$PSScriptRoot\build\SelfContained"
 $releaseFile = "$releaseFolder\LiveReloadWebServer.exe"
-$releaseZip = "$releaseFolder\LiveReloadWebServer.zip"
+$releaseZip = ".\LiveReloadWebServer-SelfContained.zip"
 
 $rawVersion = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($releaseFile).FileVersion
 
@@ -8,6 +8,7 @@ $version = $rawVersion.Trim().Replace(".0","")
 "Writing Version File for: $version ($rawVersion)"
 
 $downloadUrl = "https://github.com/RickStrahl/LiveReloadServer/raw/$version/LiveReloadWebServer-SelfContained.zip"               
+"Download Url: $downloadUrl"
 
 # Write out Verification.txt
 $sha = get-filehash -path $releaseZip -Algorithm SHA256  | select -ExpandProperty "Hash"
