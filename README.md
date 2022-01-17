@@ -65,7 +65,7 @@ You can also use this 'generic' server behind a live Web Server (like IIS, nginx
 You can install this server as a .NET Tool using Dotnet SDK Tool installation:
 
 ```powershell
-dotnet install -g LiveReloadServer
+dotnet tool install -g LiveReloadServer
 ```
 
 To use it, navigate to a folder that you want to serve HTTP files out of:
