@@ -62,6 +62,16 @@ namespace LiveReloadServer
         public string DefaultFiles { get; set; } = "index.html,index.htm,default.htm";
 
         /// <summary>
+        /// An optional fallback path that's used in the LiveReloadServer
+        /// to redirect to another URL if a folder isn't found on the server.
+        /// Used for SPA application that have client navigation URLS and
+        /// need to redirect back a starting page.
+        /// Example: "/index.html"
+        /// </summary>
+        public string FolderNotFoundFallbackPath { get; set; }
+
+
+        /// <summary>
         /// Determines whether the browser is opened
         /// </summary>
         public bool OpenBrowser { get; set; } = true;
@@ -145,14 +155,7 @@ namespace LiveReloadServer
         public Dictionary<string,string> AdditionalMimeMappings {get; set; }
 
 
-        /// <summary>
-        /// An optional fallback path that's used in the LiveReloadServer
-        /// to redirect to another URL if a folder isn't found on the server.
-        /// Used for SPA application that have client navigation URLS and
-        /// need to redirect back a starting page.
-        /// Example: "/index.html"
-        /// </summary>
-        public string FolderNotFoundFallbackPath { get; set; }
+
 
         #endregion
 

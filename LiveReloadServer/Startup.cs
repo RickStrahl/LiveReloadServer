@@ -105,6 +105,7 @@ namespace LiveReloadServer
                             new PhysicalFileProvider(Path.Combine(Startup.StartupPath, "templates")));
                     });
 
+                // explicitly add any custom assemblies so Razor can see them for compilation
                 LoadPrivateBinAssemblies(mvcBuilder);
             }
         }
@@ -183,18 +184,17 @@ namespace LiveReloadServer
                 {
                     // We need MVC Routing for Markdown to work
                     endpoints.MapDefaultControllerRoute();
+
+
+                    if (!string.IsNullOrEmpty(ServerConfig.FolderNotFoundFallbackPath))
+                    {
+                        endpoints.MapFallbackToFile(ServerConfig.FolderNotFoundFallbackPath);
+                        //app.Use(FallbackMiddlewareHandler);
+                    }
                 });
             }
 
-            //if (!string.IsNullOrEmpty(ServerConfig.FolderNotFoundFallbackPath))
-            //{
-            //    app.UseEndpoints(endpoints =>
-            //    {
-            //        endpoints.MapFallbackToFile("/index.html");
-            //    });
-            //}
-            //app.Use(FallbackMiddlewareHandler);
-            
+           
             DisplayServerSettings(env);
 
             if (ServerConfig.OpenBrowser)

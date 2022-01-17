@@ -169,14 +169,15 @@ namespace LiveReloadServer
 #endif
 
             string headerLine = new string('-', Helpers.AppHeader.Length);
-            
+
             Console.WriteLine($@"
 {headerLine}
 {Helpers.AppHeader}
-{headerLine}
-(c) Rick Strahl, West Wind Technologies, 2019-2020
+{headerLine}");
 
-Static, Markdown and Razor Files Web Server with Live Reload for changed content.
+            ColorConsole.WriteLine("(c) Rick Strahl, West Wind Technologies, 2019-2022", ConsoleColor.DarkGray);
+
+            Console.WriteLine($@"Static, Markdown and Razor Files Web Server with Live Reload for changed content.
 
 Syntax:
 -------
@@ -190,6 +191,7 @@ Syntax:
 --UseLiveReload          True*|False
 --Extensions             ""{(useRazor ? ".cshtml," : "")}.css,.js,.htm,.html,.ts""*
 --DefaultFiles           ""index.html,default.htm""*
+--FallbackRouteUrl       ""Fallback Url on 404 requests (none* or ""index.html"")""
 
 --ShowUrls               True|False*
 --OpenBrowser            True*|False

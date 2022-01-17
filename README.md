@@ -41,8 +41,8 @@ You can grab the compiled tool as:
   ```ps
   choco install LiveReloadWebServer
   ```
-* [Self Contained Windows Executable Folder (zipped)](https://github.com/RickStrahl/Westwind.AspnetCore.LiveReload/raw/master/LiveReloadServer/LiveReloadWebServer-SelfContained.zip) <small>(windows)</small>
-* [Hostable Package (requires installed .NET Runtime)](https://github.com/RickStrahl/LiveReloadServer/blob/master/LiveReloadServer-Hosted.zip) <small>(windows, mac, linux)</small>  
+* [Self Contained Windows Executable Folder (zipped)](https://github.com/RickStrahl/LiveReloadServer/raw/master/LiveReloadWebServer-SelfContained.zip) <small>(windows)</small>
+* [Hostable Package (requires installed .NET 6 Runtime)](https://github.com/RickStrahl/LiveReloadServer/blob/master/LiveReloadServer-Hosted.zip) <small>(windows, mac, linux)</small>  
 
 
 > All three versions have the same features and interface, just the delivery mechanism and the executable name is different. The EXE uses `LiveReloadWebServer` while the Dotnet Tool uses `LiveReloadServer`.
@@ -455,9 +455,11 @@ The first setting ensures that `.dll` files for .NET assemblies can be served by
 The second setting ensures that you can **refresh a client side page** which forces a server refresh. The page will rewrite the current 404 request by accessing the specified URL which typically will be `/index.html`. Since the URL stays the same the Blazor page should then navigate then to the desired client side URL on refresh.
 
 ### SPA Client Side Routing Fallback: FolderNotFoundFallbackPath
-If you're using this server against a SPA application that uses **client side routing**, you need to enable server side route  fallback so that client side routes not handled by the server serve the SPA home page - typically `index.html`. This is done via the `--FolderNotFoundFallbackPath` configuration switch which points to the SPA start URL. 
+If you're using this server against a SPA application that uses **client side routing**, you may need to enable server side route fallback for extensionless Urls, so that client side routes not handled by the server can be served by the SPA home page - typically `index.html` - as a client side route. This is done via the `--FolderNotFoundFallbackPath` configuration switch which points to the SPA start URL. 
 
-When this setting is enabled any extensionless URL fired against the server that isn't handled serves up the specified site relative URL which typically is `/index.html`.
+By default this value is `null` and an invalid folder route causes a `404 - Not Found` response. But you can set this setting to a local url like `/index.html` or `/404NotFound.html`
+
+When this setting is enabled any extensionless URL fired against the server that isn't handled serves up the specified site relative Url.
 
 You can do this with:
 

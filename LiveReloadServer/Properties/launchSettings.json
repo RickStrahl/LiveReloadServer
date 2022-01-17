@@ -45,7 +45,7 @@
 
     "LiveReloadServer - Anti-Trust": {
       "commandName": "Project",
-      "commandLineArgs": "\"~/DropBox/Web Sites/anti-trust.rocks\" -useRazor -useMarkdown -useSsl --openEditor True --MarkdownTheme blackout",
+      "commandLineArgs": "\"c:/projects/anti-trust-guilty-album/anti-trust.rocks\" -useRazor -useMarkdown -useSsl --MarkdownTheme blackout --openBrowser true --openEditor",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
