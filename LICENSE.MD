@@ -1,10 +1,9 @@
-West Wind Live Reload Web Server
-================================
+# License for Live Reload Server
 
 MIT License
 -----------
 
-Copyright (c) 2019-2020 West Wind Technologies
+Copyright (c) 2019-2022 West Wind Technologies
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
