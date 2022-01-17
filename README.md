@@ -1,8 +1,8 @@
 # Live Reload Web Server
 
-[![NuGet](https://img.shields.io/nuget/v/LiveReloadServer.svg)](https://www.nuget.org/packages/LiveReloadServer/)
-[![](https://img.shields.io/nuget/dt/LiveReloadServer.svg)](https://www.nuget.org/packages/LiveReloadServer/) &nbsp; &nbsp; &nbsp; &nbsp;
-[![NuGet](https://img.shields.io/chocolatey/v/livereloadwebserver.svg)](https://chocolatey.org/packages/livereloadwebserver) [![](https://img.shields.io/chocolatey/dt/livereloadwebserver.svg)](https://chocolatey.org/packages/livereloadwebserver)
+[![NuGet](https://img.shields.io/nuget/v/LiveReloadServer.svg)](https://www.nuget.org/packages/LiveReloadServer/) [![](https://img.shields.io/nuget/dt/LiveReloadServer.svg)](https://www.nuget.org/packages/LiveReloadServer/) &nbsp; &nbsp; &nbsp; &nbsp;
+[![NuGet](https://img.shields.io/chocolatey/v/livereloadwebserver.svg)](https://chocolatey.org/packages/livereloadwebserver) 
+[![](https://img.shields.io/chocolatey/dt/livereloadwebserver.svg)](https://chocolatey.org/packages/livereloadwebserver)
 
 **A self-contained, local, cross-platform, static file Web Server with automatic Live Reloading, Markdown rendering and loose Razor Pages support.**
 
@@ -24,11 +24,14 @@ This server supports:
 * Hostable ASP.NET Core app that can be used by multiple sites on a server
 * Available as: Dotnet Tool, Chocolatey Package, or Self-Contained (Windows) Download
 
-### Requirements:
-Version 1.1 and later switches to .NET 6.0. Prior versions run on .NET 5.0. If you're using the .NET tool, `dotnet tool install -g` should pick the correct version for your SDK version (ie. 1.0.x for 5.0 and 1.1+  for 6.0).
+### Links
+* [v1 Release Blog Post](https://weblog.west-wind.com/posts/2021/Mar/23/LiveReloadServer-A-NET-Core-Based-Generic-Static-Web-Server-with-Live-Reload#Feedback)
 
-* Dotnet Tool: .NET 6.0 or 5.0 SDK
-* Hosting: .NET 6.0 or 5.0 Runtime or SDK
+### Requirements:
+Version 1.1 and later requires .NET 6. Prior versions run on .NET 5. If you're using the .NET tool, `dotnet tool install -g` picks the correct version for your SDK version (ie. 1.0.x for 5.0 and 1.1+  for 6.0).
+
+* Dotnet Tool: .NET 6 or 5 SDK
+* Hosting: .NET 6 or 5 Runtime or SDK
 * Standalone Exe (Window): self-contained
 
 You can grab the compiled tool as:
@@ -43,7 +46,6 @@ You can grab the compiled tool as:
   ```
 * [Self Contained Windows Executable Folder (zipped)](https://github.com/RickStrahl/LiveReloadServer/raw/master/LiveReloadWebServer-SelfContained.zip) <small>(windows)</small>
 * [Hostable Package (requires installed .NET 6 Runtime)](https://github.com/RickStrahl/LiveReloadServer/blob/master/LiveReloadServer-Hosted.zip) <small>(windows, mac, linux)</small>  
-
 
 > All three versions have the same features and interface, just the delivery mechanism and the executable name is different. The EXE uses `LiveReloadWebServer` while the Dotnet Tool uses `LiveReloadServer`.
   
