@@ -6,6 +6,9 @@
 * **Fix: FolderNotFoundFallbackPath Handling**  
 Fix `FolderNotFoundFallbackPath` which wasn't working properly on `404` errors when no Razor pages are in use. Moved the handler into it's own endpoint processing logic so it always gets applied when set now.
 
+* **Update Markdown Helper 3.7.0**  
+Bring in latest Markdown helpers from `Westwind.AspNetCore.Markdown` including latest updates to Markdig.
+
 
 ### Version 1.1 
 <small>November 11th, 2021</small>
