@@ -191,7 +191,8 @@ Syntax:
 --UseLiveReload          True*|False
 --Extensions             ""{(useRazor ? ".cshtml," : "")}.css,.js,.htm,.html,.ts""*
 --DefaultFiles           ""index.html,default.htm""*
---FallbackRouteUrl       ""Fallback Url on 404 requests (none* or ""index.html"")""
+--FolderNotFoundFallbackPath 
+                         ""Fallback Url on 404 folder requests (none* or ""index.html"")""
 
 --ShowUrls               True|False*
 --OpenBrowser            True*|False

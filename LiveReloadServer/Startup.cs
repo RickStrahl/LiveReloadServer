@@ -184,7 +184,14 @@ namespace LiveReloadServer
                 {
                     // We need MVC Routing for Markdown to work
                     endpoints.MapDefaultControllerRoute();
+                });
+            }
 
+           
+            if(!string.IsNullOrEmpty(ServerConfig.FolderNotFoundFallbackPath))
+            {
+                app.UseEndpoints(endpoints =>
+                {
 
                     if (!string.IsNullOrEmpty(ServerConfig.FolderNotFoundFallbackPath))
                     {
@@ -194,7 +201,6 @@ namespace LiveReloadServer
                 });
             }
 
-           
             DisplayServerSettings(env);
 
             if (ServerConfig.OpenBrowser)
