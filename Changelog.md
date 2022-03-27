@@ -1,5 +1,12 @@
 # Live Reload Server Change Log
 
+### Version 1.2
+<small>not released yet</small>
+
+* **Fix: FolderNotFoundFallbackPath Handling**  
+Fix `FolderNotFoundFallbackPath` which wasn't working properly on `404` errors when no Razor pages are in use. Moved the handler into it's own endpoint processing logic so it always gets applied when set now.
+
+
 ### Version 1.1 
 <small>November 11th, 2021</small>
 
@@ -7,17 +14,17 @@
 v1.1 and later now runs on .NET Core 6.0 rather than 5.0 previously. The dotnet tool should automatically use 1.0.x for .NET 5.0 SDKs and .NET 6.0 for 1.1+. The self-contained project and Chocolatey packages now run .NET 6 and the hosted version depends on .NET 6.0 now. .NET 6.0 improves overall performance and memory usage.
 
 * **Add `BrowserUrl` Configuration Switch**  
-You can now optionally specify an explicit startup URL when launching LiveReloadServer. The url specified in `BrowserUrl` can either be absolute (`https://localhost:5200/test.html` or a relative site path (ie. `/test.html` or `/subfolder/test.thml`). If not specified the root URL site URL is used.
+You can now optionally specify an explicit startup URL when launching LiveReloadServer. The URL specified in `BrowserUrl` can either be absolute (`https://localhost:5200/test.html` or a relative site path (ie. `/test.html` or `/subfolder/test.thml`). If not specified the root URL site URL is used.
 
 * **Fix -OpenEditor Option for Mac**  
 Fix -OpenEditor on Mac for opening VS Code by default in the WebRoot folder if specified. Find a x-plat way to open both on Windows and Mac (and likely also on Linux).
 
 * **Better Handling of LiveReload when Pages are manually Refreshed**  
-Added better support for disconnecting WebSocket when a page is navigated away from or refreshed. In those scenarios sometimes the WebSocket would still fire after the page has already unloaded resulting in multiple immmediate requests on a reloaded page. This should remove some of the request clutter that can 'pile' up, especially when many windows are open at the same time with the same monitored site.
+Added better support for disconnecting WebSocket when a page is navigated away from or refreshed. In those scenarios sometimes the WebSocket would still fire after the page has already unloaded resulting in multiple immediate requests on a reloaded page. This should remove some of the request clutter that can 'pile' up, especially when many windows are open at the same time with the same monitored site.
 
 ### Version 1.0
 <small>March 8, 2021</small>
-* **Environment Variable Path Fixups**  
+* **Environment Variable Path Fix ups**  
 The WebRoot path can now include Environment variables as well as root path `~` markers to resolve to a fully qualified launch path.
 
 * **Improved Server Hosting Functionality**  

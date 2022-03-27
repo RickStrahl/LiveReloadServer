@@ -27,7 +27,7 @@
     },
     "LiveReloadServer - PRA": {
       "commandName": "Project",
-      "commandLineArgs": "--webroot C:/clients/PRA/PraMobile/PraMobileAngular_Published --Host 0.0.0.0 -UseRazor -UseMarkdown --CopyMarkdownResources False --useMarkdown True --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs --ShowUrls True",
+      "commandLineArgs": "--webroot C:/clients/PRA/PraMobile/PraMobileAngular_Published --Host 0.0.0.0  --FolderNotFoundFallbackPath /index.html --ShowUrls True ",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -39,16 +39,16 @@
       "commandLineArgs": "C:\\temp\\MarkdownProject -UseMarkdown --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs  --Host 0.0.0.0 ",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Production"
       }
     },
 
     "LiveReloadServer - Anti-Trust": {
       "commandName": "Project",
-      "commandLineArgs": "\"c:/projects/anti-trust-guilty-album/anti-trust.rocks\" -useRazor -useMarkdown -useSsl --MarkdownTheme blackout --openBrowser true --openEditor",
+      "commandLineArgs": "\"c:/projects/anti-trust-guilty-album/anti-trust.rocks\" -useRazor -useMarkdown -useSsl --MarkdownTheme blackout --openBrowser true -openEditor --detailedErrors false",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Production"
       }
     },
 

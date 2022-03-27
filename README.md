@@ -33,6 +33,7 @@ Version 1.1 and later requires .NET 6. Prior versions run on .NET 5. If you're u
 * Dotnet Tool: .NET 6 or 5 SDK
 * Hosting: .NET 6 or 5 Runtime or SDK
 * Standalone Exe (Window): self-contained
+* If optionally hosting requires a Web Server that supports WebSockets
 
 You can grab the compiled tool as:
 
@@ -56,10 +57,6 @@ Live Reload is enabled by default and checks for changes to common static files.
 
 You can also use this 'generic' server behind a live Web Server (like IIS, nginx etc.) by installing the main project as a deployed Web application. A single installation can serve many Web sites using the same static, Razor and Markdown resources which can be ideal for mostly static content sites that need 'a little extra' beyond plain static pages (examples [here](https://anti-trust.rocks) and [here](https://markdownmonster.west-wind.com)).
 
-### Requirements
-* Dotnet Tool: Dotnet Core SDK 3.0+
-* Chocolatey or 
-* If optionally hosting requires a Web Server that supports WebSockets
 
 ## Installation
 You can install this server as a .NET Tool using Dotnet SDK Tool installation:
@@ -289,9 +286,11 @@ There are two ways you can display error information:
 
 Both require that you explicitly create a `/Error.cshtml` file.
 
-LiveReloadServer by default use ASP.NET Developer error page as this server is primarily meant as a dev server. You can disable that behavior by  using the `--DetailedErrors False` flag. 
+LiveReloadServer by default use ASP.NET Developer error page as this server is primarily meant as a development server. You can disable that behavior by using the `--DetailedErrors False` flag which triggers the `/Error.cshtml` page. 
 
 > Note: If you don't have an `/Errors.cshtml` file any compilation or runtime errors in the server will result in a `404` error as it tries to redirect to the `/error` route that doesn't exist.
+
+> If you host your server in IIS or another Web Server, make sure to set the `LIVERELOADSERVER_DETAILEDERRORS` value to `false` to avoid displaying a developer error page to users.
 
 ### Developer Error Page
 The developer error page is internal to ASP.NET, but unfortunately it still requires a physical `/Error.cshtml` in order for the routing to fire properly.
