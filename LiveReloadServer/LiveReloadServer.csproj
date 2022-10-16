@@ -6,14 +6,19 @@
     <!--<DefineConstants>USE_RAZORPAGES</DefineConstants>-->
     <!-- Build _PACKAGE or _EXE with Razor Support -->
     <DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE;</DefineConstants>
+    <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE;TRACE;DEBUG</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE;TRACE;DEBUG</DefineConstants>
+  </PropertyGroup>
 
   <PropertyGroup>
-    <Version>1.1.5</Version> 
+    <Version>1.1.6</Version> 
     <OutputType>Exe</OutputType>
+      
     <TargetFramework>net6.0</TargetFramework>
 
 	  <RazorCompileOnPublish>false</RazorCompileOnPublish>
@@ -50,6 +55,7 @@
     <PackageIcon>icon.png</PackageIcon>    
     <NoWarn>1591</NoWarn>
     <ApplicationIcon>LiveReload.ico</ApplicationIcon>
+
   </PropertyGroup>
 
   <!-- Build NuGet Tool Package -->
@@ -64,7 +70,7 @@
 
   <!-- Build Standalone Exe -->
   <PropertyGroup Condition="$(DefineConstants.Contains('BUILD_EXE'))">
-    <PublishSingleFile>true</PublishSingleFile>
+    <PublishSingleFile>false</PublishSingleFile>
     <PublishTrimmed>false</PublishTrimmed>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
@@ -78,11 +84,12 @@
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.7.0" />
+    <PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.9.2" />
     <PackageReference Include="Westwind.AspNetCore.LiveReload" Version="0.3.6" />
-    <PackageReference Include="Westwind.Utilities" Version="3.1.9" />
+    <PackageReference Include="Westwind.Utilities" Version="3.1.15" />
     
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.10" />
+
   </ItemGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains('USE_RAZORPAGES'))">
@@ -98,7 +105,7 @@
     <None Update="templates/**/*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-      </ItemGroup>
+   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 

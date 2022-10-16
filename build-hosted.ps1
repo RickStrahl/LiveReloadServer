@@ -1,4 +1,3 @@
-.\
 # Make sure you have this in your project:
 #
 # <DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE</DefineConstants>
