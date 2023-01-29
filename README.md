@@ -28,10 +28,10 @@ This server supports:
 * [v1 Release Blog Post](https://weblog.west-wind.com/posts/2021/Mar/23/LiveReloadServer-A-NET-Core-Based-Generic-Static-Web-Server-with-Live-Reload#Feedback)
 
 ### Requirements:
-Version 1.1 and later requires .NET 6. Prior versions run on .NET 5. If you're using the .NET tool, `dotnet tool install -g` picks the correct version for your SDK version (ie. 1.0.x for 5.0 and 1.1+  for 6.0).
+Version 1.1 and later requires .NET 7.06. Prior versions run on .NET 5. If you're using the .NET tool, `dotnet tool install -g` picks the correct version for your SDK version (ie. 1.0.x for 5.0 and 1.1+  for 7.0).
 
-* Dotnet Tool: .NET 6 or 5 SDK
-* Hosting: .NET 6 or 5 Runtime or SDK
+* Dotnet Tool: .NET 7, 6 or 5 SDK
+* Hosting: .NET 7, 6 or 5 Runtime or SDK
 * Standalone Exe (Window): self-contained
 * If optionally hosting requires a Web Server that supports WebSockets
 
@@ -46,7 +46,7 @@ You can grab the compiled tool as:
   choco install LiveReloadWebServer
   ```
 * [Self Contained Windows Executable Folder (zipped)](https://github.com/RickStrahl/LiveReloadServer/raw/master/LiveReloadWebServer-SelfContained.zip) <small>(windows)</small>
-* [Hostable Package (requires installed .NET 6 Runtime)](https://github.com/RickStrahl/LiveReloadServer/blob/master/LiveReloadServer-Hosted.zip) <small>(windows, mac, linux)</small>  
+* [Hostable Package (requires installed .NET 7.0 Runtime)](https://github.com/RickStrahl/LiveReloadServer/blob/master/LiveReloadServer-Hosted.zip) <small>(windows, mac, linux)</small>  
 
 > All three versions have the same features and interface, just the delivery mechanism and the executable name is different. The EXE uses `LiveReloadWebServer` while the Dotnet Tool uses `LiveReloadServer`.
   
