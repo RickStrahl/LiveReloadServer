@@ -61,7 +61,17 @@ namespace LiveReloadServer
 #if USE_RAZORPAGES
             if (ServerConfig.UseRazor)
             {
-                mvcBuilder = services.AddRazorPages(opt => { opt.RootDirectory = "/"; });
+                mvcBuilder = services.AddRazorPages(opt => { opt.RootDirectory = "/"; })
+                    .AddRazorRuntimeCompilation(
+                        opt =>
+                        {
+                            opt.FileProviders.Clear();
+                            opt.FileProviders.Add(new PhysicalFileProvider(ServerConfig.WebRoot) {
+                                UseActivePolling = true
+                            });
+                            opt.FileProviders.Add(
+                                new PhysicalFileProvider(Path.Combine(Startup.StartupPath, "templates")));
+                        });
             }
 #endif
 
@@ -86,6 +96,14 @@ namespace LiveReloadServer
                 // we have to force MVC in order for the controller routing to work
                 mvcBuilder = services
                     .AddMvc()
+                    .AddRazorRuntimeCompilation(
+                        opt =>
+                        {
+                            opt.FileProviders.Clear();
+                            opt.FileProviders.Add(new PhysicalFileProvider(ServerConfig.WebRoot));
+                            opt.FileProviders.Add(
+                                new PhysicalFileProvider(Path.Combine(Startup.StartupPath, "templates")));
+                        })
                     // have to let MVC know we have a dynamically loaded controller
                     .AddApplicationPart(typeof(MarkdownPageProcessorMiddleware).Assembly);
 
@@ -96,14 +114,14 @@ namespace LiveReloadServer
 
             if (mvcBuilder != null)
             {
-                mvcBuilder.AddRazorRuntimeCompilation(
-                    opt =>
-                    {
-                        opt.FileProviders.Clear();
-                        opt.FileProviders.Add(new PhysicalFileProvider(ServerConfig.WebRoot));
-                        opt.FileProviders.Add(
-                            new PhysicalFileProvider(Path.Combine(Startup.StartupPath, "templates")));
-                    });
+                //mvcBuilder.AddRazorRuntimeCompilation(
+                //    opt =>
+                //    {
+                //        opt.FileProviders.Clear();
+                //        opt.FileProviders.Add(new PhysicalFileProvider(ServerConfig.WebRoot));
+                //        opt.FileProviders.Add(
+                //            new PhysicalFileProvider(Path.Combine(Startup.StartupPath, "templates")));
+                //    });
 
                 // explicitly add any custom assemblies so Razor can see them for compilation
                 LoadPrivateBinAssemblies(mvcBuilder);

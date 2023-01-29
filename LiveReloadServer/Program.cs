@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Client;
 
 namespace LiveReloadServer
 {
@@ -14,10 +15,12 @@ namespace LiveReloadServer
     {
 
         public static IHost WebHost;
-        
+
+        public static string Version { get; set;  }
 
         public static void Main(string[] args)
         {
+
 
             if (Environment.CommandLine.Contains("LiveReloadWebServer", StringComparison.InvariantCultureIgnoreCase))
                 Helpers.ExeName = "LiveReloadWebServer";
@@ -28,6 +31,8 @@ namespace LiveReloadServer
                 var ver = version.Major + "." + version.Minor +
                           (version.Build > 0 ? "." + version.Build : string.Empty);
                 Helpers.AppHeader = $"Live Reload Web Server v{ver}";
+
+                Version = ver;
 
 
                 if (args.Contains("--help", StringComparer.InvariantCultureIgnoreCase) ||

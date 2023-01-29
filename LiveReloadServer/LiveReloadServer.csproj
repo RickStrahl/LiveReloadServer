@@ -4,7 +4,7 @@
   <PropertyGroup>
     <!-- Exe with Razor Support -->
     <!--<DefineConstants>USE_RAZORPAGES</DefineConstants>-->
-    <!-- Build _PACKAGE or _EXE with Razor Support -->
+    <!-- BUILD_PACKAGE or BUILD_EXE with Razor Support -->
     <DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE;</DefineConstants>
     <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
@@ -16,17 +16,15 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>1.1.7</Version> 
+    <Version>1.2</Version> 
     <OutputType>Exe</OutputType>
-      
-    <TargetFramework>net6.0</TargetFramework>
-
+	  <TargetFramework>net70</TargetFramework>
 	  <RazorCompileOnPublish>false</RazorCompileOnPublish>
 		<Title>Live Reload Server</Title>
 	  <Product>Live ReloadServer</Product>
 	  <Authors>Rick Strahl</Authors>
     <Company>West Wind Technolologies</Company>
-    <Copyright>© Rick Strahl - West Wind Technologies, 2019-2022</Copyright>
+    <Copyright>© Rick Strahl - West Wind Technologies, 2019-2023</Copyright>
 		<Summary>A self-contained, local, cross-platform, static file Web Server with automatic Live Reloading, Markdown rendering and loose Razor Pages support.</Summary>
 	  <Description>
       LiveReloadServer is a local, static file Web Server with optional, built-in Live Reload functionality, Markdown rendering support and the ability to run self-contained Razor Pages out of any local folder. Simply point at a local folder with `--webroot` and start serving the folder as a Web site. 
@@ -68,7 +66,7 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
-  <!-- Build Standalone Exe -->
+  <!-- Build Standalone (Self-Contained Runtime) Exe -->
   <PropertyGroup Condition="$(DefineConstants.Contains('BUILD_EXE'))">
     <PublishSingleFile>false</PublishSingleFile>
     <PublishTrimmed>false</PublishTrimmed>
@@ -84,12 +82,10 @@
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.9.2" />
-    <PackageReference Include="Westwind.AspNetCore.LiveReload" Version="0.3.6" />
-
-	  <PackageReference Include="Westwind.Utilities" Version="3.1.15" />
-    
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.10" />
+    <PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.10.0" />
+    <PackageReference Include="Westwind.AspNetCore.LiveReload" Version="0.4.2" />
+    <PackageReference Include="Westwind.Utilities" Version="3.1.18" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.2" />
 
   </ItemGroup>
 
