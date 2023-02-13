@@ -186,7 +186,7 @@ namespace LiveReloadServer
 
 Syntax:
 -------
-{Helpers.ExeName}  <options>
+{Helpers.ExeName} <WebRoot> <options>
 
 --WebRoot                <path>  (current Path if not provided)
 --Port                   5200*
@@ -229,7 +229,8 @@ Configuration options can be specified in:
 
 Examples:
 ---------
-{Helpers.ExeName} --WebRoot ""c:\temp\My Site"" --port 5500 -useSsl -useRazor --openBrowser false
+{Helpers.ExeName} ""c:\temp\My Site"" -useSsl -useRazor 
+{Helpers.ExeName} --WebRoot ""c:\temp\My Html Site"" --port 5500 -useSsl -openEditor
 
 $env:{Helpers.ExeName}_Port 5500
 $env:{Helpers.ExeName}_WebRoot c:\mySites\Site1\Web
