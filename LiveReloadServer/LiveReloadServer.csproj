@@ -78,15 +78,12 @@
 		<None Remove="nupkg\**" />
 	</ItemGroup>
 
-
-
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 		<PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.10.0" />
 		<PackageReference Include="Westwind.AspNetCore.LiveReload" Version="0.4.2" />
 		<PackageReference Include="Westwind.Utilities" Version="3.1.18" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.2" />
-
 	</ItemGroup>
 
 	<ItemGroup Condition="$(DefineConstants.Contains('USE_RAZORPAGES'))">
