@@ -1,109 +1,113 @@
 ﻿<!--<Project Sdk="Microsoft.NET.Sdk.Web">-->
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <!-- Exe with Razor Support -->
-    <!--<DefineConstants>USE_RAZORPAGES</DefineConstants>-->
-    <!-- BUILD_PACKAGE or BUILD_EXE with Razor Support -->
-    <DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE;</DefineConstants>
-    <Platforms>AnyCPU;x86</Platforms>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE;TRACE;DEBUG</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-    <DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE;TRACE;DEBUG</DefineConstants>
-  </PropertyGroup>
+	<PropertyGroup>
+		<!-- Exe with Razor Support -->
+		<!--<DefineConstants>USE_RAZORPAGES</DefineConstants>-->
+		<!-- BUILD_PACKAGE or BUILD_EXE with Razor Support -->
+		<DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE</DefineConstants>
+		<Platforms>AnyCPU;x86</Platforms>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE;TRACE;DEBUG</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+		<DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE;TRACE;DEBUG</DefineConstants>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <Version>1.2</Version> 
-    <OutputType>Exe</OutputType>
-	  <TargetFramework>net70</TargetFramework>
-	  <RazorCompileOnPublish>false</RazorCompileOnPublish>
+	<PropertyGroup>
+		<Version>1.2.1</Version>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net70</TargetFramework>
+		<RazorCompileOnPublish>false</RazorCompileOnPublish>
 		<Title>Live Reload Server</Title>
-	  <Product>Live ReloadServer</Product>
-	  <Authors>Rick Strahl</Authors>
-    <Company>West Wind Technolologies</Company>
-    <Copyright>© Rick Strahl - West Wind Technologies, 2019-2023</Copyright>
+		<Product>Live ReloadServer</Product>
+		<Authors>Rick Strahl</Authors>
+		<Company>West Wind Technolologies</Company>
+		<Copyright>© Rick Strahl - West Wind Technologies, 2019-2023</Copyright>
 		<Summary>A self-contained, local, cross-platform, static file Web Server with automatic Live Reloading, Markdown rendering and loose Razor Pages support.</Summary>
-	  <Description>
-      LiveReloadServer is a local, static file Web Server with optional, built-in Live Reload functionality, Markdown rendering support and the ability to run self-contained Razor Pages out of any local folder. Simply point at a local folder with `--webroot` and start serving the folder as a Web site. 
-      
-      Commandline options let you customize the path, port, add Razor and Markdown features support, add extensions to monitor and more. Convenience features can launch a browser, optionally launch an editor and can start on a specific page.
-      
-      Live Reload lets you change any content, code and stying files and immediately see the content refreshed in a Web browser - very useful for local development tasks or editing content sites.
+		<Description>
+			LiveReloadServer is a local, static file Web Server with optional, built-in Live Reload functionality, Markdown rendering support and the ability to run self-contained Razor Pages out of any local folder. Simply point at a local folder with `--webroot` and start serving the folder as a Web site.
 
-      This tool also provides an ASP.NET Core runtime, that can be hosted on a server to provide the dynamic dynamic features used by the Razor and Markdown functionality. This is useful for mostly content driven WebSites that a need a little extra functionality beyond plain static content. 
+			Commandline options let you customize the path, port, add Razor and Markdown features support, add extensions to monitor and more. Convenience features can launch a browser, optionally launch an editor and can start on a specific page.
 
-      LiveReloadServer works with:
+			Live Reload lets you change any content, code and stying files and immediately see the content refreshed in a Web browser - very useful for local development tasks or editing content sites.
 
-      * Static HTML, CSS, JavaScript etc. files
-      * Loose, single-file Razor Pages including assembly dependencies
-      * Markdown Files - .md files rendered to HTML with customizable themes and page template
-      * Options to configure extensions to monitor, port, folder and more.
+			This tool also provides an ASP.NET Core runtime, that can be hosted on a server to provide the dynamic dynamic features used by the Razor and Markdown functionality. This is useful for mostly content driven WebSites that a need a little extra functionality beyond plain static content.
 
-    Version 1.1 uses .NET 6.0. Versions prior use .NET 5.0.
-    </Description>
+			LiveReloadServer works with:
 
-    <PackageProjectUrl>https://github.com/RickStrahl/LiveReloadServer</PackageProjectUrl>
-    <PackageLicense>LICENSE.MD</PackageLicense>
-    <RepositoryUrl>https://github.com/RickStrahl/LiveReloadServer</RepositoryUrl>
-    <RepositoryType>Github</RepositoryType>
-    <PackageTags>WebServer LiveReload AutoRefresh StaticWebServer DotnetTool</PackageTags>
-    <PackageIcon>icon.png</PackageIcon>    
-    <NoWarn>1591</NoWarn>
-    <ApplicationIcon>LiveReload.ico</ApplicationIcon>
+			* Static HTML, CSS, JavaScript etc. files
+			* Loose, single-file Razor Pages including assembly dependencies
+			* Markdown Files - .md files rendered to HTML with customizable themes and page template
+			* Options to configure extensions to monitor, port, folder and more.
 
-  </PropertyGroup>
+			Version 1.1 uses .NET 6.0. Versions prior use .NET 5.0.
+		</Description>
 
-  <!-- Build NuGet Tool Package -->
-  <PropertyGroup Condition="$(DefineConstants.Contains('BUILD_PACKAGE'))">
-    <PackAsTool>true</PackAsTool>
-    <ToolCommandName>LiveReloadServer</ToolCommandName>
-    <PackageOutputPath>../build/nupkg</PackageOutputPath>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PublishTrimmed>false</PublishTrimmed>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-  </PropertyGroup>
+		<PackageProjectUrl>https://github.com/RickStrahl/LiveReloadServer</PackageProjectUrl>
+		<PackageLicense>LICENSE.MD</PackageLicense>
+		<RepositoryUrl>https://github.com/RickStrahl/LiveReloadServer</RepositoryUrl>
+		<RepositoryType>Github</RepositoryType>
+		<PackageTags>WebServer LiveReload AutoRefresh StaticWebServer DotnetTool</PackageTags>
+		<PackageIcon>icon.png</PackageIcon>
+		<NoWarn>1591</NoWarn>
+		<ApplicationIcon>LiveReload.ico</ApplicationIcon>
 
-  <!-- Build Standalone (Self-Contained Runtime) Exe -->
-  <PropertyGroup Condition="$(DefineConstants.Contains('BUILD_EXE'))">
-    <PublishSingleFile>false</PublishSingleFile>
-    <PublishTrimmed>false</PublishTrimmed>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="nupkg\**" />
-    <EmbeddedResource Remove="nupkg\**" />
-    <None Remove="nupkg\**" />
-  </ItemGroup>
- 
+	</PropertyGroup>
+
+	<!-- Build NuGet Tool Package -->
+	<PropertyGroup Condition="$(DefineConstants.Contains('BUILD_PACKAGE'))">
+		<PackAsTool>true</PackAsTool>
+		<ToolCommandName>LiveReloadServer</ToolCommandName>
+		<PackageOutputPath>../build/nupkg</PackageOutputPath>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PublishTrimmed>false</PublishTrimmed>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+	</PropertyGroup>
+
+	<!-- Build Standalone (Self-Contained Runtime) Exe -->
+	<PropertyGroup Condition="$(DefineConstants.Contains('BUILD_EXE'))">
+		<PublishSingleFile>false</PublishSingleFile>
+		<PublishTrimmed>false</PublishTrimmed>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Remove="nupkg\**" />
+		<EmbeddedResource Remove="nupkg\**" />
+		<None Remove="nupkg\**" />
+	</ItemGroup>
 
 
-  <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.10.0" />
-    <PackageReference Include="Westwind.AspNetCore.LiveReload" Version="0.4.2" />
-    <PackageReference Include="Westwind.Utilities" Version="3.1.18" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.2" />
 
-  </ItemGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.10.0" />
+		<PackageReference Include="Westwind.AspNetCore.LiveReload" Version="0.4.2" />
+		<PackageReference Include="Westwind.Utilities" Version="3.1.18" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.2" />
 
-  <ItemGroup Condition="$(DefineConstants.Contains('USE_RAZORPAGES'))">
-  </ItemGroup>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="icon.png" Pack="true" PackagePath="" />
-    <None Include="LICENSE.MD" Pack="true" PackagePath="" />
-    <None Update="LiveReloadWebServer.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+	<ItemGroup Condition="$(DefineConstants.Contains('USE_RAZORPAGES'))">
+	</ItemGroup>
 
-    <None Update="templates/**/*.*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-   </ItemGroup>
+	<ItemGroup>
+		<None Include="icon.png" Pack="true" PackagePath="" />
+		<None Include="LICENSE.MD" Pack="true" PackagePath="" />
+		<None Update="LiveReloadWebServer.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 
-  <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+		<None Update="templates/**/*.*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ProjectExtensions>
+		<VisualStudio>
+			<UserProperties properties_4launchsettings_1json__JsonSchema="" />
+		</VisualStudio>
+	</ProjectExtensions>
 
 </Project>
