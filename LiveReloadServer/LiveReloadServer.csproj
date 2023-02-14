@@ -5,7 +5,7 @@
 		<!-- Exe with Razor Support -->
 		<!--<DefineConstants>USE_RAZORPAGES</DefineConstants>-->
 		<!-- BUILD_PACKAGE or BUILD_EXE with Razor Support -->
-		<DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE</DefineConstants>
+		<DefineConstants>USE_RAZORPAGES;BUILD_PACKAGER</DefineConstants>
 		<Platforms>AnyCPU;x86</Platforms>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

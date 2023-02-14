@@ -14,9 +14,11 @@ if (test-path './build/Hosted' -PathType Container) { remove-item .\build\Hosted
 # Single File Exe output
 dotnet publish -c Release -o ./build/Hosted
 
-# Sign exe
-.\signtool.exe sign /v /n "West Wind Technologies"   /tr "http://timestamp.digicert.com" /td SHA256 /fd SHA256 ".\build\Hosted\LiveReloadServer.exe"
+copy-Item ./build/Hosted/LiveReloadServer.exe ./build/Hosted/LiveReloadWebServer.exe
+remove-item ./build/Hosted/LiveReloadServer.exe
 
+# Sign exe
+.\signtool.exe sign /v /n "West Wind Technologies"   /tr "http://timestamp.digicert.com" /td SHA256 /fd SHA256 ".\build\Hosted\LiveReloadWebServer.exe"
 
 del  ".\LiveReloadServer-Hosted.zip"
 7z a -tzip -r ".\LiveReloadServer-Hosted.zip" "./build/Hosted/*.*"

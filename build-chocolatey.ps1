@@ -4,7 +4,7 @@
 #
 #  Assumes: Uses latest release out of Pre-release folder
 #           Release has been checked in to GitHub Repo
-#   Builds: ChocolateyInstall.ps1 file with download URL and sha256 embedded
+#   Builds: ChocolateyInstall.ps1 file with download URL (by Tag Id) and sha256 embedded
 
 
 # *** IMPORTANT! *** 
