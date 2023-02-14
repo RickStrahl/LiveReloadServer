@@ -11,7 +11,9 @@
 This server supports:
 
 * Generic Static File Web Server you can launch in any folder
-* Just start with `LiveReloadServer <folder>`
+* Just start with:
+    * `LiveReloadServer <folder>` (dotnet tool)  
+    * `LiveReloadWebServer <folder>` (installed version)
 * LiveReload functionality for change detection and browser refresh
 * Self-contained Razor Pages support with Live Reload Support
 * Themed Markdown page rendering support built in
@@ -28,11 +30,10 @@ This server supports:
 * [v1 Release Blog Post](https://weblog.west-wind.com/posts/2021/Mar/23/LiveReloadServer-A-NET-Core-Based-Generic-Static-Web-Server-with-Live-Reload#Feedback)
 
 ### Requirements:
-Version 1.1 and later requires .NET 7.06. Prior versions run on .NET 5. If you're using the .NET tool, `dotnet tool install -g` picks the correct version for your SDK version (ie. 1.0.x for 5.0 and 1.1+  for 7.0).
 
 * Dotnet Tool: .NET 7, 6 or 5 SDK
-* Hosting: .NET 7, 6 or 5 Runtime or SDK
-* Standalone Exe (Window): self-contained
+* Hosted: .NET 7
+* Standalone Exe (Window): self-contained (.NET 7)
 * If optionally hosting requires a Web Server that supports WebSockets
 
 You can grab the compiled tool as:
