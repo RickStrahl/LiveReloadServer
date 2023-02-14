@@ -5,7 +5,7 @@
 		<!-- Exe with Razor Support -->
 		<!--<DefineConstants>USE_RAZORPAGES</DefineConstants>-->
 		<!-- BUILD_PACKAGE or BUILD_EXE with Razor Support -->
-		<DefineConstants>USE_RAZORPAGES;BUILD_PACKAGER</DefineConstants>
+		<DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE</DefineConstants>
 		<Platforms>AnyCPU;x86</Platforms>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -42,7 +42,7 @@
 			* Markdown Files - .md files rendered to HTML with customizable themes and page template
 			* Options to configure extensions to monitor, port, folder and more.
 
-			Version 1.1 uses .NET 6.0. Versions prior use .NET 5.0.
+			Version 1.2 uses .NET 7.0. Versions prior use .NET 6.0.
 		</Description>
 
 		<PackageProjectUrl>https://github.com/RickStrahl/LiveReloadServer</PackageProjectUrl>

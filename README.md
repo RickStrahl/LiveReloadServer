@@ -47,17 +47,16 @@ You can grab the compiled tool as:
   choco install LiveReloadWebServer
   ```
 * [Self Contained Windows Executable Folder (zipped)](https://github.com/RickStrahl/LiveReloadServer/raw/master/LiveReloadWebServer-SelfContained.zip) <small>(windows)</small>
-* [Hostable Package (requires installed .NET 7.0 Runtime)](https://github.com/RickStrahl/LiveReloadServer/blob/master/LiveReloadServer-Hosted.zip) <small>(windows, mac, linux)</small>  
+* [Hostable Package (requires installed .NET 7.0 Runtime)](https://github.com/RickStrahl/LiveReloadServer/blob/master/LiveReloadWebServer-Hosted.zip) <small>(windows, mac, linux)</small>  
 
 > All three versions have the same features and interface, just the delivery mechanism and the executable name is different. The EXE uses `LiveReloadWebServer` while the Dotnet Tool uses `LiveReloadServer`.
   
 ### What does it do?
-This tool is a generic **local Web Server** that you can start in **any folder** to provide simple and quick HTTP access to HTML and other Web resources. You can serve any static resources - HTML, CSS, JS etc. - as well as loose Razor Pages that don't require any code behind or dependent source code. There's also optional support for rendering Markdown Pages as themed HTML directly from Markdown files.
+This tool is a generic **local Web Server** that you can point to **any folder** and provide simple and quick HTTP access to HTML and other Web resources. You can serve any **static resources** - HTML, CSS, JS etc. - as well as **loose Razor Pages** that don't require any code behind or dependent source code. There's also optional support for rendering **Markdown Pages** as themed HTML directly from Markdown files.
 
 Live Reload is enabled by default and checks for changes to common static files. If a checked file is changed, the browser's current page is refreshed. You can map additional extensions that trigger the LiveReload.
 
-You can also use this 'generic' server behind a live Web Server (like IIS, nginx etc.) by installing the main project as a deployed Web application. A single installation can serve many Web sites using the same static, Razor and Markdown resources which can be ideal for mostly static content sites that need 'a little extra' beyond plain static pages (examples [here](https://anti-trust.rocks) and [here](https://markdownmonster.west-wind.com)).
-
+You can also use this 'generic' server behind a live Web Server (like IIS, nginx etc.) by installing the main project as a deployed Web application to provide loose Razor support and Markdown rendering on a Web server. A  single LiveReloadServer installation can serve many Web sites using the same static, Razor and Markdown resources which can be ideal for mostly static content sites that need 'a little extra' beyond plain static pages (examples [here](https://anti-trust.rocks) and [here](https://markdownmonster.west-wind.com)).
 
 ## Installation
 You can install this server as a .NET Tool using Dotnet SDK Tool installation:
@@ -87,10 +86,12 @@ choco install LiveReloadWebServer
 
 Note that EXE filename is `LiveReloadWebServer` which is different from the Dotnet Tool's `LiveReloadServer` so they can exist side by side without conflict.
 
+> Any of the following examples use `LiveReloadServer`, and you should substitute `LiveReloadServer` with `LiveReloadWebServer` for any non dotnet tool  installations.
+
 ### Launching the Web Server
 You can use the command line to customize how the server runs. By default files are served out of the current directory on port `5200`, but you can override the `WebRoot` folder.
 
-Use commandlines to customize:
+Use commandline parameters to customize:
 
 ```ps
 LiveReloadServer "c:/temp/My Web Site" --port 5200 -useSsl -openEditor
@@ -158,12 +159,12 @@ LiveReload
 ## Static Files
 The Web Server automatically serves all static files and Live Reload is automatically enabled unless explicitly turned off. HTML pages, CSS and scripts, and any other specific files with extensions you add are automatically reloaded whenever you make a change to the files.
 
-You can specify explicit file extensions to monitor using the `--Extensions` switch. The default is: `".cshtml,.css,.js,.htm,.html,.ts,.md"`.
+You can specify explicit file extensions to monitor using the `--Extensions` switch. The default is: `".cshtml,.css,.js,.htm,.html,.ts,.md"`. If you rather work without Live Reload you can turn it off  via `--useLiveReload False`.
 
 `BrowserUrl` is an optional flag that allows you to specify a specific URL to open on launch. By default the root site is opened - by specifying a URL you can open a specific page. The `BrowserUrl` can be an absolute URL (`https://localhost:5200/test.html`) or a relative URL (`/test.html` or `test.html` or `/subfolder/test.html`).
 
 ## Markdown File Rendering
-You can enable Markdown support in this server by setting `-UseMarkdown`. This serves HTML content directly off any `.md` or `.markdown` files in the Web root. The server provides default templates for the HTML styling, but you can override the rendering behavior with a **custom Razor template** that provides the chrome around the rendered Markdown, additional styling and syntax coloring.
+You can enable Markdown support in this server by setting `-useMarkdown`. This serves HTML content directly off any `.md` or `.markdown` files in the Web root. The server provides default templates for the HTML styling, but you can override the rendering behavior with a **custom Razor template** that provides the chrome around the rendered Markdown, additional styling and syntax coloring.
 
 This can be very useful if you are building documentation Web sites, so you can easily 'run' the documentation and see the Markdown rendered. Because `.md` files are effectively mapped you can even navigate naturally between Markdown pages if they are linked in the Markdown as is often the case for GitHub doc. 
 
@@ -276,7 +277,7 @@ LiveReloadServer has **basic Razor Pages support**, which means you can create *
 However, there's **no support for code behind razor models** or  **loose C# `.cs` file compilation** as runtime compilation outside of Razor is not supported. All dynamic compilable code has to live in Razor `.shtml` content.
 
 ### External Assembly Support
-It is possible to use external code by explicitly important external .NET assemblies.
+It is possible to use external code by explicitly importing external .NET assemblies.
 You can add **external assemblies** by adding final dependent assemblies (not NuGet packages!) into a `./privatebin` folder below your WebRoot folder. Assemblies in this folder will be loaded when the site is launched and become available for access in your Razor page code.
 
 ## Error Page Display
@@ -397,7 +398,9 @@ http://localhost:5200/subfolder/hello
 
 Same as you would expect with Razor Page in full ASP.NET Core applications.
 
-I want to stress though, that this is a limited Razor Pages implementation that is not meant to substitute for a full ASP.NET Core Razor Application. Since there's no code behind compilation or ability to 
+I want to stress though, that this is a limited Razor Pages implementation that is not meant to substitute for a full ASP.NET Core Razor Application. Since there's no code behind compilation or ability to create loose classes that are compiled at runtime.
+
+The only external code mechanism is via the External Assembly import from `./privatebin` mentioned above.
 
 ### Files and Folder Support
 As mentioned above you can use most Razor Pages file based constructs like _Layout and Partial pages, ViewStart as well as shared folders etc. The root folder works like any other Razor Pages folder or Area in ASP.NET Core and so all the relative linking and child page access are available.
@@ -435,7 +438,7 @@ Some things you can do that are useful:
 
 All these things use intrinsic built-in features of .NET or ASP.NET which, while limited to generic functionality, are still very useful for simple scripting scenarios.
 
-Also keep in mind this is meant as a generic **local** server and although you can in theory host this generic server on a Web site, the primary use case for this library is local hosting either for testing or for integration into local (desktop) applications that might require visual HTML content and a Web server to serve local Web content.
+Also keep in mind this is meant as a generic **local** server and although you can host this generic server on a Web site, the primary use case for this library is local hosting either for testing or for integration into local (desktop) applications that might require visual HTML content and a Web server to serve local Web content.
 
 ### Blazor WASM Support
 It is possible to run client side Blazor applications with this Web server, but there will be no live-reload functionality since a live Blazor application is pre-compiled. It is however possible to run Blazor with a couple of configuration settings.
