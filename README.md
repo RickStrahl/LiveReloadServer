@@ -47,7 +47,7 @@ You can grab the compiled tool as:
   choco install LiveReloadWebServer
   ```
 * [Self Contained Windows Executable Folder (zipped)](https://github.com/RickStrahl/LiveReloadServer/raw/master/LiveReloadWebServer-SelfContained.zip) <small>(windows)</small>
-* [Hostable Package (requires installed .NET 7.0 Runtime)](https://github.com/RickStrahl/LiveReloadServer/raw/master/LiveReloadWebServer-Hosted.zip) <small>(windows, mac, linux)</small>  
+* [Hostable Package (requires installed .NET 7.0 Runtime)](https://github.com/RickStrahl/LiveReloadServer/raw/master/LiveReloadServer-Hosted.zip) <small>(windows, mac, linux)</small>  
 
 > All three versions have the same features and interface, just the delivery mechanism and the executable name is different. The EXE uses `LiveReloadWebServer` while the Dotnet Tool uses `LiveReloadServer`.
   
