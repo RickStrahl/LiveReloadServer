@@ -42,7 +42,7 @@ You can grab the compiled tool as:
   ```ps
   dotnet tool install -g LiveReloadServer
   ```
-* [Chocolatey Package](https://chocolatey.org/packages/LiveReloadWebServer) <small>(windows)</small>   
+* [Chocolatey Package](https://chocolatey.org/packages/LiveReloadWebServer) <small>(windows)</small>
   ```ps
   choco install LiveReloadWebServer
   ```
