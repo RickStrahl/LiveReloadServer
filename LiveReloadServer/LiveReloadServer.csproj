@@ -6,17 +6,13 @@
 		<!--<DefineConstants>USE_RAZORPAGES</DefineConstants>-->
 		<!-- BUILD_PACKAGE or BUILD_EXE with Razor Support -->
 		<DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE</DefineConstants>
-		<Platforms>AnyCPU;x86</Platforms>
+		<Platforms>AnyCPU</Platforms>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DefineConstants>USE_RAZORPAGES;TRACE;DEBUG</DefineConstants>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-		<DefineConstants>USE_RAZORPAGES;TRACE;DEBUG</DefineConstants>
-	</PropertyGroup>
-
 	<PropertyGroup>
-		<Version>1.2.2</Version>
+		<Version>1.2.3</Version>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net70</TargetFramework>
 		<RazorCompileOnPublish>false</RazorCompileOnPublish>
@@ -82,9 +78,9 @@
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 		<PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.11.0" />
 		<PackageReference Include="Westwind.AspNetCore.LiveReload" Version="0.4.2" />
-		<PackageReference Include="Westwind.Utilities" Version="4.0.0.0" />
+		<PackageReference Include="Westwind.Utilities" Version="4.0.2" />
 		<PackageReference Include="Westwind.Utilities.Data" Version="4.0.0.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.4" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.8" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$(DefineConstants.Contains('USE_RAZORPAGES'))">
