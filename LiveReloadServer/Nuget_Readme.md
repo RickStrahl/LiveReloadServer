@@ -22,15 +22,15 @@ This server supports:
 
 * [More detailed info on Github](https://github.com/RickStrahl/LiveReloadServer)
 
-### Links
-* [v1 Release Blog Post](https://weblog.west-wind.com/posts/2021/Mar/23/LiveReloadServer-A-NET-Core-Based-Generic-Static-Web-Server-with-Live-Reload#Feedback)
-
 ### Requirements:
 
-* Dotnet Tool: .NET 7, 6 or 5 SDK
-* Hosted: .NET 7
-* Standalone Exe (Window): self-contained (.NET 7)
+* Dotnet Tool: .NET 8 SDK
+* Hosted: .NET 8  (Asp.Net Runtime)
+* Standalone Exe (Windows): self-contained (.NET 8)
 * If optionally hosting requires a Web Server that supports WebSockets
+* Older versions of .NET are supported with prior releases
+    * <  1.3  -  .NET 7.0
+    * <= 1.1  -  .NET 6.0
 
 You can grab the compiled tool as:
 

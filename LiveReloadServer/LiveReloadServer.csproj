@@ -44,7 +44,7 @@
 
 		<PackageProjectUrl>https://github.com/RickStrahl/LiveReloadServer</PackageProjectUrl>
 		<PackageLicenseFile>LICENSE.MD</PackageLicenseFile>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageReadmeFile>Nuget_Readme.md</PackageReadmeFile>
 		<RepositoryUrl>https://github.com/RickStrahl/LiveReloadServer</RepositoryUrl>
 		<RepositoryType>Github</RepositoryType>
 		<PackageTags>WebServer LiveReload AutoRefresh StaticWebServer StaticFiles DotnetTool</PackageTags>
@@ -93,7 +93,7 @@
 	<ItemGroup>
 		<None Include="icon.png" Pack="true" PackagePath="" />
 		<None Include="LICENSE.MD" Pack="true" PackagePath="" />
-		<None Include="README.md" Pack="true" PackagePath="" />
+		<None Include="Nuget_Readme.md" Pack="true" PackagePath="" />
 		<None Update="LiveReloadWebServer.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>

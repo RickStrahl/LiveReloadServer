@@ -32,23 +32,30 @@ This server supports:
 
 ### Requirements:
 
-* Dotnet Tool: .NET 8, 6 or 5 SDK
-* Hosted: .NET 8
-* Standalone Exe (Window): self-contained (.NET 8)
+* Dotnet Tool: .NET 8 SDK
+* Hosted: .NET 8  (Asp.Net Runtime)
+* Standalone Exe (Windows): self-contained (.NET 8)
 * If optionally hosting requires a Web Server that supports WebSockets
+* Older versions of .NET are supported with prior releases
+    * <  1.3  -  .NET 7.0
+    * <= 1.1  -  .NET 6.0
 
-You can grab the compiled tool as:
+You can grab the compiled Dotnet Tool from:
 
 * [Dotnet Tool](https://www.nuget.org/packages/LiveReloadServer/)  <small>(windows, mac, linux)</small>  
+
   ```ps
   dotnet tool install -g LiveReloadServer
   ```
+  
 * [Chocolatey Package](https://chocolatey.org/packages/LiveReloadWebServer) <small>(windows)</small>
+
   ```ps
   choco install LiveReloadWebServer
   ```
+  
 * [Self Contained Windows Executable Folder (zipped)](https://github.com/RickStrahl/LiveReloadServer/raw/master/LiveReloadWebServer-SelfContained.zip) <small>(windows)</small>
-* [Hostable Package (requires installed .NET 7.0 Runtime)](https://github.com/RickStrahl/LiveReloadServer/raw/master/LiveReloadServer-Hosted.zip) <small>(windows, mac, linux)</small>  
+* [Hostable Package (requires installed .NET/ASP.NET 8.0 Runtime)](https://github.com/RickStrahl/LiveReloadServer/raw/master/LiveReloadServer-Hosted.zip) <small>(windows, mac, linux)</small>  
 
 > All three versions have the same features and interface, just the delivery mechanism and the executable name is different. The EXE uses `LiveReloadWebServer` while the Dotnet Tool uses `LiveReloadServer`.
   
