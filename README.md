@@ -27,13 +27,14 @@ This server supports:
 * Available as: Dotnet Tool, Chocolatey Package, or Self-Contained (Windows) Download
 
 ### Links
-* [v1 Release Blog Post](https://weblog.west-wind.com/posts/2021/Mar/23/LiveReloadServer-A-NET-Core-Based-Generic-Static-Web-Server-with-Live-Reload#Feedback)
+
+* [LiveReloadServer v1 Release Post](https://weblog.west-wind.com/posts/2021/Mar/23/LiveReloadServer-A-NET-Core-Based-Generic-Static-Web-Server-with-Live-Reload)
 
 ### Requirements:
 
-* Dotnet Tool: .NET 7, 6 or 5 SDK
-* Hosted: .NET 7
-* Standalone Exe (Window): self-contained (.NET 7)
+* Dotnet Tool: .NET 8, 6 or 5 SDK
+* Hosted: .NET 8
+* Standalone Exe (Window): self-contained (.NET 8)
 * If optionally hosting requires a Web Server that supports WebSockets
 
 You can grab the compiled tool as:
@@ -544,4 +545,4 @@ If that's of interest to you or you want to contribute, please file an issue to 
 
 ## Version History
 
-[Live Reload Server Change Log](Changelog.md)
+* [Live Reload Server Change Log](Changelog.md)

@@ -1,13 +1,7 @@
 
 # Make sure you have this in your project:
 #
-# <PublishSingleFile>true</PublishSingleFile>
-# <PublishTrimmed>true</PublishTrimmed>
-# <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-#
-# and you disable the Package Build
-#
-# <PackAsTool>false</PackAsTool>
+# <DefineConstants>USE_RAZORPAGES;BUILD_EXE</DefineConstants>
 #
 # Note:
 # For Razor Compilation `PublishTrimmed` does not work because

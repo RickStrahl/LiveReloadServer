@@ -4,17 +4,18 @@
 	<PropertyGroup>
 		<!-- Exe with Razor Support -->
 		<!--<DefineConstants>USE_RAZORPAGES</DefineConstants>-->
-		<!-- BUILD_PACKAGE or BUILD_EXE with Razor Support -->
-		<DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE</DefineConstants>
+		
+		<!-- BUILD_PACKAGE (NuGet, Hosted) or BUILD_EXE (Standalone)-->
+		<DefineConstants>USE_RAZORPAGES;BUILD_EXE</DefineConstants>
 		<Platforms>AnyCPU</Platforms>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DefineConstants>USE_RAZORPAGES;TRACE;DEBUG</DefineConstants>
 	</PropertyGroup>
 	<PropertyGroup>
-		<Version>1.2.3</Version>
+		<Version>1.3.0</Version>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net70</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<RazorCompileOnPublish>false</RazorCompileOnPublish>
 		<Title>Live Reload Server</Title>
 		<Product>Live ReloadServer</Product>
@@ -38,21 +39,22 @@
 			* Markdown Files - .md files rendered to HTML with customizable themes and page template
 			* Options to configure extensions to monitor, port, folder and more.
 
-			Version 1.2 uses .NET 7.0. Versions prior use .NET 6.0.
+			Version 1.3 uses .NET 8.0, 1.2 uses .NET 7.0. Versions prior use .NET 6.0.
 		</Description>
 
 		<PackageProjectUrl>https://github.com/RickStrahl/LiveReloadServer</PackageProjectUrl>
-		<PackageLicense>LICENSE.MD</PackageLicense>
+		<PackageLicenseFile>LICENSE.MD</PackageLicenseFile>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<RepositoryUrl>https://github.com/RickStrahl/LiveReloadServer</RepositoryUrl>
 		<RepositoryType>Github</RepositoryType>
-		<PackageTags>WebServer LiveReload AutoRefresh StaticWebServer DotnetTool</PackageTags>
-		<PackageIcon>icon.png</PackageIcon>
+		<PackageTags>WebServer LiveReload AutoRefresh StaticWebServer StaticFiles DotnetTool</PackageTags>
+		<PackageIcon>icon.png</PackageIcon>		
 		<NoWarn>1591</NoWarn>
 		<ApplicationIcon>LiveReload.ico</ApplicationIcon>
 
 	</PropertyGroup>
 
-	<!-- Build NuGet Tool Package -->
+	<!-- Build NuGet Tool Package and Hosted -->
 	<PropertyGroup Condition="$(DefineConstants.Contains('BUILD_PACKAGE'))">
 		<PackAsTool>true</PackAsTool>
 		<ToolCommandName>LiveReloadServer</ToolCommandName>
@@ -64,9 +66,11 @@
 
 	<!-- Build Standalone (Self-Contained Runtime) Exe -->
 	<PropertyGroup Condition="$(DefineConstants.Contains('BUILD_EXE'))">
-		<PublishSingleFile>false</PublishSingleFile>
-		<PublishTrimmed>false</PublishTrimmed>
-		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<!--<PublishSingleFile>True</PublishSingleFile>
+		<PublishTrimmed>True</PublishTrimmed>-->
+		<PublishSingleFile>true</PublishSingleFile>
+		<SelfContained>true</SelfContained>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>		
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Remove="nupkg\**" />
@@ -76,11 +80,11 @@
 
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-		<PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.11.0" />
-		<PackageReference Include="Westwind.AspNetCore.LiveReload" Version="0.4.2" />
-		<PackageReference Include="Westwind.Utilities" Version="4.0.2" />
-		<PackageReference Include="Westwind.Utilities.Data" Version="4.0.0.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.8" />
+		<PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.12.0" />
+		<PackageReference Include="Westwind.AspNetCore.LiveReload" Version="0.5.0" />
+		<PackageReference Include="Westwind.Utilities" Version="4.0.6.1" />
+		<PackageReference Include="Westwind.Utilities.Data" Version="4.0.3" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.0" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$(DefineConstants.Contains('USE_RAZORPAGES'))">
@@ -89,6 +93,7 @@
 	<ItemGroup>
 		<None Include="icon.png" Pack="true" PackagePath="" />
 		<None Include="LICENSE.MD" Pack="true" PackagePath="" />
+		<None Include="README.md" Pack="true" PackagePath="" />
 		<None Update="LiveReloadWebServer.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
@@ -97,11 +102,5 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
-
-	<ProjectExtensions>
-		<VisualStudio>
-			<UserProperties properties_4launchsettings_1json__JsonSchema="" />
-		</VisualStudio>
-	</ProjectExtensions>
 
 </Project>

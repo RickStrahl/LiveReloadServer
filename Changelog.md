@@ -1,13 +1,27 @@
 # Live Reload Server Change Log
 
-### Version 1.2
-<small>not released yet</small>
+### Version 1.3
+<small>November 20th, 2023</small>
+
+* **Update to .NET 8.0 Runtime**  
+Update to the latest .NET Runtime LTS release upon RTM release. This .NET release significantly improves startup times and smaller improvements in overall processing performance. This especially pronounced for sites that contain compiled Razor Pages using the `--useRazor` flag.
+
+
+### Version 1.2.4
+<small>July 10th, 2022</small>
 
 * **Fix: FolderNotFoundFallbackPath Handling**  
 Fix `FolderNotFoundFallbackPath` which wasn't working properly on `404` errors when no Razor pages are in use. Moved the handler into it's own endpoint processing logic so it always gets applied when set now.
 
 * **Update Markdown Helper 3.7.0**  
 Bring in latest Markdown helpers from `Westwind.AspNetCore.Markdown` including latest updates to Markdig.
+
+
+### Version 1.2
+<small>November 12th, 2022</small>
+
+* **Update to .NET 7.0 Runtime**  
+Update to the latest .NET Runtime after RTM release. Overall small performance improvements over 6.0.
 
 
 ### Version 1.1 
