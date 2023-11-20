@@ -9,7 +9,13 @@
 
 # *** IMPORTANT! *** 
 # Make sure you ADD A TAG  with the version number when the zip file is pushed! (ie. 0.2.5)
-# or else the zip file will not be found on GitHub
+# or else the zip file will not be found on GitHub. You can run:
+#
+# createrelease.ps1 
+#
+# to create a new release, push to GitHub and tag the commit with the version, 
+# and update the Chocolatey script
+# Run this **AFTER** you have create the Self Contained EXE build (Zip file)
 
 cd "$PSScriptRoot\Chocolatey" 
 

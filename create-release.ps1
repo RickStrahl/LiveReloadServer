@@ -1,3 +1,12 @@
+# Make sure you run this after you have build the Self-Contained EXE and Zip
+# This script will:
+#
+# * Commit to GitHub and tag the commit with the latest file version numer
+# * Update the Chocolatey script with the latest version number and SHA256 hash
+#
+# Once you've run this script, you can run the build-chocolatey.ps1 script to 
+# build the Chocolatey package and the push to chocolatey.
+
 $releaseFolder = "$PSScriptRoot\build\SelfContained"
 $releaseFile = "$releaseFolder\LiveReloadWebServer.exe"
 $releaseZip = ".\LiveReloadWebServer-SelfContained.zip"

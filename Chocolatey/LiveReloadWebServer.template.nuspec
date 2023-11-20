@@ -2,9 +2,9 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <version>{{version}}</version>
-        <dependencies>
+        <!-- <dependencies>
             <dependency id="dotnet-desktopruntime" version="8.0.0" />        
-        </dependencies>
+        </dependencies> -->
         <id>LiveReloadWebServer</id>
         <title>Live Reload Local Web Server for Windows</title>
         <authors>Rick Strahl,West Wind Technologies</authors>
