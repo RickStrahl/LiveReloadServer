@@ -4,16 +4,8 @@
 <small>in progress</small>
 
 * **Update to .NET 8.0 Runtime**  
-Update to the latest .NET Runtime LTS release upon RTM release. This .NET release significantly improves startup times and smaller improvements in overall processing performance. This especially pronounced for sites that contain compiled Razor Pages using the `--useRazor` flag. We'll only install the 8.0 runtime if 7.0 is not already installed (ie. no suitable runtime available). Eventually we'll switch to 8.0 minimum requirements but for now, 7.0 required, 8.0 installed if no-runtime found.
+Update to the latest .NET Runtime LTS release upon RTM release. This .NET release significantly improves startup times and smaller improvements in overall processing performance. 
 
-* **Updated GitHub Preview Styling**  
-Minor tweaks to the GitHub default preview templates: Remove the grid outline when rendering under 980px frame width to reduce wasted space.  Grid outline is rendered in larger screen sizes (980px+). Clean up blockquotes and docfx renderings and backgrounds. Clean up differences between the Github light and dark preview templates.
-
-* **Updates to DocFx Preview Styling**  
-In light of GitHub's addition of some DocFx functionality in its Markdown renderer we've more closely matched the default styling of the Note/Warning/Info/Tip block quote rendering to more closely match the GitHub styling in the GitHub styles. Also updated the Blackout template styling. 
-
-* **Fix: DocFx include/code Embedding**  
-Fix issue with built-in DocFx include/code embedding directives (`[!include]` and `[!code-lang]`) which were failing if multiple directives were used on the same page.
 
 * **Fix: FolderNotFoundFallbackPath Handling**  
 Fix `FolderNotFoundFallbackPath` which wasn't working properly on `404` errors when no Razor pages are in use. Moved the handler into it's own endpoint processing logic so it always gets applied when set now.
