@@ -1,7 +1,7 @@
 # Live Reload Server Change Log
 
 ### Version 1.3
-<small>in progress</small>
+<small>November 20th, 2023</small>
 
 * **Update to .NET 8.0 Runtime**  
 Update to the latest .NET Runtime LTS release upon RTM release. This .NET release significantly improves startup times and smaller improvements in overall processing performance. 
