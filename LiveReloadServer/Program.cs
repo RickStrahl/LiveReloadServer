@@ -20,8 +20,6 @@ namespace LiveReloadServer
 
         public static void Main(string[] args)
         {
-
-
             if (Environment.CommandLine.Contains("LiveReloadWebServer", StringComparison.InvariantCultureIgnoreCase))
                 Helpers.ExeName = "LiveReloadWebServer";
 
