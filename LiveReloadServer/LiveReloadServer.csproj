@@ -6,7 +6,7 @@
 		<!--<DefineConstants>USE_RAZORPAGES</DefineConstants>-->
 		
 		<!-- BUILD_PACKAGE (NuGet, Hosted) or BUILD_EXE (Standalone)-->
-		<DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE</DefineConstants>
+		<DefineConstants>USE_RAZORPAGES;BUILD_EXE</DefineConstants>
 		<Platforms>AnyCPU</Platforms>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
