@@ -51,8 +51,7 @@ namespace LiveReloadServer
                     opt.LiveReloadEnabled = ServerConfig.UseLiveReload;
 
                     if (!string.IsNullOrEmpty(ServerConfig.Extensions))
-                        opt.ClientFileExtensions = ServerConfig.Extensions;
-                    
+                        opt.ClientFileExtensions = ServerConfig.Extensions;                
                 });
             }
 
@@ -131,7 +130,7 @@ namespace LiveReloadServer
 
         private static object consoleLock = new object();
 
-
+        
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IWebHostEnvironment env)
         {
@@ -223,41 +222,41 @@ namespace LiveReloadServer
 
             if (ServerConfig.OpenBrowser)
             {
-                var rootUrl = ServerConfig.GetHttpUrl();
-
-                if (!string.IsNullOrEmpty(ServerConfig.BrowserUrl))
-                {
-                    if (ServerConfig.BrowserUrl.StartsWith("http://") || ServerConfig.BrowserUrl.StartsWith("https://"))
-                        rootUrl = ServerConfig.BrowserUrl;
-                    else
-                    {
-                        var url = "/" + ServerConfig.BrowserUrl.TrimStart('/'); // force leading slash
-                        rootUrl = rootUrl.TrimEnd('/') + url
-                                .Replace("~", "")
-                                .Replace("\\", "/")
-                                .Replace("//", "/");
-                    }
-                }
-                Helpers.OpenUrl(rootUrl);
+                OpenBrowser();
             }
 
             if (ServerConfig.OpenEditor)
             {
-                string cmdLine = null;
-                try
-                {
-                    cmdLine = ServerConfig.EditorLaunchCommand.Replace("%1", ServerConfig.WebRoot);
-                    Westwind.Utilities.ShellUtils.ExecuteCommandLine(cmdLine);
-                }
-                catch (Exception ex)
-                {
-                    ColorConsole.WriteError("Failed to launch editor with: " + cmdLine);
-                    ColorConsole.WriteError("-- " + ex.Message);
-                }
-
+                OpenEditor();
             }
         }
 
+
+        /// <summary>
+        /// Copies the Markdown Template resources into the WebRoot if it doesn't exist already.
+        ///
+        /// If you want to get a new set of template, delete the `markdown-themes` folder in hte
+        /// WebRoot output folder.
+        /// </summary>
+        /// <returns>false if already exists and no files were copied. True if path doesn't exist and files were copied</returns>
+        private bool CopyMarkdownTemplateResources()
+        {
+            // explicitly don't want to copy resources
+            if (!ServerConfig.CopyMarkdownResources)
+                return false;
+
+            var templatePath = Path.Combine(ServerConfig.WebRoot, "markdown-themes");
+            if (Directory.Exists(templatePath))
+                return false;
+
+            FileUtils.CopyDirectory(Path.Combine(Startup.StartupPath, "templates", "markdown-themes"),
+                templatePath, recursive: true);
+
+            return true;
+        }
+
+
+        #region Console Display Operations
         private void DisplayServerSettings(IWebHostEnvironment env)
         {
             string headerLine = new string('-', Helpers.AppHeader.Length);
@@ -329,81 +328,6 @@ namespace LiveReloadServer
             Console.ForegroundColor = oldColor;
         }
 
-        public static Type GetTypeFromName(string TypeName)
-        {
-
-            Type type = Type.GetType(TypeName);
-            if (type != null)
-                return type;
-
-            // *** try to find manually
-            foreach (Assembly ass in AssemblyLoadContext.Default.Assemblies)
-            {
-                type = ass.GetType(TypeName, false);
-
-                if (type != null)
-                    break;
-
-            }
-
-            return type;
-        }
-
-        private List<string> LoadedPrivateAssemblies = new List<string>();
-        private List<string> FailedPrivateAssemblies = new List<string>();
-
-        private void LoadPrivateBinAssemblies(IMvcBuilder mvcBuilder)
-        {
-            var binPath = Path.Combine(ServerConfig.WebRoot, "privatebin");
-            if (Directory.Exists(binPath))
-            {
-                var files = Directory.GetFiles(binPath);
-                foreach (var file in files)
-                {
-                    if (!file.EndsWith(".dll", StringComparison.CurrentCultureIgnoreCase) &&
-                        !file.EndsWith(".exe", StringComparison.InvariantCultureIgnoreCase))
-                        continue;
-
-                    try
-                    {
-                        var asm = AssemblyLoadContext.Default.LoadFromAssemblyPath(file);
-                        mvcBuilder.AddApplicationPart(asm);
-                        LoadedPrivateAssemblies.Add(file);
-                    }
-                    catch (Exception ex)
-                    {
-                        FailedPrivateAssemblies.Add(file + "\n    - " + ex.Message);
-                    }
-
-                }
-            }
-
-        }
-
-        /// <summary>
-        /// Copies the Markdown Template resources into the WebRoot if it doesn't exist already.
-        ///
-        /// If you want to get a new set of template, delete the `markdown-themes` folder in hte
-        /// WebRoot output folder.
-        /// </summary>
-        /// <returns>false if already exists and no files were copied. True if path doesn't exist and files were copied</returns>
-        private bool CopyMarkdownTemplateResources()
-        {
-            // explicitly don't want to copy resources
-            if (!ServerConfig.CopyMarkdownResources)
-                return false;
-
-            var templatePath = Path.Combine(ServerConfig.WebRoot, "markdown-themes");
-            if (Directory.Exists(templatePath))
-                return false;
-
-            FileUtils.CopyDirectory(Path.Combine(Startup.StartupPath, "templates", "markdown-themes"),
-                templatePath, recursive: true);
-
-            return true;
-        }
-
-
         /// <summary>
         /// This middle ware handler intercepts every request captures the time
         /// and then logs out to the screen (when that feature is enabled) the active
@@ -432,7 +356,6 @@ namespace LiveReloadServer
                 WriteConsoleLogDisplay(context, sw, originalPath);
             }
         }
-
 
         /// <summary>
         /// Responsible for writing the actual request display out to the console.
@@ -485,6 +408,152 @@ namespace LiveReloadServer
 
             Console.ForegroundColor = saveColor;
         }
+
+        #endregion
+
+
+        #region AssemblyLoading and PrivateBin Updates
+
+        private List<string> LoadedPrivateAssemblies = new List<string>();
+        private List<string> FailedPrivateAssemblies = new List<string>();
+
+        private void LoadPrivateBinAssemblies(IMvcBuilder mvcBuilder)
+        {
+            var binPath = Path.Combine(ServerConfig.WebRoot, "privatebin");
+            var updatePath = Path.Combine(binPath, "updates");
+
+            // if 
+            UpdatePrivateBinAssemblies();
+
+            
+            if (Directory.Exists(binPath))
+            {
+                var files = Directory.GetFiles(binPath);
+                foreach (var file in files)
+                {
+                    if (!file.EndsWith(".dll", StringComparison.CurrentCultureIgnoreCase) &&
+                        !file.EndsWith(".exe", StringComparison.InvariantCultureIgnoreCase))
+                        continue;
+
+                    try
+                    {
+                        var asm = AssemblyLoadContext.Default.LoadFromAssemblyPath(file);
+                        mvcBuilder.AddApplicationPart(asm);
+                        LoadedPrivateAssemblies.Add(file);
+                    }
+                    catch (Exception ex)
+                    {
+                        FailedPrivateAssemblies.Add(file + "\n    - " + ex.Message);
+                    }
+
+                }
+            }
+
+        }
+
+        FileSystemWatcher privateBinWatcher { get; set; }
+
+        private void UpdatePrivateBinAssemblies()
+        {
+            var updatePath = Path.Combine(ServerConfig.WebRoot, "privatebin", "updates");
+
+            // If Updates Folder exists copy files into PrivateBin
+            if (Directory.Exists(updatePath))
+            {
+                var files = Directory.GetFiles(updatePath);
+                foreach (var file in files)
+                {
+                    try
+                    {
+                        var updateFile = file.Replace("\\updates\\", "\\").Replace("/updates/","/");
+                        File.Copy(file, updateFile, true);
+                        File.Delete(file);
+                        
+                        ColorConsole.WriteLine("Assembly Updated: " + file, ConsoleColor.Green);
+                    }
+                    catch(Exception ex) { 
+                        ColorConsole.WriteLine("Assembly Update failed:  " + file + ". " + ex.Message, ConsoleColor.Red);
+                    }
+                }
+
+                // On IIS allow updates in /privatebin/updates folder when updated by touching web.config
+                if (privateBinWatcher == null) // && File.Exists(Path.Combine(ServerConfig.WebRoot,"web.config")))
+                {
+                    privateBinWatcher = new FileSystemWatcher(updatePath, filter: "*.dll");
+                    privateBinWatcher.EnableRaisingEvents = true;                    
+
+                    privateBinWatcher.IncludeSubdirectories = false;
+                    privateBinWatcher.NotifyFilter = NotifyFilters.LastWrite;
+                    privateBinWatcher.Changed += OnPrivateBinPrivateBinIisWatcherOnChanged;
+                    privateBinWatcher.Created += OnPrivateBinPrivateBinIisWatcherOnChanged;                    
+                }
+            }
+        }
+
+        private void OnPrivateBinPrivateBinIisWatcherOnChanged(object sender, FileSystemEventArgs args)
+        {
+            var file = Path.Combine(ServerConfig.WebRoot, "web.config");   
+            Console.WriteLine("Trying to update Assemblies by touching web.config: " + file);
+            var fi = new FileInfo(file);
+            if (!fi.Exists)
+                return;
+
+            Console.WriteLine("updating: " + file);
+
+            // trigger IIS to recycle
+            fi.LastWriteTime = DateTime.Now;                        
+        }
+
+        #endregion
+
+
+        #region Shell Operations
+        /// <summary>
+        /// Opens the Web Browser on the local machine using Shell Operations
+        /// </summary>
+        private void OpenBrowser()
+        {
+            var rootUrl = ServerConfig.GetHttpUrl();
+
+            if (!string.IsNullOrEmpty(ServerConfig.BrowserUrl))
+            {
+                if (ServerConfig.BrowserUrl.StartsWith("http://") || ServerConfig.BrowserUrl.StartsWith("https://"))
+                    rootUrl = ServerConfig.BrowserUrl;
+                else
+                {
+                    var url = "/" + ServerConfig.BrowserUrl.TrimStart('/'); // force leading slash
+                    rootUrl = rootUrl.TrimEnd('/') + url
+                        .Replace("~", "")
+                        .Replace("\\", "/")
+                        .Replace("//", "/");
+                }
+            }
+            Helpers.OpenUrl(rootUrl);
+        }
+
+
+        /// <summary>
+        /// Opens the configured editor (if any) on the local machine
+        /// </summary>
+        private void OpenEditor()
+        {
+            string cmdLine = null;
+            try
+            {
+                cmdLine = ServerConfig.EditorLaunchCommand.Replace("%1", ServerConfig.WebRoot);
+                Westwind.Utilities.ShellUtils.ExecuteCommandLine(cmdLine);
+            }
+            catch (Exception ex)
+            {
+                ColorConsole.WriteError("Failed to launch editor with: " + cmdLine);
+                ColorConsole.WriteError("-- " + ex.Message);
+            }
+        }
+
+        #endregion
+
+
+        #region Middleware
 
         /// <summary>
         /// Fallback handler middleware that is fired for any requests that aren't processed.
@@ -567,5 +636,7 @@ page or resource also does not exist.</p>
             await context.Response.CompleteAsync();
         }
     }
+
+    #endregion
 }
 

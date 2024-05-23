@@ -1,12 +1,11 @@
 # Live Reload Web Server
 
 [![NuGet](https://img.shields.io/nuget/v/LiveReloadServer.svg)](https://www.nuget.org/packages/LiveReloadServer/) [![](https://img.shields.io/nuget/dt/LiveReloadServer.svg)](https://www.nuget.org/packages/LiveReloadServer/) &nbsp; &nbsp; &nbsp; &nbsp;
-[![NuGet](https://img.shields.io/chocolatey/v/livereloadwebserver.svg)](https://chocolatey.org/packages/livereloadwebserver) 
-[![](https://img.shields.io/chocolatey/dt/livereloadwebserver.svg)](https://chocolatey.org/packages/livereloadwebserver)
+[![Chocolatey](https://img.shields.io/chocolatey/v/livereloadwebserver.svg)](https://chocolatey.org/packages/livereloadwebserver)
 
-**A self-contained, local, cross-platform, static file Web Server with automatic Live Reloading, Markdown rendering and loose Razor Pages support.**
+**A self-contained, local, cross-platform, static file Web Server that is based on .NET, with automatic Live Reloading, Markdown rendering and loose Razor Pages support.**
 
-![](screenshot.png)
+![](https://raw.githubusercontent.com/RickStrahl/LiveReloadServer/master/screenshot.png)
 
 This server supports:
 
