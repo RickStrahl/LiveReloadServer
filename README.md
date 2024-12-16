@@ -31,11 +31,12 @@ This server supports:
 
 ### Requirements:
 
-* Dotnet Tool: .NET 8 SDK
-* Hosted: .NET 8  (Asp.Net Runtime)
-* Standalone Exe (Windows): self-contained (.NET 8)
+* Dotnet Tool: .NET 9 SDK
+* Hosted: .NET 9  (Asp.Net Runtime)
+* Standalone Exe (Windows): self-contained (.NET 9)
 * If optionally hosting requires a Web Server that supports WebSockets
 * Older versions of .NET are supported with prior releases
+    * <  1.5  -  .NET 8.0
     * <  1.3  -  .NET 7.0
     * <= 1.1  -  .NET 6.0
 
