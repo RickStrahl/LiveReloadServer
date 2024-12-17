@@ -28,10 +28,14 @@ This server supports:
   * Dotnet Tool (cross-platform)
   * Chocolatey Package
   * Self-Contained (Windows) Download
+  
+  
 
 ### Links
 
 * [LiveReloadServer v1 Release Post](https://weblog.west-wind.com/posts/2021/Mar/23/LiveReloadServer-A-NET-Core-Based-Generic-Static-Web-Server-with-Live-Reload)
+
+![](BasicOperation.gif)
 
 ### Requirements:
 
