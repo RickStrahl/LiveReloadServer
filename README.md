@@ -3,7 +3,7 @@
 [![NuGet](https://img.shields.io/nuget/v/LiveReloadServer.svg)](https://www.nuget.org/packages/LiveReloadServer/) [![](https://img.shields.io/nuget/dt/LiveReloadServer.svg)](https://www.nuget.org/packages/LiveReloadServer/) &nbsp; &nbsp; &nbsp; &nbsp;
 [![Chocolatey](https://img.shields.io/chocolatey/v/livereloadwebserver.svg)](https://chocolatey.org/packages/livereloadwebserver)
 
-**A self-contained, local, cross-platform, static file Web Server that is based on .NET, with automatic Live Reloading, Markdown rendering and loose Razor Pages support.**
+**A self-contained, local, cross-platform, static file Web Server that is based on .NET, with automatic Live Reloading, Markdown rendering and loose Razor Pages.**
 
 ![](https://raw.githubusercontent.com/RickStrahl/LiveReloadServer/master/screenshot.png)
 
@@ -13,17 +13,21 @@ This server supports:
 * Just start with:
     * `LiveReloadServer <folder>` (dotnet tool)  
     * `LiveReloadWebServer <folder>` (installed version)
-* LiveReload functionality for change detection and browser refresh
-* Self-contained Razor Pages support with Live Reload Support
+* Support for self-contained Razor Pages  <small>*(.cshtml)*</small>
 * Themed Markdown page rendering support built in
+* Built-in, optional Live Reload functionality for change detection and browser refresh  
+  <small>*for all supported file formats: Static Files, Razor and Markdown*</small> 
 * Options to customize location, port, files checked etc.
 * Easily installed and updated with `dotnet tool -g install LiveReloadServer`
 * Run local SPA applications (Angular, VueJs, React etc.)
-* Run Blazor Applications (without Live Reload support however)
-* Cross Platform - Windows, Mac, Linux (dotnet tool only)
-* Serve HTTPS content (dotnet tool only)
+* Run local Blazor Applications (without Live Reload support however)
+* Cross Platform - Windows, Mac, Linux <small>*(dotnet tool only)*</small>
+* Serve HTTPS content <small>*(dotnet tool only)*</small>
 * Hostable ASP.NET Core app that can be used by multiple sites on a server
-* Available as: Dotnet Tool, Chocolatey Package, or Self-Contained (Windows) Download
+* Available as: 
+  * Dotnet Tool (cross-platform)
+  * Chocolatey Package
+  * Self-Contained (Windows) Download
 
 ### Links
 
@@ -34,7 +38,7 @@ This server supports:
 * Dotnet Tool: .NET 9 SDK
 * Hosted: .NET 9  (Asp.Net Runtime)
 * Standalone Exe (Windows): self-contained (.NET 9)
-* If optionally hosting requires a Web Server that supports WebSockets
+* Live Reload in hosted apps requires a Web Server that supports WebSockets
 * Older versions of .NET are supported with prior releases
     * <  1.5  -  .NET 8.0
     * <  1.3  -  .NET 7.0
