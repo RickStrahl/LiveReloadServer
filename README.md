@@ -3,19 +3,19 @@
 [![NuGet](https://img.shields.io/nuget/v/LiveReloadServer.svg)](https://www.nuget.org/packages/LiveReloadServer/) [![](https://img.shields.io/nuget/dt/LiveReloadServer.svg)](https://www.nuget.org/packages/LiveReloadServer/) &nbsp; &nbsp; &nbsp; &nbsp;
 [![Chocolatey](https://img.shields.io/chocolatey/v/livereloadwebserver.svg)](https://chocolatey.org/packages/livereloadwebserver)
 
-**A self-contained, local, cross-platform, static file Web Server that is based on .NET, with automatic Live Reloading, Markdown rendering and loose Razor Pages.**
+**A self-contained, local, cross-platform, static file Web Server that is based on .NET, with automatic Live Reloading, Markdown rendering and loose Razor Pages** support.
 
 ![](https://raw.githubusercontent.com/RickStrahl/LiveReloadServer/master/screenshot.png)
 
 This server supports:
 
-* Generic Static File Web Server you can launch in any folder
+* **Generic Static File Web Server** you can launch in any folder
 * Just start with:
-    * `LiveReloadServer <folder>` (dotnet tool)  
-    * `LiveReloadWebServer <folder>` (installed version)
-* Support for self-contained Razor Pages  <small>*(.cshtml)*</small>
-* Themed Markdown page rendering support built in
-* Built-in, optional Live Reload functionality for change detection and browser refresh  
+    * `LiveReloadServer <folder>` <small>*(dotnet tool)*</small>  
+    * `LiveReloadWebServer <folder>` <small>*(installed version)*</small>
+* Support for self-contained **Razor Pages**  <small>*(.cshtml)*</small>
+* Themed **Markdown Page Rendering** support built in
+* Built-in, optional **Live Reload** functionality for change detection and browser refresh  
   <small>*for all supported file formats: Static Files, Razor and Markdown*</small> 
 * Options to customize location, port, files checked etc.
 * Easily installed and updated with `dotnet tool -g install LiveReloadServer`
@@ -23,7 +23,7 @@ This server supports:
 * Run local Blazor Applications (without Live Reload support however)
 * Cross Platform - Windows, Mac, Linux <small>*(dotnet tool only)*</small>
 * Serve HTTPS content <small>*(dotnet tool only)*</small>
-* Hostable ASP.NET Core app that can be used by multiple sites on a server
+* **Hostable ASP.NET Core Server** that can be used by multiple sites on a server
 * Available as: 
   * Dotnet Tool (cross-platform)
   * Chocolatey Package
