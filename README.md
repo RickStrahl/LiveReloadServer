@@ -59,16 +59,18 @@ You can grab the compiled Dotnet Tool from:
   ```
   
 * [Self Contained Windows Executable Folder (zipped)](https://github.com/RickStrahl/LiveReloadServer/raw/master/LiveReloadWebServer-SelfContained.zip) <small>(windows)</small>
-* [Hostable Package (requires installed .NET/ASP.NET 8.0 Runtime)](https://github.com/RickStrahl/LiveReloadServer/raw/master/LiveReloadServer-Hosted.zip) <small>(windows, mac, linux)</small>  
+* [Hostable Package (requires installed .NET/ASP.NET 9.0 Runtime)](https://github.com/RickStrahl/LiveReloadServer/raw/master/LiveReloadServer-Hosted.zip) <small>(windows, mac, linux)</small>  
 
 > All three versions have the same features and interface, just the delivery mechanism and the executable name is different. The EXE uses `LiveReloadWebServer` while the Dotnet Tool uses `LiveReloadServer`.
   
 ### What does it do?
-This tool is a generic **local Web Server** that you can point to **any folder** and provide simple and quick HTTP access to HTML and other Web resources. You can serve any **static resources** - HTML, CSS, JS etc. - as well as **loose Razor Pages** that don't require any code behind or dependent source code. There's also optional support for rendering **Markdown Pages** as themed HTML directly from Markdown files.
+This tool is a generic **local Web Server** that you can point to **any folder** and provide simple and quick HTTP access to HTML and other Web resources. You can serve any **static resources** - HTML, CSS, JS etc. Optionally you can also serve **loose Razor Pages** - .cshtml pages that are self-contained with any code contained in the `.cshtml` template. It's also possible to load loose assemblies with custom .NET library code. Additionally there's also optional **Markdown Page Rendering** support with themed HTML templates that render directly from Markdown file to themed page output. 
 
-Live Reload is enabled by default and checks for changes to common static files. If a checked file is changed, the browser's current page is refreshed. You can map additional extensions that trigger the LiveReload.
+Live Reload is enabled by default and checks for changes to common static files and also Razor and Markdown files if enabled. If a checked file is changed, the browser's current page is refreshed. Razor pages are recompiled before the refresh. You can map additional file extensions that trigger the Live Reload.
 
-You can also use this 'generic' server behind a live Web Server (like IIS, nginx etc.) by installing the main project as a deployed Web application to provide loose Razor support and Markdown rendering on a Web server. A  single LiveReloadServer installation can serve many Web sites using the same static, Razor and Markdown resources which can be ideal for mostly static content sites that need 'a little extra' beyond plain static pages (examples [here](https://anti-trust.rocks) and [here](https://markdownmonster.west-wind.com)).
+You can also use this 'generic' server behind a live Web Server (like IIS, nginx etc.) by installing the main project as a deployed Web application to provide loose Razor support and Markdown rendering on a Web server. **A  single LiveReloadServer installation can serve many Web sites** using the same static, Razor and Markdown resources which can be ideal for mostly static content sites that need 'a little extra' beyond plain static pages <small>*(examples:  [Anti-Trust Band Site](https://anti-trust.rocks) and [Markdown Monster Product Site](https://markdownmonster.west-wind.com))*</small>.
+
+> Note: This hosting feature isn't meant to be a replacement for full ASP.NET Web sites. If you have complex logic beyond simple scripting  or displaying easily managed local content, a full Web site will offer a better development experience. BUt if you just need a few small features or some easy script code to render some output the hosting feature is a quick way to push-button deploy individual HTML pages and their dependencies.
 
 ## Installation
 You can install this server as a .NET Tool using Dotnet SDK Tool installation:
@@ -175,6 +177,18 @@ You can specify explicit file extensions to monitor using the `--Extensions` swi
 
 `BrowserUrl` is an optional flag that allows you to specify a specific URL to open on launch. By default the root site is opened - by specifying a URL you can open a specific page. The `BrowserUrl` can be an absolute URL (`https://localhost:5200/test.html`) or a relative URL (`/test.html` or `test.html` or `/subfolder/test.html`).
 
+## SSL Support (--useSsl)
+If you're using the `dotnet tool` and are .NET SDK you can easily enable SSL on the local site by using the `--useSsl` switch. This will run the local site in `https://` mode with the install dev certificate of the SDK.
+
+If the SDK dev certificates are not installed you can install them with:
+
+```ps
+dotnet dev-certs https --trust
+```
+
+> The only way to use --useSsl at the moment is via the built-in .NET dev certificates. If you're running the standalone versions and you want to run with `https://` you have to install the .NET SDK to get the certificates installed.
+
+
 ## Markdown File Rendering
 You can enable Markdown support in this server by setting `-useMarkdown`. This serves HTML content directly off any `.md` or `.markdown` files in the Web root. The server provides default templates for the HTML styling, but you can override the rendering behavior with a **custom Razor template** that provides the chrome around the rendered Markdown, additional styling and syntax coloring.
 
@@ -191,7 +205,7 @@ To access `README.md` in the WebRoot you can use:
 * https://localhost:5200/README.md  
 * https://localhost:5200/README
 
-## Customizing Markdown Templates and Styling
+### Customizing Markdown Templates and Styling
 Default styling for Markdown comes from a Razor template that is provided as part of the distribution in the install folder's `./templates/markdown-themes` directory. This folder is hoisted as `~/markdown-themes` into the Web site, which makes the default CSS and script resources available to the Web site. This folder by default is routed back to the launch (not Web) root and is used for all sites you run through this server.
 
 There are several ways you can customize the Markdown styling and supporting resources:
