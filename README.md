@@ -232,12 +232,16 @@ You can also use Environment variables to set these save options by using a `Liv
 $env:LiveReloadServer_Port 5500
 LiveReload
 ```
+
+
+> LiveReloadServer is optimized for local development operation, so many of the flags default to settings that are geared towards quickly getting a site opened and running. All of these default options can be disabled with switches.
+
 ## Static Files
-The Web Server automatically serves all static files and Live Reload is automatically enabled unless explicitly turned off. HTML pages, CSS and scripts, and any other specific files with extensions you add are automatically reloaded whenever you make a change to the files.
+The Web Server automatically serves all static files and Live Reload is enabled by default unless explicitly turned off. HTML pages, CSS and scripts, and any other specific files with extensions you add are automatically reloaded whenever you make a change to the files.
 
-You can specify explicit file extensions to monitor using the `--Extensions` switch. The default is: `".cshtml,.css,.js,.htm,.html,.ts,.md"`. If you rather work without Live Reload you can turn it off  via `--useLiveReload False`.
+You can add extensions using the `--Extensions` switch. The default is: `".cshtml,.css,.js,.htm,.html,.ts,.md"`. If you rather work without Live Reload you can turn it off via `--useLiveReload False`.
 
-`BrowserUrl` is an optional flag that allows you to specify a specific URL to open on launch. By default the root site is opened - by specifying a URL you can open a specific page. The `BrowserUrl` can be an absolute URL (`https://localhost:5200/test.html`) or a relative URL (`/test.html` or `test.html` or `/subfolder/test.html`).
+`BrowserUrl` is an optional flag that allows you to specify a specific URL to open on launch. By default the root site is opened - by specifying a URL you can open a specific page. The `BrowserUrl` can be an absolute URL (`https://localhost:5200/test.html`) or a relative URL (`/test.html` or `test.html` or `/subfolder/test.html`). You can disable browser opening with `--OpenBrowser false`.
 
 ## SSL Support (--useSsl)
 If you're using the `dotnet tool` and are .NET SDK you can easily enable SSL on the local site by using the `--useSsl` switch. This will run the local site in `https://` mode with the install dev certificate of the SDK.
