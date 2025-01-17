@@ -5,7 +5,7 @@
 
 **A self-contained, local, cross-platform, static file Web Server that is based on .NET, with automatic Live Reloading, Markdown rendering and loose Razor Pages** support. The server also supports Web server and standalone hosting for sites using the non-static resource features.
 
-![](https://raw.githubusercontent.com/RickStrahl/LiveReloadServer/master/screenshot.png)
+![Live Reload Server Screenshot](https://raw.githubusercontent.com/RickStrahl/LiveReloadServer/master/screenshot.png)
 
 ## Features
 
@@ -33,7 +33,7 @@
 
 * [LiveReloadServer v1 Release Post](https://weblog.west-wind.com/posts/2021/Mar/23/LiveReloadServer-A-NET-Core-Based-Generic-Static-Web-Server-with-Live-Reload)
 
-![](BasicOperation.gif)
+![Basic Operation of Live Reload Server](BasicOperation.gif)
 
 ### Requirements:
 
@@ -588,15 +588,15 @@ To do this:
 * Configure Web site's `web.config` to point .NET Core binary
 
 ### Installing on IIS
-Let's go through this with IIS which uses the ASP.NET Core Hosting module. Make sure whatever server you're using .NET Core 5.x or later is installed. On IIS you need [ASP.NET Core Windows Server Hosting Bundle](https://dotnet.microsoft.com/download/dotnet/5.0).
+Let's go through this with IIS which uses the ASP.NET Core Hosting module. Make sure whatever server you're using .NET Core 5.x or later is installed. On IIS you need [ASP.NET Core Windows Server Hosting Bundle](https://dotnet.microsoft.com/en-us/download/dotnet/9.0).
 
 Start by downloading the hosted binaries and unzip into a folder - I use `LiveReloadServer` in my `Web Sites` folder. The Web Site goes into a separate folder `anti-trust.rocks` using only the static files that make up the Web site's content.
 
-![](Assets/HostedServerAndWebSiteFolders.png)
+![Multiple IIS WebSites using a single Live Reload Server Hosted Server](Assets/HostedServerAndWebSiteFolders.png)
 
 Next set up a new Web Site (or virtual in IIS) and point it at this new folder. You'll want to use a separate Application Pool as IIS can only host a single .NET Core app in an Application Pool. Remove ASP.NET Framework support from the Application Pool to reduce overhead.
 
-![](Assets/IISSiteFolder.png)
+![Setting up Live Reload Server for IIS](Assets/IISSiteFolder.png)
 
 Finally you need to configure the site to point at the Web folder and set any custom settings you want to run the site, like enabling Markdown and Razor etc. For IIS you do this via the `web.config` file in the Web folder:
 
