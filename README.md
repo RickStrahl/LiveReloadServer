@@ -3,11 +3,11 @@
 [![NuGet](https://img.shields.io/nuget/v/LiveReloadServer.svg)](https://www.nuget.org/packages/LiveReloadServer/) [![](https://img.shields.io/nuget/dt/LiveReloadServer.svg)](https://www.nuget.org/packages/LiveReloadServer/) &nbsp; &nbsp; &nbsp; &nbsp;
 [![Chocolatey](https://img.shields.io/chocolatey/v/livereloadwebserver.svg)](https://chocolatey.org/packages/livereloadwebserver)
 
-**A self-contained, local, cross-platform, static file Web Server that is based on .NET, with automatic Live Reloading, Markdown rendering and loose Razor Pages** support.
+**A self-contained, local, cross-platform, static file Web Server that is based on .NET, with automatic Live Reloading, Markdown rendering and loose Razor Pages** support. The server also supports Web server and standalone hosting for sites using the non-static resource features.
 
 ![](https://raw.githubusercontent.com/RickStrahl/LiveReloadServer/master/screenshot.png)
 
-This server supports:
+## Features
 
 * **Generic Static File Web Server** you can launch in any folder
 * Just start with:
@@ -28,8 +28,6 @@ This server supports:
   * Dotnet Tool (cross-platform)
   * Chocolatey Package
   * Self-Contained (Windows) Download
-  
-  
 
 ### Links
 
@@ -65,7 +63,7 @@ You can grab the compiled Dotnet Tool from:
 * [Self Contained Windows Executable Folder (zipped)](https://github.com/RickStrahl/LiveReloadServer/raw/master/LiveReloadWebServer-SelfContained.zip) <small>(windows)</small>
 * [Hostable Package (requires installed .NET/ASP.NET 9.0 Runtime)](https://github.com/RickStrahl/LiveReloadServer/raw/master/LiveReloadServer-Hosted.zip) <small>(windows, mac, linux)</small>  
 
-> All three versions have the same features and interface, just the delivery mechanism and the executable name is different. The EXE uses `LiveReloadWebServer` while the Dotnet Tool uses `LiveReloadServer`.
+> All four versions have the same features and interface, just the delivery mechanism and the executable name is different. The EXE uses `LiveReloadWebServer` while the Dotnet Tool uses `LiveReloadServer`.
   
 ### What does it do?
 This tool is a generic **local Web Server** that you can point to **any folder** and provide simple and quick HTTP access to HTML and other Web resources. You can serve any **static resources** - HTML, CSS, JS etc. Optionally you can also serve **loose Razor Pages** - .cshtml pages that are self-contained with any code contained in the `.cshtml` template. It's also possible to load loose assemblies with custom .NET library code. Additionally there's also optional **Markdown Page Rendering** support with themed HTML templates that render directly from Markdown file to themed page output. 
@@ -77,7 +75,15 @@ You can also use this 'generic' server behind a live Web Server (like IIS, nginx
 > Note: This hosting feature isn't meant to be a replacement for full ASP.NET Web sites. If you have complex logic beyond simple scripting  or displaying easily managed local content, a full Web site will offer a better development experience. BUt if you just need a few small features or some easy script code to render some output the hosting feature is a quick way to push-button deploy individual HTML pages and their dependencies.
 
 ## Installation
-You can install this server as a .NET Tool using Dotnet SDK Tool installation:
+Live Reload Server can be installed as:
+
+* A dotnet tool using .NET SDK *(cross-platform)*
+* From Chocolatey as a self-contained Executable *(Windows)*
+* Downloaded self-contained or shared runtime install *(Windows)*
+* Hosted Package in a Web Server *(cross-platform)*
+
+### Dotnet Tool
+If you are a .NET developer and are already using the .NET SDK this is the easiest way to use this tool and it works on all platforms .NET is supported on:
 
 ```powershell
 dotnet tool install -g LiveReloadServer
@@ -96,20 +102,72 @@ LiveReloadServer "c:/temp/My Local WebSite" --port 5350 -UseSsl
 LiveReloadServer --LiveReloadEnabled False --OpenBrowser False -UseSsl -UseRazor
 ```
 
-You can also install from Chocolatey:
+### Chocolatey
+You can also install from Chocolatey on Windows:
 
 ```ps
 choco install LiveReloadWebServer
 ```
 
-Note that EXE filename is `LiveReloadWebServer` which is different from the Dotnet Tool's `LiveReloadServer` so they can exist side by side without conflict.
+To use it then use:
 
+```ps
+LiveReloadWebServer "c:/temp/My Local WebSite" --port 5350 -UseSsl
+```
+
+> Note that EXE filename is `LiveReloadWebServer` which is different from the Dotnet Tool's ` LiveReloadServer` so they can exist side by side without conflict.
+>
 > Any of the following examples use `LiveReloadServer`, and you should substitute `LiveReloadServer` with `LiveReloadWebServer` for any non dotnet tool  installations.
 
-### Launching the Web Server
+### Download and Install Self-Contained EXE or Shared Runtime Installs
+You can also download the self-contained binaries directly into a folder and run locally on Windows. The application installs into a folder and runs as console application. Invoke directly or add your path to the folder to launch the console app.
+
+> This version can also be used in a hosted environment (see next section)
+
+[Download and Install Self (Windows)](https://github.com/RickStrahl/LiveReloadServer/raw/master/LiveReloadWebServer-SelfContained.zip)
+
+To launch with a full path:
+
+```ps
+# Use your install folder
+~\MyPrograms\LiveReloadServer\LiveReloadWebServer c:\Web Sites\MyStaticSite -useSsl -useRazor
+```
+
+### Shared Runtimes and Hosted Install
+The Shared Runtime install requires that the .NET and ASP.NET Runtimes are installed. Using this install is smaller and works identical tot he self-contained install. 
+
+In addition it can also be hosted in a Web server to provide Razor, Markdown and LiveReload services to Web sites. In order to host you'll need to map the binaries to a Web site and you can use .NET configuration or Environment variables to set startup parameters to point at the Web site folder.
+
+For IIS this looks like this:
+
+```xml
+<system.webServer>
+   <handlers>
+     <add name="aspNetCore" path="*" verb="*" modules="AspNetCoreModuleV2" resourceType="Unspecified" />
+   </handlers> 
+   <!-- point at the DLL with absolute or relative path -->
+   <aspNetCore processPath="dotnet" hostingModel="InProcess" arguments="..\LiveReloadServer\LiveReloadServer.dll" stdoutLogEnabled="false" stdoutLogFile=".\logs\stdout">
+     <environmentVariables>
+       <!-- set launch options for the site  -->
+       <environmentVariable name="ASPNET_ENVIRONMENT" value="Production" />
+       <environmentVariable name="LIVERELOADSERVER_WEBROOT" value="C:\users\rstrahl\OneDrive\Web Sites\anti-trust.rocks" />
+       <environmentVariable name="LIVERELOADSERVER_USERAZOR" value="True" />
+       <environmentVariable name="LIVERELOADSERVER_USEMARKDOWN" value="True" />
+       <environmentVariable name="LIVERELOADSERVER_USELIVERELOAD" value="False" />
+       <environmentVariable name="LIVERELOADSERVER_OPENBROWSER" value="False" />           
+       <environmentVariable name="LIVERELOADSERVER_SHOWCONSOLEOUTPUT" value="False" />     
+       <environmentVariable name="LIVERELOADSERVER_DEFAULTFILES" value="index.html,post.md,readme.md" />        
+     </environmentVariables>
+   </aspNetCore>
+</system.webServer>
+```
+
+You can map multiple sites to a single executable in this way. It's possible to do this both with the Self-Contained and Shared Runtime installs.
+
+## Launching the Web Server
 You can use the command line to customize how the server runs. By default files are served out of the current directory on port `5200`, but you can override the `WebRoot` folder.
 
-Use commandline parameters to customize:
+Use command line parameters to customize:
 
 ```ps
 LiveReloadServer "c:/temp/My Web Site" --port 5200 -useSsl -openEditor

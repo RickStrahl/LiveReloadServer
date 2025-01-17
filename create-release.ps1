@@ -28,7 +28,7 @@ $filetext = @"
 `$url = "$downloadUrl"
 `$drop = "`$(Split-Path -Parent `$MyInvocation.MyCommand.Definition)"
 `$sha = "$sha"
-`Install-ChocolateyZipPackage -PackageName "`$packageName" -Url "`$url" -UnzipLocation "`$drop" -checksum64 "`$sha" -checksumtype "sha256"
+`Install-ChocolateyZipPackage -PackageName "`$packageName" -Url "`$url" -UnzipLocation "`$drop" -checksum "`$sha" -checksumtype "sha256"
 "@
 out-file -filepath Chocolatey\tools\chocolateyInstall.ps1 -inputobject $filetext
 Write-Host $filetext
