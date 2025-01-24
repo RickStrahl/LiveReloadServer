@@ -8,59 +8,68 @@
     }
   },
   "profiles": {
-      "LiveReloadServer - SampleSite": {
-        "commandName": "Project",
-        "commandLineArgs": "../../../../SampleSite -OpenEditor -UseSsl -UseRazor -UseMarkdown  --CopyMarkdownResources True --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs --ShowUrls True",
-        "xcommandLineArgs": "--WebRoot ../../../../SampleSite --Host 0.0.0.0 -UseRazor -UseMarkdown  --CopyMarkdownResources False --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs --ShowUrls True",
-        "launchBrowser": true,
-        "environmentVariables": {
-          "ASPNETCORE_ENVIRONMENT": "Development"
-        }
-      },
-      "LiveReloadServer - Anti-Trust": {
-	      "commandName": "Project",
-	      "commandLineArgs": "\"d:/projects/anti-trust-guilty-album/anti-trust.rocks\" -useRazor -useMarkdown -useSsl --MarkdownTheme blackout --openBrowser true --openEditor true",
-	      "launchBrowser": true,
-	      "environmentVariables": {
-	        "ASPNETCORE_ENVIRONMENT": "Production"
-      },
-      "LiveReloadServer - Help": {
-        "commandName": "Project",
-        "commandLineArgs": "--help",
-        "launchBrowser": false,
-        "environmentVariables": {
-          "ASPNETCORE_ENVIRONMENT": "Development"
-        }
-      },
-      "LiveReloadServer - PRA": {
-        "commandName": "Project",
-        "commandLineArgs": "--webroot C:/clients/PRA/PraMobile/PraMobileAngular_Published --Host 0.0.0.0  --FolderNotFoundFallbackPath /index.html --ShowUrls True ",
-        "launchBrowser": true,
-        "environmentVariables": {
-          "ASPNETCORE_ENVIRONMENT": "Development"
-        }
-      },
-
-      "LiveReloadServer - MarkdownFolder": {
-        "commandName": "Project",
-        "commandLineArgs": "C:\\temp\\MarkdownProject -UseMarkdown --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs  --Host 0.0.0.0 ",
-        "launchBrowser": true,
-        "environmentVariables": {
-          "ASPNETCORE_ENVIRONMENT": "Production"
-        }
-      }
-
-
-    },
-
-    "LiveReloadServer - AlbumViewer": {
+    "LiveReloadServer - SampleSite": {
       "commandName": "Project",
-      "commandLineArgs": "--webroot C:\\projects\\AlbumViewerVNext\\src\\AlbumViewerNetCore\\wwwroot --Host 0.0.0.0",
+      "commandLineArgs": "../../../../SampleSite -OpenEditor -UseSsl -UseRazor -UseMarkdown  --CopyMarkdownResources True --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs --ShowUrls True --VirtualPath /docs/",
+      "xcommandLineArgs": "--WebRoot ../../../../SampleSite --Host 0.0.0.0 -UseRazor -UseMarkdown  --CopyMarkdownResources False --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs --ShowUrls True",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    },
+    "LiveReloadServer - Anti-Trust": {
+      "commandName": "Project",
+      "commandLineArgs": "\"d:/projects/anti-trust-guilty-album/anti-trust.rocks\" -useRazor -useMarkdown -useSsl --MarkdownTheme blackout --openBrowser true --openEditor true --VirtualPath /docs/",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      }
+    },
+    "LiveReloadServer - Doc Monster WebSurge": {
+      "commandName": "Project",
+      "commandLineArgs": "\"d:/temp/WebSurge3_project/wwwroot\"  -useSsl --openBrowser true --VirtualPath /docs/",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      }
+    },
+    "LiveReloadServer - Help": {
+      "commandName": "Project",
+      "commandLineArgs": "--help",
+      "launchBrowser": false,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "LiveReloadServer - PRA": {
+      "commandName": "Project",
+      "commandLineArgs": "--webroot C:/clients/PRA/PraMobile/PraMobileAngular_Published --Host 0.0.0.0  --FolderNotFoundFallbackPath /index.html --ShowUrls True ",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+
+    "LiveReloadServer - MarkdownFolder": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\temp\\MarkdownProject -UseMarkdown --MarkdownTheme Dharkan  --MarkdownSyntaxTheme vs  --Host 0.0.0.0 ",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      }
     }
 
+
+  },
+
+  "LiveReloadServer - AlbumViewer": {
+    "commandName": "Project",
+    "commandLineArgs": "--webroot C:\\projects\\AlbumViewerVNext\\src\\AlbumViewerNetCore\\wwwroot --Host 0.0.0.0",
+    "launchBrowser": true,
+    "environmentVariables": {
+      "ASPNETCORE_ENVIRONMENT": "Development"
+    }
   }
+
 }
+

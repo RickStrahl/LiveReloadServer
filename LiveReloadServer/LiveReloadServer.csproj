@@ -13,7 +13,7 @@
 		<DefineConstants>USE_RAZORPAGES;TRACE;DEBUG</DefineConstants>
 	</PropertyGroup>
 	<PropertyGroup>
-		<Version>1.5.0</Version>
+		<Version>1.5.2</Version>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net9.0</TargetFramework>
 		<RazorCompileOnPublish>false</RazorCompileOnPublish>
@@ -21,14 +21,14 @@
 		<Product>Live ReloadServer</Product>
 		<Authors>Rick Strahl</Authors>
 		<Company>West Wind Technolologies</Company>
-		<Copyright>© Rick Strahl - West Wind Technologies, 2019-2024</Copyright>
+		<Copyright>© Rick Strahl - West Wind Technologies, 2019-2025</Copyright>
 		<Summary>A self-contained, local, cross-platform, static file Web Server with automatic Live Reloading, Markdown rendering and loose Razor Pages support.</Summary>
 		<Description>
 			LiveReloadServer is a local, static file Web Server with optional, built-in Live Reload functionality, Markdown rendering support and the ability to run self-contained Razor Pages out of any local folder. Simply point at a local folder with `--webroot` and start serving the folder as a Web site.
 
 			Commandline options let you customize the path, port, add Razor and Markdown features support, add extensions to monitor and more. Convenience features can launch a browser, optionally launch an editor and can start on a specific page.
 
-			Live Reload lets you change any content, code and stying files and immediately see the content refreshed in a Web browser - very useful for local development tasks or editing content sites.
+			Live Reload lets you change any content, code and styling files and immediately see the content refreshed in a Web browser - very useful for local development tasks or editing content sites.
 
 			This tool also provides an ASP.NET Core runtime, that can be hosted on a server to provide the dynamic dynamic features used by the Razor and Markdown functionality. This is useful for mostly content driven WebSites that a need a little extra functionality beyond plain static content.
 

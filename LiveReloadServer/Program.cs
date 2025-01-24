@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Reflection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -130,8 +131,14 @@ namespace LiveReloadServer
                     if (!string.IsNullOrEmpty(webRoot))
                         webBuilder.UseWebRoot(webRoot);
                   
-                    webBuilder.UseUrls($"http{(serverConfig.UseSsl ? "s" : "")}://{serverConfig.Host}:{serverConfig.Port}");
+                    var virtualPath = serverConfig.VirtualPath;
+                    if (!string.IsNullOrEmpty(virtualPath) || virtualPath == "/")
+                        virtualPath = "";
 
+                    var hostingUrl = serverConfig.GetHostingHostingServerUrl();
+                    webBuilder.UseUrls(hostingUrl);
+                        //$"http{(serverConfig.UseSsl ? "s" : "")}://{serverConfig.Host}:{serverConfig.Port}{virtualPath}");
+                    
                     webBuilder
                         .UseStartup<Startup>();
                 });
@@ -206,6 +213,7 @@ Syntax:
 --DetailedErrors         True*|False
 --ShowConsoleOutput      True*|False (turn off for production)
 --Environment            Production*|Development
+--VirtualPath            / | /docs/ | /myApp/docs/  (default is root /)
 
 Razor Pages:
 ------------

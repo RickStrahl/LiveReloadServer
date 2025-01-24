@@ -18,6 +18,25 @@ namespace LiveReloadServer
         /// </summary>
         public string WebRoot { get; set; }
 
+        
+        /// <summary>
+        /// An optional virtual path that can be applied when the server starts
+        /// so you can emulate a Web site subfolder (ie. /docs/)
+        /// 
+        /// Automatically adds a trailing slash to the path
+        /// </summary>
+        public string VirtualPath {
+            get => _virtualPath;
+            set {
+                
+                if (string.IsNullOrEmpty(value))
+                    value = "/";
+
+                _virtualPath = StringUtils.TerminateString(value,"/");                
+            }
+        }
+        private string _virtualPath = "/";
+
 
         /// <summary>
         /// The port that the server is bound to. Defaults to 5200
@@ -156,7 +175,6 @@ namespace LiveReloadServer
 
 
 
-
         #endregion
 
         /// <summary>
@@ -192,6 +210,7 @@ namespace LiveReloadServer
             }
             
             Port = Helpers.GetIntegerSetting("Port", Configuration, Port);
+            VirtualPath = Helpers.GetStringSetting("VirtualPath", Configuration, VirtualPath);
             UseSsl = Helpers.GetLogicalSetting("UseSsl", Configuration, UseSsl);
             Host = Helpers.GetStringSetting("Host", Configuration, Host);
             DefaultFiles = Helpers.GetStringSetting("DefaultFiles", Configuration, DefaultFiles);
@@ -263,7 +282,7 @@ namespace LiveReloadServer
 
         /// <summary>
         /// Retrieves the adjusted HTTP URL - adjusted for localhost for
-        /// local urls
+        /// local urls that can be safely used in the browser.
         /// </summary>
         /// <returns></returns>
         public string GetHttpUrl(bool noHostNameTranslation = false)
@@ -272,10 +291,20 @@ namespace LiveReloadServer
             if (!noHostNameTranslation)
                 hostName = GetHostName();
 
-            return $"http{(UseSsl ? "s" : "")}://{hostName}:{Port}";
+            return $"http{(UseSsl ? "s" : "")}://{hostName}:{Port}{VirtualPath}";
         }
 
+        /// <summary>
+        /// Retrieve the hosting server URL used to start the server
+        /// </summary>
+        /// <returns></returns>
+        public string GetHostingHostingServerUrl()
+        {
+         
 
+            return $"http{(UseSsl ? "s" : "")}://{Host}:{Port}";
+        }
+        
 
 
     }

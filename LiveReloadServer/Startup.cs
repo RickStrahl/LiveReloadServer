@@ -146,6 +146,9 @@ namespace LiveReloadServer
             if (ServerConfig.ShowUrls)
                 app.Use(DisplayRequestInfoMiddlewareHandler);
 
+            if (ServerConfig.VirtualPath != "/") 
+                app.UsePathBase(ServerConfig.VirtualPath);
+
             app.UseDefaultFiles(new DefaultFilesOptions
             {
                 FileProvider = new PhysicalFileProvider(ServerConfig.WebRoot),
@@ -276,7 +279,7 @@ namespace LiveReloadServer
 
             ColorConsole.WriteEmbeddedColorLine($"Site Url     : [darkcyan]{ServerConfig.GetHttpUrl()}[/darkcyan] {hostUrl}");
             //ConsoleHelper.WriteLine(, ConsoleColor.DarkCyan);
-            Console.WriteLine($"Web Root     : {ServerConfig.WebRoot}");
+            Console.WriteLine($"Web Root     : {ServerConfig.WebRoot}");            
             Console.WriteLine($"Executable   : {Assembly.GetExecutingAssembly().Location}");
             Console.WriteLine($"Live Reload  : {ServerConfig.UseLiveReload}");
             if (ServerConfig.UseLiveReload)
