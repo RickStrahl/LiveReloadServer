@@ -1,5 +1,16 @@
 # Live Reload Server Change Log
 
+### Version 1.5.2
+
+<small>in progress</small>
+
+* **Add support for Virtual Path Hosting**  
+You can now host a site with an optional virtual path so that you can use relative base paths that simulate virtual directories on a server. Useful for example if you use `https://mySite.com/docs/` folder for a documentation and you want to duplicate that locally. You can with `--VirtualPath /docs/` now.
+
+* **Update to .NET 9.0**  
+Updated the server to use the .NET 9.0 Runtime.
+
+
 ### Version 1.3
 <small>November 20th, 2023</small>
 

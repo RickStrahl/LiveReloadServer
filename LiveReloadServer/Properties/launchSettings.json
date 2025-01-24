@@ -19,7 +19,7 @@
     },
     "LiveReloadServer - Anti-Trust": {
       "commandName": "Project",
-      "commandLineArgs": "\"d:/projects/anti-trust-guilty-album/anti-trust.rocks\" -useRazor -useMarkdown -useSsl --MarkdownTheme blackout --openBrowser true --openEditor true --VirtualPath /docs/",
+      "commandLineArgs": "\"d:/projects/anti-trust-guilty-album/anti-trust.rocks\" -useRazor -useMarkdown -useSsl --MarkdownTheme blackout --openBrowser true --openEditor true ",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production"

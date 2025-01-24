@@ -198,6 +198,7 @@ LiveReloadServer <path> <options>
                          "open -a \"Visual Studio Code\" \"%1\""* (Mac)
 --DetailedErrors         True*|False
 --Environment            Production*|Development
+--VirtualPath            Optional virtual paths: /docs/ | /subdir/docs/ 
 
 Razor Pages:
 ------------
