@@ -40,6 +40,16 @@ namespace LiveReloadServer
                     ShowHelp();
                     return;
                 }
+                if (args.Contains("--RegisterExplorer", StringComparer.InvariantCultureIgnoreCase))
+                {
+                    Startup.RegisterInExplorer();
+                    return;
+                }
+                if (args.Contains("--UnregisterExplorer", StringComparer.InvariantCultureIgnoreCase))
+                {
+                    Startup.RegisterInExplorer(true);
+                    return;
+                }
 
                 var builder = CreateHostBuilder(args);
                 if (builder == null)
@@ -185,7 +195,7 @@ namespace LiveReloadServer
 {Helpers.AppHeader}
 {headerLine}");
 
-            ColorConsole.WriteLine("(c) Rick Strahl, West Wind Technologies, 2019-2022", ConsoleColor.DarkGray);
+            ColorConsole.WriteLine("(c) Rick Strahl, West Wind Technologies, 2019-" + DateTime.Now.Year, ConsoleColor.DarkGray);
 
             Console.WriteLine($@"Static, Markdown and Razor Files Web Server with Live Reload for changed content.
 
@@ -214,6 +224,8 @@ Syntax:
 --ShowConsoleOutput      True*|False (turn off for production)
 --Environment            Production*|Development
 --VirtualPath            / | /docs/ | /myApp/docs/  (default is root /)
+--RegisterExplorer       True*|False (register .livereload files with this server)
+--UnRegisterExplorer     True*|False
 
 Razor Pages:
 ------------

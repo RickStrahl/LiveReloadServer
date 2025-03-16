@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Net.Sockets;
+using System.Net;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Configuration;
 using Westwind.Utilities;
+using System.Net.NetworkInformation;
 
 namespace LiveReloadServer
 {
@@ -37,11 +41,24 @@ namespace LiveReloadServer
         }
         private string _virtualPath = "/";
 
+        /// <summary>
+        /// When set registers LiveReloadServer as an Explorer Folder Open here
+        /// </summary>
+        public bool RegisterExplorer { get; set; }
 
         /// <summary>
-        /// The port that the server is bound to. Defaults to 5200
+        /// If set unregisters the Explorer shell extension to open a Web site here
         /// </summary>
-        public int Port { get; set; } = 5200;
+        public bool UnregisterExplorer { get; set; }
+
+
+        /// <summary>
+        /// The port that the server is bound to.
+        /// 
+        /// Defaults to 0 which attempts to find an empty port 
+        /// starting at port 5200.
+        /// </summary>
+        public int Port { get; set; } = 0;
 
         /// <summary>
         /// The IP or Host address to bind the server to. By default uses localhost
@@ -210,6 +227,12 @@ namespace LiveReloadServer
             }
             
             Port = Helpers.GetIntegerSetting("Port", Configuration, Port);
+            if (Port == 0)
+            {
+                // pick a random port that's available                
+                Port = FindLowestAvailablePort();
+            }
+
             VirtualPath = Helpers.GetStringSetting("VirtualPath", Configuration, VirtualPath);
             UseSsl = Helpers.GetLogicalSetting("UseSsl", Configuration, UseSsl);
             Host = Helpers.GetStringSetting("Host", Configuration, Host);
@@ -226,6 +249,9 @@ namespace LiveReloadServer
             BrowserUrl = Helpers.GetStringSetting("BrowserUrl", Configuration, BrowserUrl);
             OpenEditor =Helpers.GetLogicalSetting("OpenEditor", Configuration, OpenEditor);
             EditorLaunchCommand = Helpers.GetStringSetting("EditorLaunchCommand", Configuration, EditorLaunchCommand);
+            
+            RegisterExplorer = Helpers.GetLogicalSetting("RegisterExplorer", Configuration, RegisterExplorer);
+            UnregisterExplorer = Helpers.GetLogicalSetting("UnregisterExplorer", Configuration, UnregisterExplorer);
 
 
             DetailedErrors = Helpers.GetLogicalSetting("DetailedErrors", Configuration, DetailedErrors);
@@ -299,12 +325,52 @@ namespace LiveReloadServer
         /// </summary>
         /// <returns></returns>
         public string GetHostingHostingServerUrl()
-        {
-         
-
+        {         
             return $"http{(UseSsl ? "s" : "")}://{Host}:{Port}";
         }
-        
+
+
+        private static int FindLowestAvailablePort(int startPort = 5200, int endPort = 10000)
+        {
+            for (int port = startPort; port <= endPort; port++)
+            {
+                if (IsPortAvailable(port))
+                    return port;
+            }
+
+            return -1;
+        }
+
+        private static bool IsPortAvailable(int port)
+        {
+            try
+            {
+                using (TcpListener listener = new TcpListener(IPAddress.Loopback, port))
+                {
+                    listener.Start();
+                    listener.Stop();
+                    return true;
+                }
+            }
+            catch (SocketException)
+            {
+                return false; // Port is in use
+            }
+        }
+
+        private class ByteArrayComparer : IComparer<byte[]>
+        {
+            public int Compare(byte[]? x, byte[]? y)
+            {
+                if (x == null || y == null) return 0;
+                for (int i = 0; i < Math.Min(x.Length, y.Length); i++)
+                {
+                    int cmp = x[i].CompareTo(y[i]);
+                    if (cmp != 0) return cmp;
+                }
+                return x.Length.CompareTo(y.Length);
+            }
+        }
 
 
     }

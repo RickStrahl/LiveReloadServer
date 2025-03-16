@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
@@ -42,6 +46,9 @@ namespace LiveReloadServer
         {
             ServerConfig = new LiveReloadServerConfiguration();
             ServerConfig.LoadFromConfiguration(Configuration);
+
+           
+
 
             if (ServerConfig.UseLiveReload)
             {
@@ -451,8 +458,9 @@ namespace LiveReloadServer
 
                 }
             }
-
+        
         }
+
 
         FileSystemWatcher privateBinWatcher { get; set; }
 
@@ -552,6 +560,77 @@ namespace LiveReloadServer
                 ColorConsole.WriteError("-- " + ex.Message);
             }
         }
+
+        public static void RegisterInExplorer(bool unregister = false)
+        {
+
+            // [HKEY_CURRENT_USER\Software\Classes\Directory\shell\LiveReloadServer]
+            // @="Open as Web Site w/ LiveReloadServer"
+            // "Icon"="livereloadWebServer.exe,0"
+            // 
+            // [HKEY_CURRENT_USER\Software\Classes\Directory\LiveReloadServer\command]
+            // @="LiveReloadServer.exe \"%1\ --openBrowser""
+
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return;
+
+
+            if (!unregister)
+            {
+                try
+                {
+                    var location = Assembly.GetExecutingAssembly().Location;
+
+
+                    string exec = location;
+                    if (File.Exists(location.Replace(".dll", ".exe")))
+                        exec = location.Replace(".dll", ".exe");
+                    else
+                    {
+                        exec = Path.Combine(Environment.ExpandEnvironmentVariables("%USERPROFILE%"), ".dotnet", "tools", "LiveReloadServer.exe");                        
+                        if (!File.Exists(exec))
+                            exec = location;    
+                    }                        
+
+                    var key = @"HKEY_CURRENT_USER\Software\Classes\Directory\shell\LiveReloadServer";
+                    var value = "Open as Live Reload Web Site";
+                    Microsoft.Win32.Registry.SetValue(key, "", value);
+                    
+                    value = "\"" + Path.GetDirectoryName(location) + "\\LiveReload.ico\"";
+                    Microsoft.Win32.Registry.SetValue( key, "Icon", value);
+
+                    key = @"HKEY_CURRENT_USER\Software\Classes\Directory\shell\LiveReloadServer\command";
+                    value = "\"" + exec + "\" \"%1\"";
+                    Microsoft.Win32.Registry.SetValue( key, "", value);
+
+                    ColorConsole.WriteSuccess("Registered LiveReloadServer from Windows Explorer.");
+                }
+                catch(Exception ex)
+                {
+                    ColorConsole.WriteError("Failed to register LiveReloadServer in Windows Explorer. " + ex.Message);
+                }
+            }
+            else
+            {
+                try
+                {         
+                    var keyPath = @"Software\Classes\Directory\shell";
+                    using (var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(keyPath, writable: true))
+                    {
+                        if (key != null)
+                        {
+                            key.DeleteSubKeyTree("LiveReloadServer", throwOnMissingSubKey: false);
+                        }
+                        ColorConsole.WriteSuccess("Unregistered LiveReloadServer from Windows Explorer.");
+                    }
+                }
+                catch
+                {
+                    ColorConsole.WriteError("Failed to unregister LiveReloadServer in Windows Explorer.");
+                }
+            }
+
+        }
+
 
         #endregion
 

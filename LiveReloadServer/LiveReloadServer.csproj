@@ -13,12 +13,12 @@
 		<DefineConstants>USE_RAZORPAGES;TRACE;DEBUG</DefineConstants>
 	</PropertyGroup>
 	<PropertyGroup>
-		<Version>1.5.2</Version>
+		<Version>1.5.5</Version>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net9.0</TargetFramework>
 		<RazorCompileOnPublish>false</RazorCompileOnPublish>
 		<Title>Live Reload Server</Title>
-		<Product>Live ReloadServer</Product>
+		<Product>Live Reload Server</Product>
 		<Authors>Rick Strahl</Authors>
 		<Company>West Wind Technolologies</Company>
 		<Copyright>© Rick Strahl - West Wind Technologies, 2019-2025</Copyright>
@@ -94,6 +94,9 @@
 		<None Include="icon.png" Pack="true" PackagePath="" />
 		<None Include="LICENSE.MD" Pack="true" PackagePath="" />
 		<None Include="Nuget_Readme.md" Pack="true" PackagePath="" />
+		<None Update="LiveReload.ico">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 		<None Update="LiveReloadWebServer.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
