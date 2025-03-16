@@ -204,7 +204,8 @@ Syntax:
 {Helpers.ExeName} <WebRoot> <options>
 
 --WebRoot                <path>  (current Path if not provided)
---Port                   5200*
+--Port                   0*|5210  0* - use next available port >= 5200
+                                  n  - force a specific port number)
 --Host                   0.0.0.0*|localhost|custom Ip - 0.0.0.0 allows external access
 --UseSsl                 True|False*{razorFlag}
 

@@ -178,31 +178,41 @@ There are a number of Configuration options available:
 ```text
 Syntax:
 -------
-LiveReloadServer <path> <options>
+Static, Markdown and Razor Files Web Server with Live Reload for changed content.
+
+Syntax:
+-------
+LiveReloadServer <WebRoot> <options>
 
 --WebRoot                <path>  (current Path if not provided)
---Port                   5200*
+--Port                   0*|5210  (0 - uses next free port starting with 5200, 
+                                   n - force specific port number)
 --Host                   0.0.0.0*|localhost|custom Ip - 0.0.0.0 allows external access
 --UseSsl                 True|False*
---UseRazor          	 True|False*
+--UseRazor           True|False*
 
 --UseLiveReload          True*|False
 --Extensions             ".cshtml,.css,.js,.htm,.html,.ts"*
 --DefaultFiles           "index.html,default.htm"*
+--FolderNotFoundFallbackPath
+                         "Fallback Url on 404 folder requests (none* or "index.html")"
 
 --ShowUrls               True|False*
 --OpenBrowser            True*|False
---BrowserUrl             optional startup url (site relative or absolute)
+--BrowserUrl             optional startup URL (relative or absolute)
 --OpenEditor             True|False*
---EditorLaunchCommand    "code \"%1\""* (Win) or 
-                         "open -a \"Visual Studio Code\" \"%1\""* (Mac)
+--EditorLaunchCommand    "code \"%1\""* (Win)
+                         "open - a \"Visual Studio Code\" \"%1\""* (Mac)
 --DetailedErrors         True*|False
+--ShowConsoleOutput      True*|False (turn off for production)
 --Environment            Production*|Development
---VirtualPath            Optional virtual paths: /docs/ | /subdir/docs/ 
+--VirtualPath            / | /docs/ | /myApp/docs/  (default is root /)
+--RegisterExplorer       True*|False (register .livereload files with this server)
+--UnRegisterExplorer     True*|False
 
 Razor Pages:
 ------------
---UseRazor               True|False*
+--UseRazor              True|False*
 
 Markdown Options:
 -----------------
@@ -220,10 +230,11 @@ Configuration options can be specified in:
 
 Examples:
 ---------
-LiveReloadServer --WebRoot "c:\temp\My Site" --port 5500 -useSsl -useRazor --openBrowser false
+LiveReloadServer "c:\temp\My Site" -useSsl -useRazor
+LiveReloadServer --WebRoot "c:\temp\My Html Site" --port 5500 -useSsl -openEditor
 
 $env:LiveReloadServer_Port 5500
-$env:LiveReloadServer_WebRoot c:\mySites\Site1\Web
+$env:LiveReloadServer_WebRoot c:\mySites\Site1\Web 
 LiveReloadServer
 ```
 
