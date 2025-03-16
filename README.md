@@ -164,13 +164,36 @@ For IIS this looks like this:
 
 You can map multiple sites to a single executable in this way. It's possible to do this both with the Self-Contained and Shared Runtime installs.
 
-### Open Live Reload Web Site Shell Extension (Windows)
-To get a shortcut on Windows Explorer to **Open LiveReload Web Site** you can use the following command line arguments to register and unregister the context menu shortcuts:
+### Open Folder as LiveReload Web Site Shell Extension (Windows)
+You can optionally add LiveReloadServer (or LiveReloadWebServer) install as a shell extension that offers to open a folder as a Web site:
+
+![Explorer Shell Extension](https://raw.githubusercontent.com/RickStrahl/LiveReloadServer/master/Assets/ExplorerShellExtension.jpg)
+
+To register and unregister this functionality, you can use these command line options:
 
 * LiveReloadServer --RegisterExplorer
 * LiveReloadServer --UnregisterExplorer
 
-![Explorer Shell Extension](https://raw.githubusercontent.com/RickStrahl/LiveReloadServer/master/Assets/ExplorerShellExtension.jpg)
+::: Tip
+Tweak your default configuration on how LiveReloadServer starts with the `LiveReloadServer.json` or `LiveReloadWebServer.json` file in the install folder - this file sets the default options that are used when LiveReloadServer is started which affects how the Shell extension opens by default.
+:::
+
+### Default Configuration Settings
+If you run `LiveReload` or `LiveReloadWebServer` without any parameters, the app starts with its default settings. You can tweak these default settings via the configuration file which can be found in the installation folder (the location when you start LiveReloadServer in the `Executable` value).
+
+In that folder find the `LiveReloadServer.json` or `LiveReloadWebServer.json` file and edit the default configuration settings that you see fit.
+
+By default LiveReloadServer:
+
+* Opens the current folder (or the folder pointed to by the Shell Extension)
+* Runs on port 5200 or the next available higher port if already in use (--port)
+* Doesn't use Secure Connection
+* Doesn't use Razor
+* Doesn't use 
+
+
+
+
 
 ## Launching the Web Server
 You can use the command line to customize how the server runs. By default files are served out of the current directory on port `5200`, but you can override the `WebRoot` folder.
