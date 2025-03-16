@@ -119,7 +119,7 @@ LiveReloadWebServer "c:/temp/My Local WebSite" --port 5350 -UseSsl
 >
 > Any of the following examples use `LiveReloadServer`, and you should substitute `LiveReloadServer` with `LiveReloadWebServer` for any non dotnet tool  installations.
 
-### Download and Install Self-Contained EXE or Shared Runtime Installs
+### Self-Contained EXE or Shared Runtime Installs
 You can also download the self-contained binaries directly into a folder and run locally on Windows. The application installs into a folder and runs as console application. Invoke directly or add your path to the folder to launch the console app.
 
 > This version can also be used in a hosted environment (see next section)
@@ -177,28 +177,7 @@ To register and unregister this functionality, you can use these command line op
 > [!TIP]
 Tweak your default configuration on how LiveReloadServer starts with the `LiveReloadServer.json` or `LiveReloadWebServer.json` file in the install folder - this file sets the default options that are used when LiveReloadServer is started which affects how the Shell extension opens by default.
 
-### Default Configuration Settings
-If you run `LiveReload` or `LiveReloadWebServer` without any parameters, the app starts with its default settings. You can tweak these default settings via the configuration file which can be found in the installation folder (the location when you start LiveReloadServer in the `Executable` value).
 
-In that folder find the `LiveReloadServer.json` or `LiveReloadWebServer.json` file and edit the default configuration settings that you see fit.
-
-By default LiveReloadServer without switches:
-
-* Opens the current folder (or the folder pointed to by the Shell Extension)
-* Runs on port 5200 or the next available higher port if already in use (--port)
-* Doesn't use Secure Connection
-* Doesn't use Razor
-* Doesn't use Markdown Rendering
-* Handles common Web resource extensions and Mime types
-
-All of the configuration switches that are available can also be tweaked in the configuration file. 
-
-The order of settings preference is as follows:
-
-* Default configuration (internal)
-* Configuration File (`LiveReloadServer.json` `LiveReloadWebServer.json`)
-* Environment Variables
-* Command Line Switches
 
 
 ## Launching the Web Server
@@ -284,6 +263,29 @@ LiveReload
 
 
 > LiveReloadServer is optimized for local development operation, so many of the flags default to settings that are geared towards quickly getting a site opened and running. All of these default options can be disabled with switches.
+
+
+### Default Configuration Settings
+If you run `LiveReload` or `LiveReloadWebServer` without any parameters, the app starts with its default settings. You can tweak these default settings via the configuration file which can be found in the installation folder (Shown **Executable** value when you start the server).
+
+You can edit `LiveReloadServer.json` or `LiveReloadWebServer.json` to modify default startup configuration settings.
+
+By default LiveReloadServer without switches:
+
+* Opens the current folder (or the folder pointed to by the Shell Extension)
+* Runs on port 5200 or the next available higher port if already in use (--port 0)
+* Doesn't use: Secure Connection, Razor or Markdown
+* Handles common static Web resource extensions and Mime types
+* Live Reload is enabled
+
+All of the command line switches shown above can be adjusted in the configuration file and then become the startup default.
+
+The order of settings preference is as follows:
+
+* Default configuration (internal)
+* Configuration File (`LiveReloadServer.json` `LiveReloadWebServer.json`)
+* Environment Variables (`LIVERELOADSERVER_SettingName`)
+* Command Line Switches
 
 ## Static Files
 The Web Server automatically serves all static files and Live Reload is enabled by default unless explicitly turned off. HTML pages, CSS and scripts, and any other specific files with extensions you add are automatically reloaded whenever you make a change to the files.
