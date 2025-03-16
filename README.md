@@ -174,25 +174,31 @@ To register and unregister this functionality, you can use these command line op
 * LiveReloadServer --RegisterExplorer
 * LiveReloadServer --UnregisterExplorer
 
-::: Tip
+> [!TIP]
 Tweak your default configuration on how LiveReloadServer starts with the `LiveReloadServer.json` or `LiveReloadWebServer.json` file in the install folder - this file sets the default options that are used when LiveReloadServer is started which affects how the Shell extension opens by default.
-:::
 
 ### Default Configuration Settings
 If you run `LiveReload` or `LiveReloadWebServer` without any parameters, the app starts with its default settings. You can tweak these default settings via the configuration file which can be found in the installation folder (the location when you start LiveReloadServer in the `Executable` value).
 
 In that folder find the `LiveReloadServer.json` or `LiveReloadWebServer.json` file and edit the default configuration settings that you see fit.
 
-By default LiveReloadServer:
+By default LiveReloadServer without switches:
 
 * Opens the current folder (or the folder pointed to by the Shell Extension)
 * Runs on port 5200 or the next available higher port if already in use (--port)
 * Doesn't use Secure Connection
 * Doesn't use Razor
-* Doesn't use 
+* Doesn't use Markdown Rendering
+* Handles common Web resource extensions and Mime types
 
+All of the configuration switches that are available can also be tweaked in the configuration file. 
 
+The order of settings preference is as follows:
 
+* Default configuration (internal)
+* Configuration File (`LiveReloadServer.json` `LiveReloadWebServer.json`)
+* Environment Variables
+* Command Line Switches
 
 
 ## Launching the Web Server
