@@ -164,6 +164,14 @@ For IIS this looks like this:
 
 You can map multiple sites to a single executable in this way. It's possible to do this both with the Self-Contained and Shared Runtime installs.
 
+### Open Live Reload Web Site Shell Extension (Windows)
+To get a shortcut on Windows Explorer to **Open LiveReload Web Site** you can use the following command line arguments to register and unregister the context menu shortcuts:
+
+* LiveReloadServer --RegisterExplorer
+* LiveReloadServer --UnregisterExplorer
+
+![Explorer Shell Extension](https://raw.githubusercontent.com/RickStrahl/LiveReloadServer/master/Assets/ExplorerShellExtension.jpg)
+
 ## Launching the Web Server
 You can use the command line to customize how the server runs. By default files are served out of the current directory on port `5200`, but you can override the `WebRoot` folder.
 
