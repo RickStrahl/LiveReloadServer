@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
+using Westwind.Utilities;
 
 namespace LiveReloadServer
 {
@@ -48,6 +50,13 @@ namespace LiveReloadServer
                 if (args.Contains("--UnregisterExplorer", StringComparer.InvariantCultureIgnoreCase))
                 {
                     Startup.RegisterInExplorer(true);
+                    return;
+                }
+                if (args.Contains("--OpenSettings"))
+                {
+                    var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                                            "LiveReloadWebServer.json");                    
+                    ShellUtils.ShellExecute(path);
                     return;
                 }
 
@@ -225,8 +234,6 @@ Syntax:
 --ShowConsoleOutput      True*|False (turn off for production)
 --Environment            Production*|Development
 --VirtualPath            / | /docs/ | /myApp/docs/  (default is root /)
---RegisterExplorer       True*|False (register .livereload files with this server)
---UnRegisterExplorer     True*|False
 
 Razor Pages:
 ------------
@@ -240,11 +247,19 @@ Markdown Options:
 --MarkdownTheme         github*|dharkan|medium|blackout|westwind
 --MarkdownSyntaxTheme   github*|vs2015|vs|monokai|monokai-sublime|twilight
 
-Configuration options can be specified in:
+System
+------
+--RegisterExplorer       True*|False (register .livereload files with this server)
+--UnRegisterExplorer     True*|False
+--OpenSettings           True|*False Opens the configuration JSON file for editing
 
+Options can be specified in this order in:
+
+* Configuration File
+* Environment Variables with '{Helpers.ExeName.ToUpper()}_' prefix. Example: '{Helpers.ExeName.ToUpper()}_PORT'
 * Command Line options as shown above
 * Logical Command Line Flags for true can be set like: -UseSsl or -UseRazor or -OpenBrowser
-* Environment Variables with '{Helpers.ExeName.ToUpper()}_' prefix. Example: '{Helpers.ExeName.ToUpper()}_PORT'
+
 
 Examples:
 ---------

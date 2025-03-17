@@ -175,9 +175,7 @@ To register and unregister this functionality, you can use these command line op
 * LiveReloadServer --UnregisterExplorer
 
 > [!TIP]
-Tweak your default configuration on how LiveReloadServer starts with the `LiveReloadServer.json` or `LiveReloadWebServer.json` file in the install folder - this file sets the default options that are used when LiveReloadServer is started which affects how the Shell extension opens by default.
-
-
+You can tweak default start up settings for LiveReloadServer by editing the the `LiveReloadWebServer.json` configuration files. Use `LiveReloadServer -opensettings` to open the file for editing.
 
 
 ## Launching the Web Server
@@ -266,9 +264,7 @@ LiveReload
 
 
 ### Default Configuration Settings
-If you run `LiveReload` or `LiveReloadWebServer` without any parameters, the app starts with its default settings. You can tweak these default settings via the configuration file which can be found in the installation folder (Shown **Executable** value when you start the server).
-
-You can edit `LiveReloadServer.json` or `LiveReloadWebServer.json` to modify default startup configuration settings.
+If you run `LiveReload` or `LiveReloadWebServer` without any parameters, the app starts with its default settings. You can tweak these default settings via the configuration file which can be found in the installation folder or which you can open with `LiveReloadServer -opensettings`. You can edit the values in this Json file, to modify the default startup behavior.
 
 By default LiveReloadServer without switches:
 
@@ -280,10 +276,10 @@ By default LiveReloadServer without switches:
 
 All of the command line switches shown above can be adjusted in the configuration file and then become the startup default.
 
-The order of settings preference is as follows:
+The order of settings are loaded is:
 
-* Default configuration (internal)
-* Configuration File (`LiveReloadServer.json` `LiveReloadWebServer.json`)
+* Default internal configuration
+* Configuration File (`LiveReloadWebServer.json`)
 * Environment Variables (`LIVERELOADSERVER_SettingName`)
 * Command Line Switches
 

@@ -126,6 +126,12 @@ namespace LiveReloadServer
         public bool OpenEditor {get; set; } = false;
 
         /// <summary>
+        /// If specified - opens the LiveReloadServer.json settings file
+        /// </summary>
+        public bool OpenSettings { get; set; }
+
+
+        /// <summary>
         /// Launch Command used to launch an editor when using -OpenEditor switch
         /// </summary>
         public string EditorLaunchCommand { get; set; } = 
@@ -252,6 +258,7 @@ namespace LiveReloadServer
             
             RegisterExplorer = Helpers.GetLogicalSetting("RegisterExplorer", Configuration, RegisterExplorer);
             UnregisterExplorer = Helpers.GetLogicalSetting("UnregisterExplorer", Configuration, UnregisterExplorer);
+            OpenSettings = Helpers.GetLogicalSetting("OpenSettings", Configuration, OpenSettings);
 
 
             DetailedErrors = Helpers.GetLogicalSetting("DetailedErrors", Configuration, DetailedErrors);
@@ -288,6 +295,8 @@ namespace LiveReloadServer
            
             return true;
         }
+
+        
 
         /// <summary>
         /// Returns the Host displayname for a browser URL. Fixes up local
