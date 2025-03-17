@@ -13,7 +13,7 @@
 		<DefineConstants>USE_RAZORPAGES;TRACE;DEBUG</DefineConstants>
 	</PropertyGroup>
 	<PropertyGroup>
-		<Version>1.6.0</Version>
+		<Version>1.6.0.1</Version>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net9.0</TargetFramework>
 		<RazorCompileOnPublish>false</RazorCompileOnPublish>
