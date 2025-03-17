@@ -26,6 +26,8 @@ namespace LiveReloadServer
             if (Environment.CommandLine.Contains("LiveReloadWebServer", StringComparison.InvariantCultureIgnoreCase))
                 Helpers.ExeName = "LiveReloadWebServer";
 
+            var cmdLine = Environment.CommandLine;
+
             try
             {
                 var version = Assembly.GetExecutingAssembly().GetName().Version;
@@ -35,28 +37,9 @@ namespace LiveReloadServer
 
                 Version = ver;
 
-
-                if (args.Contains("--help", StringComparer.OrdinalIgnoreCase) ||
-                    args.Contains("/h") || args.Contains("-h"))
+                // Process commands that don't start the server
+                if (ProcessNonServerCommandLineSwitches(cmdLine))
                 {
-                    ShowHelp();
-                    return;
-                }
-                if (args.Contains("-RegisterExplorer", StringComparer.OrdinalIgnoreCase))
-                {
-                    Startup.RegisterInExplorer();
-                    return;
-                }
-                if (args.Contains("-UnregisterExplorer", StringComparer.OrdinalIgnoreCase))
-                {
-                    Startup.RegisterInExplorer(true);
-                    return;
-                }
-                if (args.Contains("-OpenSettings", StringComparer.OrdinalIgnoreCase))
-                {
-                    var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-                                            "LiveReloadWebServer.json");                    
-                    ShellUtils.ShellExecute(path);
                     return;
                 }
 
@@ -102,6 +85,42 @@ namespace LiveReloadServer
             }
         }
 
+        /// <summary>
+        /// Pre-process Command Line Switches that don't start up the server.
+        /// 
+        /// Returns true to indicate processing is complete, false to continue
+        /// on into the server.
+        /// </summary>
+        /// <param name="cmdLine"></param>
+        /// <returns>True - processing complete, False - continue running</returns>
+        private static bool ProcessNonServerCommandLineSwitches(string cmdLine)
+        {
+            if (cmdLine.Contains("--help", StringComparison.OrdinalIgnoreCase) ||
+                cmdLine.Contains(" /h") || cmdLine.Contains(" -h"))
+            {
+                ShowHelp();
+                return true;
+            }
+            if (cmdLine.Contains("-RegisterExplorer", StringComparison.OrdinalIgnoreCase))
+            {
+                Startup.RegisterInExplorer();
+                return true;
+            }
+            if (cmdLine.Contains("-UnregisterExplorer", StringComparison.OrdinalIgnoreCase))
+            {
+                Startup.RegisterInExplorer(true);
+                return true;
+            }
+            if (cmdLine.Contains("-OpenSettings", StringComparison.OrdinalIgnoreCase))
+            {
+                var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                    "LiveReloadWebServer.json");
+                ShellUtils.ShellExecute(path);
+                return true;
+            }
+
+            return false;
+        }
 
 
         public static IHostBuilder CreateHostBuilder(string[] args)
@@ -249,9 +268,9 @@ Markdown Options:
 
 System
 ------
---RegisterExplorer       True*|False (register .livereload files with this server)
---UnRegisterExplorer     True*|False
---OpenSettings           True|*False Opens the configuration JSON file for editing
+-RegisterExplorer       Registers Open LiveReload Web Server Here Folder Shell Context Menu
+-UnRegisterExplorer     Unregisters Shell integration
+-OpenSettings           Opens default Configuration Settings in an editor as Json
 
 Options can be specified in this order in:
 

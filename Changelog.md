@@ -1,16 +1,19 @@
 # Live Reload Server Change Log
 
-### Version 1.5.5
+### Version 1.6
 
-<small>in progress</small>
+<small>March 17th, 2025</small>
 
 * **Add support for Virtual Path Hosting**  
 You can now host a site with an optional virtual path so that you can use relative base paths that simulate virtual directories on a server. Useful for example if you use `https://mySite.com/docs/` folder for a documentation and you want to duplicate that locally. You can with `--VirtualPath /docs/` now.
 
-* **--RegisterExplorer --UnregisterExplorer to Open Web Site**  
+* **-RegisterExplorer -UnregisterExplorer to Open Web Site**  
 You can use these commands to add and remove Explorer integration that allows the current user to open a Web site from the Explorer context menu. Sites are opened with the default settings (defined in the startup folder's `LiveReloadWebServerConfiguration.json`) using the folder as the parameter.
 
-* **Automatic Open Host Port Detection**  
+* **-OpenSettings to easily access Default Configuration Settings**  
+You can now use the `-OpenSettings` command line switch to open an editor with the Json configuration file opened.
+
+* **Automatic Available Host Port Detection**  
 LiveReloadServer now defaults to a port number of 0 which scans for open ports starting with port 5200 (the old default). If the port is in use it finds the next available port and uses that. You can still force a specific port using `--port 5201` switch.
 
 * **Update to .NET 9.0**  

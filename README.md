@@ -194,6 +194,8 @@ There are a number of Configuration options available:
 ```text
 Syntax:
 -------
+Syntax:
+-------
 LiveReloadServer <WebRoot> <options>
 
 --WebRoot                <path>  (current Path if not provided)
@@ -234,9 +236,9 @@ Markdown Options:
 
 System
 ------
---RegisterExplorer       True*|False (register .livereload files with this server)
---UnRegisterExplorer     True*|False
---OpenSettings           True|*False Opens the configuration JSON file for editing
+-RegisterExplorer       Registers Folder Shell Context Menu
+-UnRegisterExplorer     Unregisters Shell integration
+-OpenSettings           Opens default Configuration Settings in an editor as Json
 
 Options can be specified in this order in:
 
