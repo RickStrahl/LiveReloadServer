@@ -36,23 +36,23 @@ namespace LiveReloadServer
                 Version = ver;
 
 
-                if (args.Contains("--help", StringComparer.InvariantCultureIgnoreCase) ||
+                if (args.Contains("--help", StringComparer.OrdinalIgnoreCase) ||
                     args.Contains("/h") || args.Contains("-h"))
                 {
                     ShowHelp();
                     return;
                 }
-                if (args.Contains("--RegisterExplorer", StringComparer.InvariantCultureIgnoreCase))
+                if (args.Contains("-RegisterExplorer", StringComparer.OrdinalIgnoreCase))
                 {
                     Startup.RegisterInExplorer();
                     return;
                 }
-                if (args.Contains("--UnregisterExplorer", StringComparer.InvariantCultureIgnoreCase))
+                if (args.Contains("-UnregisterExplorer", StringComparer.OrdinalIgnoreCase))
                 {
                     Startup.RegisterInExplorer(true);
                     return;
                 }
-                if (args.Contains("--OpenSettings"))
+                if (args.Contains("-OpenSettings", StringComparer.OrdinalIgnoreCase))
                 {
                     var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
                                             "LiveReloadWebServer.json");                    
