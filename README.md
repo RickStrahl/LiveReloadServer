@@ -194,15 +194,11 @@ There are a number of Configuration options available:
 ```text
 Syntax:
 -------
-Static, Markdown and Razor Files Web Server with Live Reload for changed content.
-
-Syntax:
--------
 LiveReloadServer <WebRoot> <options>
 
 --WebRoot                <path>  (current Path if not provided)
---Port                   0*|5210  (0 - uses next free port starting with 5200, 
-                                   n - force specific port number)
+--Port                   0*|5210  0* - use next available port >= 5200
+                                  n  - force a specific port number)
 --Host                   0.0.0.0*|localhost|custom Ip - 0.0.0.0 allows external access
 --UseSsl                 True|False*
 --UseRazor           True|False*
@@ -223,8 +219,6 @@ LiveReloadServer <WebRoot> <options>
 --ShowConsoleOutput      True*|False (turn off for production)
 --Environment            Production*|Development
 --VirtualPath            / | /docs/ | /myApp/docs/  (default is root /)
---RegisterExplorer       True*|False (register .livereload files with this server)
---UnRegisterExplorer     True*|False
 
 Razor Pages:
 ------------
@@ -238,11 +232,19 @@ Markdown Options:
 --MarkdownTheme         github*|dharkan|medium|blackout|westwind
 --MarkdownSyntaxTheme   github*|vs2015|vs|monokai|monokai-sublime|twilight
 
-Configuration options can be specified in:
+System
+------
+--RegisterExplorer       True*|False (register .livereload files with this server)
+--UnRegisterExplorer     True*|False
+--OpenSettings           True|*False Opens the configuration JSON file for editing
 
+Options can be specified in this order in:
+
+* Configuration File
+* Environment Variables with 'LIVERELOADSERVER_' prefix. Example: 'LIVERELOADSERVER_PORT'
 * Command Line options as shown above
 * Logical Command Line Flags for true can be set like: -UseSsl or -UseRazor or -OpenBrowser
-* Environment Variables with 'LIVERELOADSERVER_' prefix. Example: 'LIVERELOADSERVER_PORT'
+
 
 Examples:
 ---------
@@ -250,15 +252,8 @@ LiveReloadServer "c:\temp\My Site" -useSsl -useRazor
 LiveReloadServer --WebRoot "c:\temp\My Html Site" --port 5500 -useSsl -openEditor
 
 $env:LiveReloadServer_Port 5500
-$env:LiveReloadServer_WebRoot c:\mySites\Site1\Web 
+$env:LiveReloadServer_WebRoot c:\mySites\Site1\Web
 LiveReloadServer
-```
-
-You can also use Environment variables to set these save options by using a `LiveReloadServer_` prefix:
-
-```ps
-$env:LiveReloadServer_Port 5500
-LiveReload
 ```
 
 
