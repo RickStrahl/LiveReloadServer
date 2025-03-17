@@ -1,5 +1,5 @@
 $packageName = "LiveReloadWebServer"
 $url = "https://github.com/RickStrahl/LiveReloadServer/raw/1.6/LiveReloadWebServer-SelfContained.zip"
 $drop = "$(Split-Path -Parent $MyInvocation.MyCommand.Definition)"
-$sha = "C628146F6186A9BEE6868799E358D5971B79F3F42FF14A4FAB78844CD3509DEF"
+$sha = "c628146f6186a9bee6868799e358d5971b79f3f42ff14a4fab78844cd3509def"
 Install-ChocolateyZipPackage -PackageName "$packageName" -Url "$url" -UnzipLocation "$drop" -checksum "$sha" -checksumtype "sha256"
