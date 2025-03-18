@@ -426,29 +426,33 @@ It's possible to load *public* NuGet packages  from the official NuGet feed by a
 The configuration lives in a `./PrivateBin/NuGetPackages.json` file in your WebRoot that looks like this:
 
 ```json
-[
-    {
-        "packageId": "Westwind.Ai",
-        "version": "0.2.4.2"
-    },
-    {
-        "packageId": "QrCoder",
-        "version": "1.6.0.0"
-    }
-]
+{
+    "Packages": [
+        {
+            "packageId": "Westwind.Ai",
+            "version": "0.2.4.2"
+        },
+        {
+            "packageId": "Humanizer.Core",
+            "version": "2.14.1"
+        },
+        
+    ],
+    "Sources": [
+        "https://api.nuget.org/v3/index.json", 
+        "./SupportPackages",
+        "d:\\Projects\\NuGet"
+    ]
+}
 ```
 
-> Note: This is a preliminary format - this is likely to change in the futures with some additional planned features.
+The `Sources` collection can be empty or null, and it will default to the default NuGet feed. Otherwise you can specify a repository Url, or a local folder path. Relative paths are relative to the `WebRoot` folder.
 
+Packages for the appropriate runtime are downloaded and installed in `./Private/Nuget` folder in your `WebRoot` folder, using standard NuGet path expansion with target and framework sub-folder hierarchy. Dependencies are pulled and also loaded.
 
-Packages for the appropriate runtime are downloaded and installed in `./Private/Nuget` folder in your WebRoot, using standard NuGet path expansion with target and framework sub-folder hierarchy. Dependencies are pulled and also loaded.
+Libraries imported can be referenced explicitly using the assembly types, so they don't require Reflection to access.
 
-Currently there are a number of limitations:
-
-* Only works with the official NuGet feed 
-* Only works with net6.0-net9.0 and netstandard targets
-
-Libraries imported can be referenced directly in Razor code and don't require Reflection to access. 
+> Make sure the `<WebRoot>/PrivateBin/NuGet` has write access when loading assemblies for the first time as they are downloaded and then saved in that folder. For distribution we recommend you provide the folder as part of your application to avoid downloading on startup in which case permissions won't be required.
 
 #### External Assembly Support
 You can also explicitly import loose .NET assemblies by adding them to the `./PrivateBin` folder in your WebRoot.
