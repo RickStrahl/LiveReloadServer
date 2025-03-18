@@ -421,9 +421,9 @@ Although LiveReloadServer supports code only directly in Razor pages, it is poss
 * Loose Assemblies in `PrivateBin`
 
 ### NuGet Package Support
-It's possible to load *public* NuGet packages  from the official NuGet feed by adding packages to load to a 
+You can load NuGet packages into your project by referencing online or local folder NuGet package sources. 
 
-The configuration lives in a `./PrivateBin/NuGetPackages.json` file in your WebRoot that looks like this:
+NuGet configuration is configured in a `<WebRoot>/PrivateBin/NuGetPackages.json` file in your WebRoot that looks like this:
 
 ```json
 {
@@ -435,8 +435,7 @@ The configuration lives in a `./PrivateBin/NuGetPackages.json` file in your WebR
         {
             "packageId": "Humanizer.Core",
             "version": "2.14.1"
-        },
-        
+        }
     ],
     "Sources": [
         "https://api.nuget.org/v3/index.json", 
@@ -454,10 +453,12 @@ Libraries imported can be referenced explicitly using the assembly types, so the
 
 > Make sure the `<WebRoot>/PrivateBin/NuGet` has write access when loading assemblies for the first time as they are downloaded and then saved in that folder. For distribution we recommend you provide the folder as part of your application to avoid downloading on startup in which case permissions won't be required.
 
-#### External Assembly Support
+### External Assembly Support
 You can also explicitly import loose .NET assemblies by adding them to the `./PrivateBin` folder in your WebRoot.
 
 You can add **external assemblies** by adding final dependent assemblies (not NuGet packages!) into a `./privatebin` folder below your WebRoot folder. Assemblies in this folder will be loaded when the site is launched and become available for access in your Razor page code.
+
+This provides a very quick and easy way to create small .NET assemblies and use them in your Web sites.
 
 ## Error Page Display
 There are two ways you can display error information:
