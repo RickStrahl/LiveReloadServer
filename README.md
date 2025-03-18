@@ -721,6 +721,11 @@ More features like dynamic compilation of loose C# code files at runtime might b
 
 If that's of interest to you or you want to contribute, please file an issue to discuss and explore the use cases and what might be possible.
 
+## Support this Project
+Find this project useful? Please give the repo a :star: to show your support. It helps visibility of the project.
+
+If you're feeling generous and you got value out of this project, consider to support mes via the [GitHub Sponsor link](https://github.com/sponsors/RickStrahl) for a one time or recurring donation.
+
 ## Version History
 
 * [Live Reload Server Change Log](Changelog.md)
