@@ -22,6 +22,7 @@ using Westwind.Utilities;
 using Microsoft.Extensions.FileProviders.Physical;
 using Microsoft.AspNetCore.Hosting;
 
+
 namespace LiveReloadServer
 {
     public class Startup
@@ -126,9 +127,9 @@ namespace LiveReloadServer
                 //            new PhysicalFileProvider(Path.Combine(Startup.StartupPath, "templates")));
                 //    });
 
-                // explicitly add any custom assemblies so Razor can see them for compilation
-                LoadPrivateBinAssemblies(mvcBuilder);
+                // explicitly add any custom assemblies so Razor can see them for compilation                
                 LoadNugetPackages(mvcBuilder, ServerConfig);
+                LoadPrivateBinAssemblies(mvcBuilder);
             }
         }
 
@@ -326,11 +327,26 @@ namespace LiveReloadServer
                 var fname = Path.GetFileName(assmbly);
                 ColorConsole.WriteEmbeddedColorLine("Additional Assembly: [darkgreen]" + fname + "[/darkgreen]");
             }
-
             foreach (var assmbly in FailedPrivateAssemblies)
             {
                 var fname = Path.GetFileName(assmbly);
-                ColorConsole.WriteLine("Failed Additional Assembly: " + fname, ConsoleColor.DarkGreen);
+                ColorConsole.WriteEmbeddedColorLine("Failed Additional Assembly: [red]" + fname + "[/red]");
+            }
+            foreach (var package in LoadedNugetPackages)
+            {
+                var fname = Path.GetFileName(package);
+                if (fname.StartsWith("--"))
+                    ColorConsole.WriteEmbeddedColorLine("Loaded Nuget assembly: [darkgreen]" + fname + "[/darkgreen]");
+                else 
+                    ColorConsole.WriteEmbeddedColorLine("Loaded Nuget Package: [darkgreen]" + fname + "[/darkgreen]");
+            }
+            foreach (var package in FailedNugetPackages)
+            {
+                var fname = Path.GetFileName(package);
+                if (fname.StartsWith("--"))
+                    ColorConsole.WriteEmbeddedColorLine("Failed to load Nuget assembly: [red]" + fname + "[/red]");
+                else
+                    ColorConsole.WriteEmbeddedColorLine("Failed to load Nuget Package: [red]" + fname + "[/red]");
             }
 
             Console.ForegroundColor = oldColor;
@@ -428,20 +444,34 @@ namespace LiveReloadServer
             var binPath = Path.Combine(ServerConfig.WebRoot, "privatebin");
             var jsonFile = Path.Combine(binPath, "NugetPackages.json");
             var outputPath = Path.Combine(binPath, "Nuget");
-            if (!File.Exists(jsonFile))
+            if (!System.IO.File.Exists(jsonFile))
                 return;
 
-            var packages = JsonSerializationUtils.DeserializeFromFile<List<NuGetPackageItem>>(jsonFile);                
-            if (packages == null || packages.Count < 1)
+            var packageConfiguration = JsonSerializationUtils.DeserializeFromFile<NuGetPackageConfiguration>(jsonFile);                
+            if (packageConfiguration == null)
                 return; 
+            if (packageConfiguration.NugetSources == null || packageConfiguration.NugetSources.Count == 0)
+                packageConfiguration.NugetSources = new() { "https://api.nuget.sorg/v3/index.json" };                                   
+            
 
             var nuget = new NuGetPackageLoader(outputPath);
 
             Task.Run(async () =>
             {
-                foreach (var package in packages)
+                foreach (var package in packageConfiguration.Packages)
                 {
-                    await nuget.LoadPackageAsync(package.PackageId, package.Version, mvcBuilder);
+                    try
+                    {
+                        await nuget.LoadPackageAsync(package.PackageId, 
+                            package.Version, 
+                            mvcBuilder, 
+                            packageConfiguration.NugetSources, 
+                            LoadedNugetPackages, FailedNugetPackages);
+                    }
+                    catch
+                    {
+                        FailedNugetPackages.Add(package.PackageId);
+                    }
                 }
             }).FireAndForget(); 
 
@@ -453,6 +483,8 @@ namespace LiveReloadServer
 
         private List<string> LoadedPrivateAssemblies = new List<string>();
         private List<string> FailedPrivateAssemblies = new List<string>();
+        private List<string> LoadedNugetPackages = new List<string>();
+        private List<string> FailedNugetPackages = new List<string>();
 
         private void LoadPrivateBinAssemblies(IMvcBuilder mvcBuilder)
         {
