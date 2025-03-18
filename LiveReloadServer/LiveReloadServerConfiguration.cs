@@ -197,7 +197,6 @@ namespace LiveReloadServer
         public Dictionary<string,string> AdditionalMimeMappings {get; set; }
 
 
-
         #endregion
 
         /// <summary>
@@ -382,5 +381,11 @@ namespace LiveReloadServer
         }
 
 
+    }
+
+    public class NuGetPackageItem
+    {
+        public string PackageId { get; set; }
+        public string Version { get; set; }
     }
 }

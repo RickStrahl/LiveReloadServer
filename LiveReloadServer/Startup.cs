@@ -45,10 +45,7 @@ namespace LiveReloadServer
         public void ConfigureServices(IServiceCollection services)
         {
             ServerConfig = new LiveReloadServerConfiguration();
-            ServerConfig.LoadFromConfiguration(Configuration);
-
-           
-
+            ServerConfig.LoadFromConfiguration(Configuration);           
 
             if (ServerConfig.UseLiveReload)
             {
@@ -131,6 +128,7 @@ namespace LiveReloadServer
 
                 // explicitly add any custom assemblies so Razor can see them for compilation
                 LoadPrivateBinAssemblies(mvcBuilder);
+                LoadNugetPackages(mvcBuilder, ServerConfig);
             }
         }
 
@@ -422,7 +420,36 @@ namespace LiveReloadServer
         #endregion
 
 
-        #region AssemblyLoading and PrivateBin Updates
+        #region NuGet And AssemblyLoading and PrivateBin Updates
+
+        private void LoadNugetPackages(IMvcBuilder mvcBuilder, LiveReloadServerConfiguration config)
+        {
+
+            var binPath = Path.Combine(ServerConfig.WebRoot, "privatebin");
+            var jsonFile = Path.Combine(binPath, "NugetPackages.json");
+            var outputPath = Path.Combine(binPath, "Nuget");
+            if (!File.Exists(jsonFile))
+                return;
+
+            var packages = JsonSerializationUtils.DeserializeFromFile<List<NuGetPackageItem>>(jsonFile);                
+            if (packages == null || packages.Count < 1)
+                return; 
+
+            var nuget = new NuGetPackageLoader(outputPath);
+
+            Task.Run(async () =>
+            {
+                foreach (var package in packages)
+                {
+                    await nuget.LoadPackageAsync(package.PackageId, package.Version, mvcBuilder);
+                }
+            }).FireAndForget(); 
+
+        }
+
+
+
+        
 
         private List<string> LoadedPrivateAssemblies = new List<string>();
         private List<string> FailedPrivateAssemblies = new List<string>();

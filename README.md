@@ -414,8 +414,45 @@ LiveReloadServer has **basic Razor Pages support**, which means you can create *
 ### No Compiled C# Code
 However, there's **no support for code behind razor models** or  **loose C# `.cs` file compilation** as runtime compilation outside of Razor is not supported. All dynamic compilable code has to live in Razor `.shtml` content.
 
-### External Assembly Support
-It is possible to use external code by explicitly importing external .NET assemblies.
+### Load External Code
+Although LiveReloadServer supports code only directly in Razor pages, it is possible to load external libraries in two ways:
+
+* NuGet Packages in `PrivateBin\NugetPackages.json`
+* Loose Assemblies in `PrivateBin`
+
+### NuGet Package Support
+It's possible to load *public* NuGet packages  from the official NuGet feed by adding packages to load to a 
+
+The configuration lives in a `./PrivateBin/NuGetPackages.json` file in your WebRoot that looks like this:
+
+```json
+[
+    {
+        "packageId": "Westwind.Ai",
+        "version": "0.2.4.2"
+    },
+    {
+        "packageId": "QrCoder",
+        "version": "1.6.0.0"
+    }
+]
+```
+
+> Note: This is a preliminary format - this is likely to change in the futures with some additional planned features.
+
+
+Packages for the appropriate runtime are downloaded and installed in `./Private/Nuget` folder in your WebRoot, using standard NuGet path expansion with target and framework sub-folder hierarchy. Dependencies are pulled and also loaded.
+
+Currently there are a number of limitations:
+
+* Only works with the official NuGet feed 
+* Only works with net6.0-net9.0 and netstandard targets
+
+Libraries imported can be referenced directly in Razor code and don't require Reflection to access. 
+
+#### External Assembly Support
+You can also explicitly import loose .NET assemblies by adding them to the `./PrivateBin` folder in your WebRoot.
+
 You can add **external assemblies** by adding final dependent assemblies (not NuGet packages!) into a `./privatebin` folder below your WebRoot folder. Assemblies in this folder will be loaded when the site is launched and become available for access in your Razor page code.
 
 ## Error Page Display

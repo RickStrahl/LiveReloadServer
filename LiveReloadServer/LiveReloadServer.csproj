@@ -65,11 +65,13 @@
 
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-		<PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.21.0" />
-		<PackageReference Include="Westwind.AspNetCore.LiveReload" Version="0.5.0" />
-		<PackageReference Include="Westwind.Utilities" Version="5.1.1" />
-		<PackageReference Include="Westwind.Utilities.Data" Version="5.1.2" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="9.0.0" />
+		<PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.23.0" />
+		<PackageReference Include="Westwind.AspNetCore.LiveReload" Version="0.5.2" />
+		<PackageReference Include="Westwind.Utilities" Version="5.1.6.2" />
+		<PackageReference Include="Westwind.Utilities.Data" Version="5.1.6" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="9.0.3" />
+		<PackageReference Include="NuGet.Protocol" Version="6.13.2" />
+		<PackageReference Include="NuGet.Packaging" Version="6.13.2" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$(DefineConstants.Contains('USE_RAZORPAGES'))">
