@@ -1,0 +1,11 @@
+{
+    "Packages": [
+        {
+            "packageId": "Westwind.Ai",
+            "version": "0.2.4.2"
+        }
+    ],
+    "Sources": [
+        "https://api.nuget.org/v3/index.json"
+    ]
+}

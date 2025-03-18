@@ -117,7 +117,7 @@ public class NuGetPackageLoader
 
 
 
-        sucessPackages.Add(packageId);
+        bool Error = false;
 
         var files = packageReader.GetFiles().Where(f => f.Contains("/" + framework + "/"));
         foreach (var file in files)
@@ -143,16 +143,21 @@ public class NuGetPackageLoader
                     if (assembly != null)
                     {
                         builder.AddApplicationPart(assembly);
-                        sucessPackages.Add("-- " + assembly);
+                        //sucessPackages.Add("-- " + assembly);
                     }
                 }
                 catch(Exception ex)
                 {
-                    failedPackages.Add("-- " + Path.GetFileName(filePath));
+                    Error = true;
+                    //failedPackages.Add("-- " + Path.GetFileName(filePath));
                 }
             }
         }
-        
+
+        if (Error)
+            failedPackages.Add(packageId);
+        else
+            sucessPackages.Add(packageId);
 
     }
 

@@ -1,0 +1,664 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Westwind.AI</name>
+    </assembly>
+    <members>
+        <member name="T:Westwind.AI.Chat.AiTextOperations">
+            <summary>
+            Text Operations like summarizing
+            </summary>
+        </member>
+        <member name="M:Westwind.AI.Chat.AiTextOperations.Summarize(System.String,System.Int32)">
+            <summary>
+            Summarize text to a specific number of sentences.
+            </summary>
+            <param name="text"></param>
+            <param name="numberOfWords"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.AI.Chat.AiTextOperations.TranslateText(System.String,System.String,System.String)">
+            <summary>
+            Translates text from one language to another.
+            </summary>
+            <param name="text"></param>
+            <param name="sourceLang"></param>
+            <param name="targetLang"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.AI.Chat.AiTextOperations.CheckGrammar(System.String)">
+            <summary>
+            Checks grammar of the input text and returns adjusted text.
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.AI.Chat.AiTextOperations.CheckGrammarAsDiff(System.String)">
+            <summary>
+            Checks grammar of the input text and returns adjusted text as a diff.
+            
+            NOTE: this is not working very well.
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.AI.Chat.GenericAiChatClient.Complete(System.Collections.Generic.IEnumerable{Westwind.AI.Configuration.OpenAiChatMessage},System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="prompts">Pass in an existing set of prompts </param>
+            <returns></returns>
+        </member>
+        <member name="T:Westwind.AI.Configuration.IOpenAiConnection">
+            <summary>
+            Interface that defines an OpenAI connection on what's
+            needed to connect to the API including endpoint, model, and API key.
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.IOpenAiConnection.Name">
+            <summary>
+            Name to identify 
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.IOpenAiConnection.ApiKey">
+            <summary>
+            The API Key for the service
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.IOpenAiConnection.Endpoint">
+            <summary>
+            The Endpoint for the service
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.IOpenAiConnection.EndpointTemplate">
+            <summary>
+            Template that can be used to access
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.IOpenAiConnection.ModelId">
+            <summary>
+            Model Id used for Azure OpenAI
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.IOpenAiConnection.ApiVersion">
+            <summary>
+            Optional Api Version typically used for Azure
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.IOpenAiConnection.OperationMode">
+            <summary>
+            Completions or Image operation
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.IOpenAiConnection.ProviderMode">
+            <summary>
+            Which AI provider is used for this connection
+            </summary>
+        </member>
+        <member name="T:Westwind.AI.Configuration.OpenAiConnection">
+            <summary>
+            Base AI configuration class that contains all the base settings 
+            required to connect to OpenAI. The default uses the bona fide
+            OpenAi (company) API settings for defaults.
+            
+            Subclasses of this class simply override default settings and 
+            provide additional Intellisense information for specific 
+            settings and providers.
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnection.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnection.ApiKey">
+            <summary>
+            The Encrypted API Key for the service
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnection.EncryptedApiKey">
+            <summary>
+            The Encrypted API Key for the connection
+            that is used for storing the key in a configuration file.
+            
+            Value is here mainly for serialization purposes
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnection.Endpoint">
+            <summary>
+            The Endpoint for the service
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnection.EndpointTemplate">
+            <summary>
+            Endpoint URL template that configures the endpoint format.
+            {0}  - Operation Segment
+            {1}  - Model Id (Azure)
+            {2}  - API Version  (Azure)
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnection.ModelId">
+            <summary>
+            Model Id used for Azure OpenAI
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnection.ApiVersion">
+            <summary>
+            An optional API version (used for Azure)
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnection.ProviderMode">
+            <summary>
+            Determines whether this is an OpenAI or Azure connection
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnection.OperationMode">
+            <summary>
+            Determines whether we're using completions or image generation 
+            </summary>
+        </member>
+        <member name="M:Westwind.AI.Configuration.OpenAiConnection.GetChatClient">
+            <summary>
+            Retrieves a Chat Client Instance
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.AI.Configuration.OpenAiConnection.GetImageGenerationClient">
+            <summary>
+            Retrieves an Image Generation Client
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnection.IsEmpty">
+            <summary>
+            Determines whether the credentials are empty    
+            </summary>
+        </member>
+        <member name="M:Westwind.AI.Configuration.OpenAiConnection.Create(Westwind.AI.Configuration.AiProviderModes,System.String,System.Boolean)">
+            <summary>
+            Creates a specific connection base on the connection mode
+            </summary>
+            <param name="providerMode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.AI.Configuration.OpenAiConnection.Create(System.String,System.Boolean)">
+            <summary>
+            Creates a specific connection base on the connection mode
+            </summary>
+            <param name="providerMode">string based connection mode</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.AI.Configuration.OpenAiConnection.EncryptApiKey(System.String)">
+            <summary>
+            Encrypts an API key if encryption is enabled
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.AI.Configuration.OpenAiConnection.DecryptApiKey(System.String)">
+            <summary>
+            Returns a decrypted API key. Key also expands % % Environment Variables
+            </summary>
+            <param name="key">Optional - the encrypted (or unencrypted) key to return. If not passed uses this connections API key</param>
+            <returns></returns>
+        </member>
+        <member name="T:Westwind.AI.Configuration.AzureOpenAiConnection">
+            <summary>
+            Azure Open AI specific connection.
+            
+            Uses:
+            Endpoint - Azure OpenAI Base Site Url (without deployment and operation paths)
+            ModelId - Name of the deployment
+            ApiVersion - Version of the Azure API (default provided)
+            </summary>
+        </member>
+        <member name="F:Westwind.AI.Configuration.OpenAiEndPointTemplates.DefaultAzureApiVersion">
+            <summary>
+            Azure API Version
+            </summary>
+        </member>
+        <member name="T:Westwind.AI.Configuration.OpenAiConnectionConfiguration">
+            <summary>
+            A container of multiple OpenAI connections that can be persisted to disk.
+            
+            This class facilitates managing multiple connections and selecting the active one
+            so you can quickly switche between different models and providers.
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnectionConfiguration.ActiveConnection">
+            <summary>
+            The active connection based on the ActiveConnectionIndex    
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnectionConfiguration.ActiveConnectionIndex">
+            <summary>
+            The index that determines which connection is the active one
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnectionConfiguration.ActiveImageConnection">
+            <summary>
+            The active connection based on the ActiveImageConnectionIndex    
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnectionConfiguration.ActiveImageConnectionIndex">
+            <summary>
+            The index that determines which image generation connection is the active one
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnectionConfiguration.Connections">
+            <summary>
+            A collection of connections. The active connection is determined by the ActiveConnectionIndex
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnectionConfiguration.CompletionConnections">
+            <summary>
+            Subset of only the Comletion Connections
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnectionConfiguration.ImageGenerationConnections">
+            <summary>
+            Subset of only the Image Generation Connections
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnectionConfiguration.IsAvailable">
+            <summary>
+            Determines whether any OpenAi Connections are available
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnectionConfiguration.IsImageConnectionAvailable">
+            <summary>
+            Determines whether an image generation connection si available.
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnectionConfiguration.Item(System.String)">
+            <summary>
+            Key indexer that return a named connection value or null if not found.
+            </summary>
+            <param name="key">Name of the connection to return</param>
+            <returns></returns>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnectionConfiguration.Item(System.Int32)">
+            <summary>
+            Key indexer that return a connection by its index.
+            </summary>
+            <param name="index">Index into the connections available</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.AI.Configuration.OpenAiConnectionConfiguration.Load(System.String)">
+            <summary>
+            Loads configuration from a file on disk
+            </summary>
+            <param name="filename"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.AI.Configuration.OpenAiConnectionConfiguration.Save(System.String)">
+            <summary>
+            Saves this set of connections to a file on disk
+            </summary>
+            <param name="filename"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnectionConfiguration.UseApiKeyEncryption">
+            <summary>
+            Determines whether encryption is used. On by default.
+            Note that you can add unencrypted keys to the configuration file,
+            and values will auto-encrypt. If you explicitly save your configuration
+            file, values will then save encrypted.
+            
+            This allows max flexibility to use encrypted keys but still allow you to
+            manually add keys unencrypted and saved them encrypted as long as you explicitly
+            save the configuration to file.
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnectionConfiguration.EncryptionKey">
+            <summary>
+            Encryption key used for the apikey in the configuration file.
+            
+            You can override this for your own application on application startup
+            and use an application specific or application+machine specific key.
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Configuration.OpenAiConnectionConfiguration.EncryptionPostFix">
+            <summary>
+            Encrypted keys are postfixed so it can be identified as encrypted. Unencrypted key values
+            are automatically encrypted when accessed.
+            </summary>
+        </member>
+        <member name="T:Westwind.AI.Configuration.OpenAiChatRequest">
+            <summary>
+            Native OpenAI Chat messages that are used to send and receive JSON content from
+            the OpenAI service.
+            </summary>
+        </member>
+        <member name="T:Westwind.AI.Images.ImagePrompt">
+            <summary>
+            Open AI Prompt container that holds both the request data
+            and response urls and data if retrieved.
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Images.ImagePrompt.Prompt">
+            <summary>
+            The prompt text to use to generate the image
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Images.ImagePrompt.VariationImageFilePath">
+            <summary>
+            If using Variations mode this is the image file to use as a
+            base for the variation.
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Images.ImagePrompt.ImageSize">
+            <summary>
+            Values dall-e-3 (default) or dall-e-2
+            * 1024x1024  (default)
+            * 1792x1024
+            * 1024x1792
+            
+            Values: dall-e-2
+            * 1024x1024
+            * 512x512
+            * 256x256
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Images.ImagePrompt.ImageStyle">
+            <summary>
+            Values:
+            * vivid  (default)
+            * natural
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Images.ImagePrompt.ImageQuality">
+            <summary>
+            Values:
+            * standard
+            * hd
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Images.ImagePrompt.ImageCount">
+            <summary>
+            For Dall-e-3 this is always 1
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Images.ImagePrompt.Model">
+            <summary>
+            Values:
+            * dall-e-3 (default)
+            * dall-e-2 
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Images.ImagePrompt.Base64Data">
+            <summary>
+            If data is downloaded in Base64 JSON format
+            </summary>
+        </member>
+        <member name="M:Westwind.AI.Images.ImagePrompt.EmbeddedBase64ToBinary(System.String)">
+            <summary>
+            Decoded an embedded base64 resource string into its binary content and mime type
+            </summary>
+            <param name="base64Data">Embedded Base64 data (data:mime/type;b64data) </param>
+            <returns></returns>
+        </member>
+        <member name="P:Westwind.AI.Images.ImagePrompt.ImageFilename">
+            <summary>
+            Name of a captured image. File only, no path
+            
+            This name is used to save and retrieve a file
+            when using DownloadImageToFile() or when reading
+            the byte data
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.Images.ImagePrompt.ImageFilePath">
+            <summary>
+            The full path to the image associated with this
+            Prompt or null/empty.
+            </summary>
+        </member>
+        <member name="M:Westwind.AI.Images.ImagePrompt.GetBase64DataFromImageFile(System.String)">
+            <summary>
+            Retrieves Base64 Image data from the saved file in
+            Image Url data format that can be embedded into
+            a document.
+            </summary>
+            <param name="filename"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.AI.Images.ImagePrompt.GetBytesFromImageFile(System.String)">
+            <summary>
+            Retrieves bytes from the image file
+            </summary>
+            <param name="filename"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.AI.Images.ImagePrompt.GetImageFilename(System.String)">
+            <summary>
+            This method fixes up the image file name to the image
+            path. If a full path is provided it's used as is.    
+            </summary>
+            <param name="fileOnlyName">filename to resolve. If omitted ImageFilename is used</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.AI.Images.ImagePrompt.DownloadImageToFile(System.String,System.String)">
+            <summary>
+            Downloads image to file based on an image url (or the first image if not provided)
+            * Downloads file
+            * Saves into image folder
+            * Sets Filename to the file downloaded (filename only)
+            </summary>
+            <param name="imageurl">Optional image url. If not specified uses prompt's first image url</param>
+            <param name="filename">Optional filename to save to. If not specified saves to image save folder with generated name</param>
+            <returns>true or false</returns>
+        </member>
+        <member name="M:Westwind.AI.Images.ImagePrompt.WriteDataToImageFile(System.Byte[])">
+            <summary>
+            Writes binary data to an image file in the image file folder
+            </summary>
+            <param name="data">binary data to write</param>
+            <returns>returns the file name only (no path)</returns>
+        </member>
+        <member name="M:Westwind.AI.Images.ImagePrompt.GetBytesFromBase64">
+            <summary>
+            Returns the bytes from Base64 data results
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.AI.Images.ImagePrompt.SaveImageFromBase64(System.String)">
+            <summary>
+            Saves base64 content to a file. If filename is provided
+            saves to that file, if no file is provided it goes into the 
+            generated images file folder and ImageFilename is set to the
+            generated file name on the prompt.
+            </summary>
+            <param name="filename">Optional - file to write to. If not provided file is created in image storage folder</param>
+            <returns></returns>
+        </member>
+        <member name="T:Westwind.AI.Images.ImageResult">
+            <summary>
+            Class that wraps the an Image result from the OpenAI API.
+            
+            The API returns one or more image responses in an array.
+            </summary>
+        </member>
+        <member name="M:Westwind.AI.Images.ImageResult.GetBytesFromBase64">
+            <summary>
+            Returns the
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.AI.Images.ImageResult.SaveFileFromBase64(System.String)">
+            <summary>
+            Saves the image stored in Base64Data to a file.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.AI.Images.ImageResult.DownloadBytesFromUrl">
+            <summary>
+            Retrieves bytes from the image URL or null if it's
+            not available.
+            </summary>
+        </member>
+        <member name="T:Westwind.AI.Images.OpenAiImageGeneration">
+            <summary>
+            Open AI Image Generation
+            </summary>
+        </member>
+        <member name="M:Westwind.AI.Images.OpenAiImageGeneration.Generate(Westwind.AI.Images.ImagePrompt,System.Boolean,Westwind.AI.Images.ImageGenerationOutputFormats)">
+            <summary>
+            Generate an image from the provided prompt
+            </summary>
+            <param name="prompt">Prompt text for image to create</param>
+            <param name="createImageFile">if true creates an image file and saves it into the OpanAiAddin\Images folder</param>
+            <param name="outputFormat">determines whether result is returned as url or base64 data</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.AI.Images.OpenAiImageGeneration.CreateVariation(Westwind.AI.Images.ImagePrompt,System.Boolean,Westwind.AI.Images.ImageGenerationOutputFormats)">
+            <summary>
+            Currently doesn't work with Dall-E-3 - only Dall-e-2 - Not supported on Azure
+            Currently pretty much worthless - don't use
+            </summary>
+            <param name="prompt"></param>
+            <param name="createImageFile"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Westwind.AI.Images.ImageRequest">
+            <summary>
+            Open AI Image Request object in the format the API expects
+            </summary>
+        </member>
+        <member name="T:Westwind.AI.OpenAiHttpClient">
+            <summary>
+            This is the low level API client that provides access to the OpenAI API with
+            high level methods for specific operations like chat, image generation etc.
+            
+            It provides the ability to use connections which can be optionally stored in
+            configuration files and loaded from disk with encryption.
+            
+            This class is used by the higher level GenericAiChat and ImageGenerations classes.
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.OpenAiHttpClient.Connection">
+            <summary>
+            The connection that is used to connect to the service.
+            This single connection type supports multiple models and providers through
+            a single interface which is accessed by GetHttpClient() and GetEndpointUrl()
+            to retrieve the correct configuration for the current connection.
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.OpenAiHttpClient.ChatHistory">
+            <summary>
+            Keep track of the chat history for passing context
+            forward.
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.OpenAiHttpClient.Proxy">
+            <summary>
+            Optional Proxy
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.OpenAiHttpClient.CaptureRequestData">
+            <summary>
+            Determine whether you want to capture request data in LastRequest and Response Json props
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.OpenAiHttpClient.LastRequestJson">
+            <summary>
+            Captures the last request body, plus the Url, Model Id and start of API key
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.OpenAiHttpClient.LastResponseJson">
+            <summary>
+            Returns the raw JSON response from the last request
+            </summary>
+        </member>
+        <member name="P:Westwind.AI.OpenAiHttpClient.LastChatResponse">
+            <summary>
+            Returns last success response
+            </summary>
+        </member>
+        <member name="M:Westwind.AI.OpenAiHttpClient.GetChatAiResponse(System.String,System.String,System.Boolean)">
+            <summary>
+            Retrieves a completion by text from the AI service.
+            </summary>
+            <param name="prompt">The query to run against the AI</param>
+            <param name="systemPrompt">
+            Instructions for the AI on how to process the prompt.
+            You can use a persona, job description or give descriptive instructions.
+            </param>
+            <param name="includeHistory"> If true includes previous requests and responses</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.AI.OpenAiHttpClient.GetChatAiResponse(System.Collections.Generic.IEnumerable{Westwind.AI.Configuration.OpenAiChatMessage},System.Boolean)">
+            <summary>
+            Returns a chat response based on multiple prompt requests or for prompts
+            that include the current prompt history.
+            </summary>
+            <param name="messages"></param>
+            <param name="includeHistory">If true includes previous requests and responses</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.AI.OpenAiHttpClient.SendJsonHttpRequest(System.String,System.String)">
+            <summary>
+            Low level, generic routine that sends an HTTP request to the OpenAI server. This method
+            works to send any type - chat, image, variation etc. - to the server.
+            </summary>
+            <param name="operationSegment">The Open AI Command operation. Segment(s) off the baseUrl. ie `chat/completions` or `image/generation`</param>
+            <param name="jsonPayload">Raw JSON to send to the server</param>         
+            <returns>JSON response or null</returns>
+        </member>
+        <member name="M:Westwind.AI.OpenAiHttpClient.GetEndpointUrl(System.String)">
+            <summary>
+            Retrieves an endpoint based on the current configuration
+            </summary>
+            <param name="operationSegment">
+            Segment that specifies the operation:
+                * images/generations
+                * images/variations
+                * models
+            </param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.AI.OpenAiHttpClient.GetHttpClient(System.Net.Http.HttpClientHandler)">
+            <summary>
+            Creates an instance of the HttpClient and sets the API Key
+            in the headers.
+            </summary>
+            <returns>Configured HttpClient instance</returns>
+        </member>
+        <member name="T:Westwind.AI.Utilities.FileHelper">
+            <summary>
+            File helper to provide missing async file byte operations in .NET Framework 
+            </summary>
+        </member>
+        <member name="T:Westwind.AI.Voice.OpenAiTextToSpeech">
+            <summary>
+            Generates text to speech using the OpenAI TTS1 model
+            </summary>
+        </member>
+        <member name="M:Westwind.AI.Voice.OpenAiTextToSpeech.ConvertTextToSpeechBytesAsync(System.String,System.String)">
+            <summary>
+            Converts text to speech and returns the mp3 audio as a byte array.
+            </summary>
+            <param name="text">Text</param>        
+            <param name="voice">Voice used: echo, alloy, fable, onyx, nova, shimmer</param>
+            <returns>true or false</returns>
+        </member>
+        <member name="M:Westwind.AI.Voice.OpenAiTextToSpeech.ConvertTextToSpeechFileAsync(System.String,System.String,System.String)">
+            <summary>
+            Converts text to speech and saves the audio as an mp3 file you specify.
+            </summary>
+            <param name="text">Text</param>
+            <param name="mp3FileToSave">File to save the audio to</param>
+            <param name="voice">Voice used: echo, alloy, fable, onyx, nova, shimmer</param>
+            <returns>true or false</returns>
+        </member>
+        <member name="M:Westwind.AI.Voice.OpenAiTextToSpeech.ConvertTextToSpeechToResponseAsync(System.String,System.String)">
+            <summary>
+            Converts text to speech and returns the audio as a HttpResponseMessage. This is the base
+            method that makes the HTTP call and handles errors and is used by the higher level methods
+            that return byte[] or save to a file.
+            </summary>
+            <param name="text">Text</param>
+            <param name="voice">Voice used: echo, alloy, fable, onyx, nova, shimmer</param>
+            <returns>HttpResponseMessage object or null</returns>
+        </member>
+    </members>
+</doc>
