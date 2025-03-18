@@ -1,8 +1,15 @@
 # Live Reload Server Change Log
 
+### Version 1.7
+
+<small>March 18th, 2025</small>
+
+* **Add Support for NuGet Packages**  
+Added support for NuGet packages that can be added in `/PrivateBin/NugetPackages.json` configuration. You can specify package Ids and provide multiple package sources.
+
 ### Version 1.6
 
-<small>March 17th, 2025</small>
+<small>March 15th, 2025</small>
 
 * **Add support for Virtual Path Hosting**  
 You can now host a site with an optional virtual path so that you can use relative base paths that simulate virtual directories on a server. Useful for example if you use `https://mySite.com/docs/` folder for a documentation and you want to duplicate that locally. You can with `--VirtualPath /docs/` now.

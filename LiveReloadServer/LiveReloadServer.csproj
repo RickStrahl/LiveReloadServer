@@ -6,14 +6,14 @@
 		<!--<DefineConstants>USE_RAZORPAGES</DefineConstants>-->
 		
 		<!-- BUILD_PACKAGE (NuGet, Hosted) or BUILD_EXE (Standalone)-->
-		<DefineConstants>USE_RAZORPAGES;BUILD_PACKAGE</DefineConstants>
+		<DefineConstants>USE_RAZORPAGES;BUILD_EXE</DefineConstants>
 		<Platforms>AnyCPU</Platforms>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DefineConstants>USE_RAZORPAGES;TRACE;DEBUG</DefineConstants>
 	</PropertyGroup>
 	<PropertyGroup>
-		<Version>1.6.99</Version>
+		<Version>1.7</Version>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net9.0</TargetFramework>
 		<RazorCompileOnPublish>false</RazorCompileOnPublish>
