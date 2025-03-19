@@ -26,9 +26,14 @@
 * Cross Platform - Windows, Mac, Linux <small>*(dotnet tool only)*</small>
 * Serve HTTPS content <small>*(dotnet tool only)*</small>
 * **Hostable ASP.NET Core Server** that can be used by multiple sites on a server
+    * Similar to ASP.NET Web Pages features but using Razor code
+    * Single file updates supported    
+    * Self-contained for light code scenarios
+    * Great fit for landing pages or product sites
+    * Multiple sites from a single LiveReloadServer folder
 * Available as: 
   * Dotnet Tool (cross-platform)
-  * Chocolatey Package
+  * Chocolatey Package (Windows)
   * Self-Contained (Windows) Download
 
 ### Links
