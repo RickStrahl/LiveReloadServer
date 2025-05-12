@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
@@ -70,9 +66,7 @@ namespace LiveReloadServer
                         opt =>
                         {
                             opt.FileProviders.Clear();
-                            opt.FileProviders.Add(new PhysicalFileProvider(ServerConfig.WebRoot) {
-                                UseActivePolling = true
-                            });
+                            opt.FileProviders.Add(new PhysicalFileProvider(ServerConfig.WebRoot));
                             opt.FileProviders.Add(
                                 new PhysicalFileProvider(Path.Combine(Startup.StartupPath, "templates")));
                         });

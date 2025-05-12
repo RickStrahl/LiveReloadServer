@@ -134,10 +134,32 @@ namespace LiveReloadServer
         /// <summary>
         /// Launch Command used to launch an editor when using -OpenEditor switch
         /// </summary>
-        public string EditorLaunchCommand { get; set; } = 
-            RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? 
-                "open -a \"Visual Studio Code\" \"%1\"" :
-                "code \"%1\"";  
+        public string EditorLaunchCommand { get; set; }
+
+
+        public static string FindExternalEditor()
+        {
+            var path64 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+            var editor = Path.Combine(path64, "Microsoft VS Code", "code.exe");
+            if (File.Exists(editor))
+                return editor;
+
+            var localAppPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            editor = Path.Combine(localAppPath, "Microsoft VS Code", "code.exe");
+            if (File.Exists(editor))
+                return editor;
+
+            editor = Path.Combine(path64, "Notepad++", "Notepad++.exe");
+            if (File.Exists(editor))
+                return editor;
+
+            editor = Path.Combine(localAppPath, "Programs", "Cursor", "Cursor.exe");
+            if (File.Exists(editor))
+                return editor;
+
+            return "Notepad.exe";
+        }
+
 
         /// <summary>
         /// Determines whether the server console window shows the URLs
@@ -253,7 +275,15 @@ namespace LiveReloadServer
             OpenBrowser = Helpers.GetLogicalSetting("OpenBrowser", Configuration, OpenBrowser);
             BrowserUrl = Helpers.GetStringSetting("BrowserUrl", Configuration, BrowserUrl);
             OpenEditor =Helpers.GetLogicalSetting("OpenEditor", Configuration, OpenEditor);
-            EditorLaunchCommand = Helpers.GetStringSetting("EditorLaunchCommand", Configuration, EditorLaunchCommand);
+            EditorLaunchCommand = Helpers.GetStringSetting("EditorLaunchCommand", Configuration);
+            if (string.IsNullOrEmpty(EditorLaunchCommand))
+            {
+                EditorLaunchCommand =
+                    RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ?
+                        "open -a \"Visual Studio Code\" \"%1\"" :
+                        "\"" + FindExternalEditor() + "\" \"%1\"";
+            }
+
             
             RegisterExplorer = Helpers.GetLogicalSetting("RegisterExplorer", Configuration, RegisterExplorer);
             UnregisterExplorer = Helpers.GetLogicalSetting("UnregisterExplorer", Configuration, UnregisterExplorer);

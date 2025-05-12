@@ -23,6 +23,7 @@ Remove-Item ./build/SelfContained/LiveReloadServer.exe
 
 # Sign exe
 .\signtool.exe sign /v /n "West Wind Technologies"   /tr "http://timestamp.digicert.com" /td SHA256 /fd SHA256 ".\build\SelfContained\LiveReloadWebServer.exe"
+.\signtool.exe sign /v /n "West Wind Technologies"   /tr "http://timestamp.digicert.com" /td SHA256 /fd SHA256 ".\build\SelfContained\LiveReloadServer.dll"
 
 remove-item ".\LiveReloadWebServer-SelfContained.zip"
 7z a -tzip -r ".\LiveReloadWebServer-SelfContained.zip" "./build/SelfContained/*.*"
