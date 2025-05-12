@@ -1,5 +1,13 @@
 # Live Reload Server Change Log
 
+### Version 1.7.5
+
+* **Improved for `<markdown>` Blocks in Razor Pages**  
+`<markdown>` block parsing now works without requiring the `-useMarkdown` command line switch. 
+
+* **External Editor Command Line**  
+Fix how the VS Code default is setup by directly executing `code.exe` rather than using the shell proxy which would often leave an open command window behind.
+
 ### Version 1.7
 
 <small>March 18th, 2025</small>
