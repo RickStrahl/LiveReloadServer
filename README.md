@@ -473,8 +473,7 @@ You can add **external assemblies** by adding final dependent assemblies (not Nu
 #### Update Assemblies in `./privatebin/updates`
 When the application is running assemblies are locked so they can't be replaced while the server is running. To make the updating easier you can place any assemblies you want to update into the `./privatebin/updates` folder, and they will be copied into the `./privatebin` folder when the server is restarted.
 
-This allows for quick hotswapping of binary code.
-
+This allows for quick hotswapping of binary code which is especially useful in hosted scenarios if you're running in IIS for example. A filewatcher is used to monitor the `updates` folder and if something changes it causes the server to be restarted, which then updates the assemblies.
 
 This provides a very quick and easy way to create small .NET assemblies and use them in your Web sites.
 
