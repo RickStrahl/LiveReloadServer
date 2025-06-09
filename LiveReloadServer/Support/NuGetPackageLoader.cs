@@ -146,7 +146,7 @@ public class NuGetPackageLoader
                         //sucessPackages.Add("-- " + assembly);
                     }
                 }
-                catch(Exception ex)
+                catch
                 {
                     Error = true;
                     //failedPackages.Add("-- " + Path.GetFileName(filePath));

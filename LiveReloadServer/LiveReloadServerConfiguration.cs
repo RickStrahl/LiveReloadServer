@@ -137,17 +137,27 @@ namespace LiveReloadServer
         public string EditorLaunchCommand { get; set; }
 
 
-        public static string FindExternalEditor()
+        /// <summary>
+        /// Finds a suitable External Windows editor that supports folders
+        /// for editing. Can be customized by setting the `EditorLaunchCommand`.
+        /// 
+        /// Note that Code and Cursor are launched using their launcher apps.
+        /// Unfortunately VS Code ends up often leaving behind a stray terminal
+        /// window that doesn't close.         
+        /// </summary>
+        /// <returns></returns>
+        public static string FindWindowsExternalEditor()
         {
+
             var path64 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
             var editor = Path.Combine(path64, "Microsoft VS Code", "code.exe");
             if (File.Exists(editor))
-                return editor;
+                return "Code"; // return the code launcher not the EXE   // editor;
 
             var localAppPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             editor = Path.Combine(localAppPath, "Microsoft VS Code", "code.exe");
             if (File.Exists(editor))
-                return editor;
+                return "Code"; // return Code launcher not the exe // editor   -
 
             editor = Path.Combine(path64, "Notepad++", "Notepad++.exe");
             if (File.Exists(editor))
@@ -155,7 +165,7 @@ namespace LiveReloadServer
 
             editor = Path.Combine(localAppPath, "Programs", "Cursor", "Cursor.exe");
             if (File.Exists(editor))
-                return editor;
+                return "Cursor"; //  return Cursor launcher not the exe  // editor;
 
             return "Notepad.exe";
         }
@@ -281,7 +291,7 @@ namespace LiveReloadServer
                 EditorLaunchCommand =
                     RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ?
                         "open -a \"Visual Studio Code\" \"%1\"" :
-                        "\"" + FindExternalEditor() + "\" \"%1\"";
+                        "\"" + FindWindowsExternalEditor() + "\" \"%1\"";
             }
 
             

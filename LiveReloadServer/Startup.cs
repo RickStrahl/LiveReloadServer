@@ -603,9 +603,9 @@ namespace LiveReloadServer
         {
             string cmdLine = null;
             try
-            {
-                cmdLine = ServerConfig.EditorLaunchCommand.Replace("%1", ServerConfig.WebRoot);
-                Westwind.Utilities.ShellUtils.ExecuteCommandLine(cmdLine);
+            {                
+                cmdLine = ServerConfig.EditorLaunchCommand.Replace("%1", ServerConfig.WebRoot);                               
+                ShellUtils.ExecuteCommandLine(cmdLine);
             }
             catch (Exception ex)
             {
@@ -613,6 +613,7 @@ namespace LiveReloadServer
                 ColorConsole.WriteError("-- " + ex.Message);
             }
         }
+
 
         public static void RegisterInExplorer(bool unregister = false)
         {

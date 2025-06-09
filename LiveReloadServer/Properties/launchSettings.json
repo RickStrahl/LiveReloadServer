@@ -17,6 +17,11 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
+    "docmonster": {
+      "commandName": "Project",
+      "commandLineArgs": "-useSsl -useRazor -openEditor",
+      "workingDirectory": "C:\\Users\\rstrahl\\Dropbox\\Web Sites\\documentationmonster.com\\"
+    },
     "LiveReloadServer - Anti-Trust": {
       "commandName": "Project",
       "commandLineArgs": "\"d:/projects/anti-trust-guilty-album/anti-trust.rocks\"  --port 0 -useRazor -useMarkdown -useSsl --MarkdownTheme blackout --openBrowser true --openEditor true ",

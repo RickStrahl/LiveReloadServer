@@ -1,9 +1,6 @@
 # Live Reload Web Server
 
-[![NuGet](https://img.shields.io/nuget/v/LiveReloadServer.svg)](https://www.nuget.org/packages/LiveReloadServer/) [![](https://img.shields.io/nuget/dt/LiveReloadServer.svg)](https://www.nuget.org/packages/LiveReloadServer/) &nbsp; &nbsp; &nbsp; &nbsp;
-[![Chocolatey](https://img.shields.io/chocolatey/v/livereloadwebserver.svg)](https://chocolatey.org/packages/livereloadwebserver)
-
-I wanna know what you think of this situation. Can we just go on with whatever? Tell me that this is really what we're asking for in this scenario.
+[![NuGet](https://img.shields.io/nuget/v/LiveReloadServer.svg)](https://www.nuget.org/packages/LiveReloadServer/) [![](https://img.shields.io/nuget/dt/LiveReloadServer.svg)](https://www.nuget.org/packages/LiveReloadServer/) [![Chocolatey](https://img.shields.io/chocolatey/v/livereloadwebserver.svg)](https://chocolatey.org/packages/livereloadwebserver)
 
 ![Live Reload Web Server Icon](https://raw.githubusercontent.com/RickStrahl/LiveReloadServer/master/Assets/icon_128.png)
 
@@ -27,6 +24,11 @@ I wanna know what you think of this situation. Can we just go on with whatever? 
 * Run local Blazor Applications (without Live Reload support however)
 * Cross Platform - Windows, Mac, Linux <small>*(dotnet tool only)*</small>
 * Serve HTTPS content <small>*(dotnet tool only)*</small>
+* Self-Contained Razor Pages
+    * Single file .cshtml files only
+    * Can import NuGet packages
+    * Can import external assemblies 
+    * Can update external assemblies (on restart)
 * **Hostable ASP.NET Core Server** that can be used by multiple sites on a server
     * Similar to ASP.NET Web Pages features but using Razor code
     * Single file updates supported    
@@ -461,9 +463,18 @@ Libraries imported can be referenced explicitly using the assembly types, so the
 > Make sure the `<WebRoot>/PrivateBin/NuGet` has write access when loading assemblies for the first time as they are downloaded and then saved in that folder. For distribution we recommend you provide the folder as part of your application to avoid downloading on startup in which case permissions won't be required.
 
 ### External Assembly Support
-You can also explicitly import loose .NET assemblies by adding them to the `./PrivateBin` folder in your WebRoot.
+You can also explicitly import loose .NET assemblies by adding them to the `./privatebin` folder in your WebRoot.
 
+#### Loading Loose Assemblies from `./privatebin`
 You can add **external assemblies** by adding final dependent assemblies (not NuGet packages!) into a `./privatebin` folder below your WebRoot folder. Assemblies in this folder will be loaded when the site is launched and become available for access in your Razor page code.
+
+> Note: Assemblies are loaded on LiveReload server startup, so any assemblies you add require a restart to be recognized.
+
+#### Update Assemblies in `./privatebin/updates`
+When the application is running assemblies are locked so they can't be replaced while the server is running. To make the updating easier you can place any assemblies you want to update into the `./privatebin/updates` folder, and they will be copied into the `./privatebin` folder when the server is restarted.
+
+This allows for quick hotswapping of binary code.
+
 
 This provides a very quick and easy way to create small .NET assemblies and use them in your Web sites.
 
