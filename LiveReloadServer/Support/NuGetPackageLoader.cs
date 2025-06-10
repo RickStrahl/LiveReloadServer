@@ -58,7 +58,7 @@ public class NuGetPackageLoader
             if (!source.StartsWith("http"))
             {
                 // local packages
-                var sourceRepository = Repository.Factory.GetCoreV3("d:\\projects\\Nuget");
+                var sourceRepository = Repository.Factory.GetCoreV3(source);
                 try
                 {
                     resource = await sourceRepository.GetResourceAsync<FindPackageByIdResource>();
@@ -79,15 +79,12 @@ public class NuGetPackageLoader
             if (await resource.CopyNupkgToStreamAsync(packageId, packageVersion, packageStream, cache, logger, default))
             {
                 packageStream.Seek(0, SeekOrigin.Begin);
+                sucessPackages.Add(packageId);
                 break;
             }
-            else
-            {
-                failedPackages.Add(packageId);
-                return;
-            }
-
-            resource = null;
+    
+            failedPackages.Add(packageId);
+            return;
         }
 
         if (packageStream == null || packageStream.Length < 1)
@@ -115,10 +112,7 @@ public class NuGetPackageLoader
             await LoadPackageAsync(pkg.Id, pkg.VersionRange.OriginalString, builder,packageSources, sucessPackages, failedPackages);
         }
 
-
-
-        bool Error = false;
-
+        bool error = false;
         var files = packageReader.GetFiles().Where(f => f.Contains("/" + framework + "/"));
         foreach (var file in files)
         {
@@ -134,7 +128,6 @@ public class NuGetPackageLoader
                 catch { /* ignore - most likely the file exists already  */ }
             }
 
-
             if (filePath.EndsWith(".dll") && File.Exists(filePath))
             {
                 try
@@ -142,39 +135,39 @@ public class NuGetPackageLoader
                     var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(filePath);
                     if (assembly != null)
                     {
-                        builder.AddApplicationPart(assembly);
-                        //sucessPackages.Add("-- " + assembly);
+                        builder.AddApplicationPart(assembly);                     
                     }
                 }
                 catch
                 {
-                    Error = true;
-                    //failedPackages.Add("-- " + Path.GetFileName(filePath));
+                    error = true;
+                    failedPackages.Add("-- " + Path.GetFileName(filePath));
                 }
             }
         }
 
-        if (Error)
+        if (error)
             failedPackages.Add(packageId);
         else
             sucessPackages.Add(packageId);
-
     }
 
     private string GetTargetFramework(PackageArchiveReader packageReader)
     {
-        string framework = packageReader.GetReferenceItems().
-                                Where(g =>
-                                {
-                                    string framework = g.TargetFramework.ToString();
-                                    if (framework == "net9.0" || framework == "net8.0" || framework == "net6.0" | framework == "net7.0" ||
-                                        framework.StartsWith("netstandard"))
-                                        return true;
-                                    return false;
-                                })
-                                .OrderByDescending(g => g.TargetFramework.ToString())
-                                .Select(g => g.TargetFramework.ToString())
-                                .FirstOrDefault();
+        var frameworks = packageReader.GetReferenceItems();
+        if (frameworks == null) return null;
+
+        string framework = frameworks
+            .Where(f => f.TargetFramework?.ToString().StartsWith("net") ?? false)
+            .OrderByDescending(f=> f.TargetFramework.ToString())
+            .Select(f => f.TargetFramework.ToString())              
+            .FirstOrDefault();
+
+        if (framework == null)
+            framework = frameworks
+                            .FirstOrDefault(f => f.TargetFramework?.ToString().StartsWith("netstandard") ?? false)?
+                            .TargetFramework.ToString(); 
+        
         return framework;
     }
 }

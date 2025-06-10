@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -17,6 +18,7 @@ using Westwind.AspNetCore.Markdown;
 using Westwind.Utilities;
 using Microsoft.Extensions.FileProviders.Physical;
 using Microsoft.AspNetCore.Hosting;
+using System.Linq;
 
 
 namespace LiveReloadServer
@@ -123,6 +125,8 @@ namespace LiveReloadServer
 
                 // explicitly add any custom assemblies so Razor can see them for compilation                
                 LoadNugetPackages(mvcBuilder, ServerConfig);
+                
+
                 LoadPrivateBinAssemblies(mvcBuilder);
             }
         }
@@ -326,15 +330,12 @@ namespace LiveReloadServer
                 var fname = Path.GetFileName(assmbly);
                 ColorConsole.WriteEmbeddedColorLine("Failed Additional Assembly: [red]" + fname + "[/red]");
             }
-            foreach (var package in LoadedNugetPackages)
+            foreach (var package in LoadedNugetPackages.Distinct())
             {
                 var fname = Path.GetFileName(package);
-                if (fname.StartsWith("--"))
-                    ColorConsole.WriteEmbeddedColorLine("Loaded Nuget assembly: [darkgreen]" + fname + "[/darkgreen]");
-                else 
-                    ColorConsole.WriteEmbeddedColorLine("Loaded Nuget Package: [darkgreen]" + fname + "[/darkgreen]");
+                ColorConsole.WriteEmbeddedColorLine("Loaded Nuget Package: [darkgreen]" + fname + "[/darkgreen]");
             }
-            foreach (var package in FailedNugetPackages)
+            foreach (var package in FailedNugetPackages.Distinct())
             {
                 var fname = Path.GetFileName(package);
                 if (fname.StartsWith("--"))
@@ -358,6 +359,7 @@ namespace LiveReloadServer
         {
             var originalPath = context.Request.Path.Value;
 
+            
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
@@ -442,24 +444,24 @@ namespace LiveReloadServer
                 return;
 
             var packageConfiguration = JsonSerializationUtils.DeserializeFromFile<NuGetPackageConfiguration>(jsonFile);                
-            if (packageConfiguration == null)
+            if (packageConfiguration == null || packageConfiguration.Packages.Count < 1)
                 return; 
             if (packageConfiguration.NugetSources == null || packageConfiguration.NugetSources.Count == 0)
                 packageConfiguration.NugetSources = new() { "https://api.nuget.sorg/v3/index.json" };                                   
             
 
             var nuget = new NuGetPackageLoader(outputPath);
-
+            
             Task.Run(async () =>
             {
                 foreach (var package in packageConfiguration.Packages)
                 {
                     try
                     {
-                        await nuget.LoadPackageAsync(package.PackageId, 
-                            package.Version, 
-                            mvcBuilder, 
-                            packageConfiguration.NugetSources, 
+                        await nuget.LoadPackageAsync(package.PackageId,
+                            package.Version,
+                            mvcBuilder,
+                            packageConfiguration.NugetSources,
                             LoadedNugetPackages, FailedNugetPackages);
                     }
                     catch
@@ -467,8 +469,11 @@ namespace LiveReloadServer
                         FailedNugetPackages.Add(package.PackageId);
                     }
                 }
-            }).FireAndForget(); 
+            }).FireAndForget();
 
+            Thread.Sleep(250);
+            Thread.Sleep(250);
+            Thread.Sleep(250);
         }
 
 
