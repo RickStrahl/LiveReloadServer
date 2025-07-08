@@ -113,7 +113,7 @@ namespace LiveReloadServer
             }
             if (cmdLine.Contains("-OpenSettings", StringComparison.OrdinalIgnoreCase))
             {
-                var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                var path = Path.Combine(Startup.StartupExecutablePath,
                     "LiveReloadWebServer.json");
                 ShellUtils.ShellExecute(path);
                 return true;

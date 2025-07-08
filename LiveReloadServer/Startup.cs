@@ -28,12 +28,15 @@ namespace LiveReloadServer
         /// <summary>
         /// Binary Startup Location irrespective of the environment path
         /// </summary>
-        public static string StartupPath { get; set; }
+        public static string StartupExecutablePath { get; set; }
+
+        public static string StartupEnvironmentPath { get; set; }
 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            StartupPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            StartupExecutablePath = AppContext.BaseDirectory.TrimEnd('/','\\'); ;
+            StartupEnvironmentPath = Environment.CurrentDirectory;
         }
 
         public IConfiguration Configuration { get; }
@@ -58,9 +61,11 @@ namespace LiveReloadServer
                 });
             }
 
-            IMvcBuilder mvcBuilder = null;
+
 
 #if USE_RAZORPAGES
+            IMvcBuilder mvcBuilder = null;
+
             if (ServerConfig.UseRazor)
             {
                 mvcBuilder = services.AddRazorPages(opt => { opt.RootDirectory = "/"; })
@@ -70,10 +75,10 @@ namespace LiveReloadServer
                             opt.FileProviders.Clear();
                             opt.FileProviders.Add(new PhysicalFileProvider(ServerConfig.WebRoot));
                             opt.FileProviders.Add(
-                                new PhysicalFileProvider(Path.Combine(Startup.StartupPath, "templates")));
+                                new PhysicalFileProvider(Path.Combine(Startup.StartupExecutablePath, "templates")));
                         });
             }
-#endif
+
 
             if (ServerConfig.UseMarkdown)
             {
@@ -102,7 +107,7 @@ namespace LiveReloadServer
                             opt.FileProviders.Clear();
                             opt.FileProviders.Add(new PhysicalFileProvider(ServerConfig.WebRoot));
                             opt.FileProviders.Add(
-                                new PhysicalFileProvider(Path.Combine(Startup.StartupPath, "templates")));
+                                new PhysicalFileProvider(Path.Combine(Startup.StartupExecutablePath, "templates")));
                         })
                     // have to let MVC know we have a dynamically loaded controller
                     .AddApplicationPart(typeof(MarkdownPageProcessorMiddleware).Assembly);
@@ -114,21 +119,12 @@ namespace LiveReloadServer
 
             if (mvcBuilder != null)
             {
-                //mvcBuilder.AddRazorRuntimeCompilation(
-                //    opt =>
-                //    {
-                //        opt.FileProviders.Clear();
-                //        opt.FileProviders.Add(new PhysicalFileProvider(ServerConfig.WebRoot));
-                //        opt.FileProviders.Add(
-                //            new PhysicalFileProvider(Path.Combine(Startup.StartupPath, "templates")));
-                //    });
-
                 // explicitly add any custom assemblies so Razor can see them for compilation                
-                LoadNugetPackages(mvcBuilder, ServerConfig);
-                
-
+                LoadNugetPackages(mvcBuilder, ServerConfig);              
                 LoadPrivateBinAssemblies(mvcBuilder);
             }
+#endif
+
         }
 
 
@@ -166,7 +162,7 @@ namespace LiveReloadServer
             // and potentially other library resources in the future
 
             var wrProvider = new PhysicalFileProvider(ServerConfig.WebRoot);
-            var tpProvider = new PhysicalFileProvider(Path.Combine(Startup.StartupPath, "templates"));
+            var tpProvider = new PhysicalFileProvider(Path.Combine(Startup.StartupExecutablePath, "templates"));
 
             var extensionProvider = new FileExtensionContentTypeProvider();
             extensionProvider.Mappings.Add(".dll", "application/octet-stream");
@@ -256,7 +252,7 @@ namespace LiveReloadServer
             if (Directory.Exists(templatePath))
                 return false;
 
-            FileUtils.CopyDirectory(Path.Combine(Startup.StartupPath, "templates", "markdown-themes"),
+            FileUtils.CopyDirectory(Path.Combine(Startup.StartupExecutablePath, "templates", "markdown-themes"),
                 templatePath, recursive: true);
 
             return true;
@@ -432,8 +428,17 @@ namespace LiveReloadServer
         #endregion
 
 
-        #region NuGet And AssemblyLoading and PrivateBin Updates
 
+
+
+
+        #region NuGet And AssemblyLoading and PrivateBin Updates
+        private List<string> LoadedPrivateAssemblies = new List<string>();
+        private List<string> FailedPrivateAssemblies = new List<string>();
+        private List<string> LoadedNugetPackages = new List<string>();
+        private List<string> FailedNugetPackages = new List<string>();
+
+#if USE_RAZORPAGES
         private void LoadNugetPackages(IMvcBuilder mvcBuilder, LiveReloadServerConfiguration config)
         {
 
@@ -480,11 +485,7 @@ namespace LiveReloadServer
 
         
 
-        private List<string> LoadedPrivateAssemblies = new List<string>();
-        private List<string> FailedPrivateAssemblies = new List<string>();
-        private List<string> LoadedNugetPackages = new List<string>();
-        private List<string> FailedNugetPackages = new List<string>();
-
+        
         private void LoadPrivateBinAssemblies(IMvcBuilder mvcBuilder)
         {
             var binPath = Path.Combine(ServerConfig.WebRoot, "privatebin");
@@ -573,7 +574,9 @@ namespace LiveReloadServer
             fi.LastWriteTime = DateTime.Now;                        
         }
 
-        #endregion
+    #endif
+    #endregion
+
 
 
         #region Shell Operations
@@ -653,8 +656,8 @@ namespace LiveReloadServer
                     var key = @"HKEY_CURRENT_USER\Software\Classes\Directory\shell\LiveReloadServer";
                     var value = "Open as Live Reload Web Site";
                     Microsoft.Win32.Registry.SetValue(key, "", value);
-                    
-                    value = "\"" + Path.GetDirectoryName(location) + "\\LiveReload.ico\"";
+
+                    value = Path.GetDirectoryName(location) + "\\LiveReload.ico";
                     Microsoft.Win32.Registry.SetValue( key, "Icon", value);
 
                     key = @"HKEY_CURRENT_USER\Software\Classes\Directory\shell\LiveReloadServer\command";

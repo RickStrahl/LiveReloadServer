@@ -152,12 +152,12 @@ namespace LiveReloadServer
             var path64 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
             var editor = Path.Combine(path64, "Microsoft VS Code", "code.exe");
             if (File.Exists(editor))
-                return "Code"; // return the code launcher not the EXE   // editor;
+                return editor; // "Code"; // return the code launcher not the EXE   // editor;
 
             var localAppPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             editor = Path.Combine(localAppPath, "Microsoft VS Code", "code.exe");
             if (File.Exists(editor))
-                return "Code"; // return Code launcher not the exe // editor   -
+                return editor; // "Code"; // return Code launcher not the exe // editor   -
 
             editor = Path.Combine(path64, "Notepad++", "Notepad++.exe");
             if (File.Exists(editor))
@@ -165,7 +165,7 @@ namespace LiveReloadServer
 
             editor = Path.Combine(localAppPath, "Programs", "Cursor", "Cursor.exe");
             if (File.Exists(editor))
-                return "Cursor"; //  return Cursor launcher not the exe  // editor;
+                return editor; //  "Cursor"; //  return Cursor launcher not the exe  // editor;
 
             return "Notepad.exe";
         }
@@ -408,7 +408,7 @@ namespace LiveReloadServer
 
         private class ByteArrayComparer : IComparer<byte[]>
         {
-            public int Compare(byte[]? x, byte[]? y)
+            public int Compare(byte[] x, byte[] y)
             {
                 if (x == null || y == null) return 0;
                 for (int i = 0; i < Math.Min(x.Length, y.Length); i++)

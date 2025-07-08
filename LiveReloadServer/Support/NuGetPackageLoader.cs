@@ -1,3 +1,4 @@
+#if USE_RAZORPAGES
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -191,3 +192,5 @@ public class NugetPackageItem
     public string PackageId { get; set; }
     public string Version { get; set; }
 }
+
+#endif

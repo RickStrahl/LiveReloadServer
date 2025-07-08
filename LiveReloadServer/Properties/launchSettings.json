@@ -65,7 +65,7 @@
     },
     "LiveReloadServer - Register": {
       "commandName": "Project",
-      "commandLineArgs": "--OpenSettings",
+      "commandLineArgs": "--RegisterExplorer",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production"
