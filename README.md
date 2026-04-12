@@ -14,7 +14,13 @@
 * Just start with:
     * `LiveReloadServer <folder>` <small>*(dotnet tool)*</small>  
     * `LiveReloadWebServer <folder>` <small>*(installed version)*</small>
+* Serve any folder as a static Web site
+	* Html Files, JS, CSS, Images etc.
+	* SPAs
+	* Blazor
 * Support for self-contained **Razor Pages**  <small>*(.cshtml)*</small>
+	* Support for server side .NET and Razor code
+	* For sites that need a little (or a lot of) server side logic
 * Themed **Markdown Page Rendering** support built in
 * Built-in, optional **Live Reload** functionality for change detection and browser refresh  
   <small>*for all supported file formats: Static Files, Razor and Markdown*</small> 
