@@ -70,7 +70,7 @@
 		<PackageReference Include="Westwind.Utilities.Data" Version="5.2.7" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="10.0.0-rc.2.25502.107" />
 		<PackageReference Include="NuGet.Protocol" Version="7.0.1" />
-		<PackageReference Include="NuGet.Packaging" Version="7.0.1" />
+		<PackageReference Include="NuGet.Packaging" Version="7.0.3" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$(DefineConstants.Contains('USE_RAZORPAGES'))">
