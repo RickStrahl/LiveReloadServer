@@ -17,10 +17,16 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
+
     "docmonster": {
       "commandName": "Project",
       "commandLineArgs": "-useSsl -useRazor -openEditor",
       "workingDirectory": "C:\\Users\\rstrahl\\Dropbox\\Web Sites\\documentationmonster.com\\"
+    },
+    "westwind": {
+      "commandName": "Project",
+      "commandLineArgs": "-useSsl -useRazor  -openEditor --port 5022",
+      "workingDirectory": "d:\\temp\\westwindcom\\"
     },
     "LiveReloadServer - Anti-Trust": {
       "commandName": "Project",

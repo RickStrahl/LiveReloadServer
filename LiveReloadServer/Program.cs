@@ -1,15 +1,11 @@
-﻿using System;
-using System.Diagnostics;
+using System;
 using System.IO;
-using System.Linq;
 using System.Net.Sockets;
 using System.Reflection;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Identity.Client;
 using Westwind.Utilities;
 
 namespace LiveReloadServer

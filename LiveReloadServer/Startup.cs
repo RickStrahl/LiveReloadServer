@@ -1,24 +1,24 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.StaticFiles;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.FileProviders.Physical;
 using Westwind.AspNetCore.LiveReload;
 using Westwind.AspNetCore.Markdown;
 using Westwind.Utilities;
-using Microsoft.Extensions.FileProviders.Physical;
-using Microsoft.AspNetCore.Hosting;
-using System.Linq;
 
 
 namespace LiveReloadServer
@@ -32,10 +32,12 @@ namespace LiveReloadServer
 
         public static string StartupEnvironmentPath { get; set; }
 
+        public bool UseTemporaryViewImportsFile { get; set; } = false;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            StartupExecutablePath = AppContext.BaseDirectory.TrimEnd('/','\\'); ;
+            StartupExecutablePath = AppContext.BaseDirectory.TrimEnd('/', '\\'); ;
             StartupEnvironmentPath = Environment.CurrentDirectory;
         }
 
@@ -47,7 +49,7 @@ namespace LiveReloadServer
         public void ConfigureServices(IServiceCollection services)
         {
             ServerConfig = new LiveReloadServerConfiguration();
-            ServerConfig.LoadFromConfiguration(Configuration);           
+            ServerConfig.LoadFromConfiguration(Configuration);
 
             if (ServerConfig.UseLiveReload)
             {
@@ -57,7 +59,7 @@ namespace LiveReloadServer
                     opt.LiveReloadEnabled = ServerConfig.UseLiveReload;
 
                     if (!string.IsNullOrEmpty(ServerConfig.Extensions))
-                        opt.ClientFileExtensions = ServerConfig.Extensions;                
+                        opt.ClientFileExtensions = ServerConfig.Extensions;
                 });
             }
 
@@ -120,17 +122,27 @@ namespace LiveReloadServer
             if (mvcBuilder != null)
             {
                 // explicitly add any custom assemblies so Razor can see them for compilation                
-                LoadNugetPackages(mvcBuilder, ServerConfig);              
+                LoadNugetPackages(mvcBuilder, ServerConfig);
                 LoadPrivateBinAssemblies(mvcBuilder);
             }
-#endif
+
+
+            var viewImportFile = Path.Combine(ServerConfig.WebRoot, "_ViewImports.cshtml");
+            if (!File.Exists(viewImportFile))
+            {
+                try {
+                    File.WriteAllText(viewImportFile, ViewImportsTemplate);
+                    UseTemporaryViewImportsFile = true;
+                }
+                catch { }
+            }
 
         }
 
-
+#endif
         private static object consoleLock = new object();
 
-        
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IWebHostEnvironment env)
         {
@@ -146,11 +158,10 @@ namespace LiveReloadServer
             if (ServerConfig.ShowUrls)
                 app.Use(DisplayRequestInfoMiddlewareHandler);
 
-            if (ServerConfig.VirtualPath != "/") 
+            if (ServerConfig.VirtualPath != "/")
                 app.UsePathBase(ServerConfig.VirtualPath);
 
-            app.UseDefaultFiles(new DefaultFilesOptions
-            {
+            app.UseDefaultFiles(new DefaultFilesOptions {
                 FileProvider = new PhysicalFileProvider(ServerConfig.WebRoot),
                 DefaultFileNames = new List<string>(ServerConfig.DefaultFiles.Split(',', ';'))
             });
@@ -174,8 +185,7 @@ namespace LiveReloadServer
             }
 
             var compositeProvider = new CompositeFileProvider(wrProvider, tpProvider);
-            var staticFileOptions = new StaticFileOptions
-            {
+            var staticFileOptions = new StaticFileOptions {
                 //FileProvider = compositeProvider, //new PhysicalFileProvider(WebRoot),
 
                 FileProvider = new PhysicalFileProvider(ServerConfig.WebRoot),
@@ -207,8 +217,8 @@ namespace LiveReloadServer
                 });
             }
 
-           
-            if(!string.IsNullOrEmpty(ServerConfig.FolderNotFoundFallbackPath))
+
+            if (!string.IsNullOrEmpty(ServerConfig.FolderNotFoundFallbackPath))
             {
                 app.UseEndpoints(endpoints =>
                 {
@@ -279,7 +289,7 @@ namespace LiveReloadServer
 
             ColorConsole.WriteEmbeddedColorLine($"Site Url     : [darkcyan]{ServerConfig.GetHttpUrl()}[/darkcyan] {hostUrl}");
             //ConsoleHelper.WriteLine(, ConsoleColor.DarkCyan);
-            Console.WriteLine($"Web Root     : {ServerConfig.WebRoot}");            
+            Console.WriteLine($"Web Root     : {ServerConfig.WebRoot}");
             Console.WriteLine($"Executable   : {Assembly.GetExecutingAssembly().Location}");
             Console.WriteLine($"Live Reload  : {ServerConfig.UseLiveReload}");
             if (ServerConfig.UseLiveReload)
@@ -355,7 +365,7 @@ namespace LiveReloadServer
         {
             var originalPath = context.Request.Path.Value;
 
-            
+
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
@@ -448,15 +458,15 @@ namespace LiveReloadServer
             if (!System.IO.File.Exists(jsonFile))
                 return;
 
-            var packageConfiguration = JsonSerializationUtils.DeserializeFromFile<NuGetPackageConfiguration>(jsonFile);                
+            var packageConfiguration = JsonSerializationUtils.DeserializeFromFile<NuGetPackageConfiguration>(jsonFile);
             if (packageConfiguration == null || packageConfiguration.Packages.Count < 1)
-                return; 
+                return;
             if (packageConfiguration.NugetSources == null || packageConfiguration.NugetSources.Count == 0)
-                packageConfiguration.NugetSources = new() { "https://api.nuget.sorg/v3/index.json" };                                   
-            
+                packageConfiguration.NugetSources = new() { "https://api.nuget.sorg/v3/index.json" };
+
 
             var nuget = new NuGetPackageLoader(outputPath);
-            
+
             Task.Run(async () =>
             {
                 foreach (var package in packageConfiguration.Packages)
@@ -483,9 +493,9 @@ namespace LiveReloadServer
 
 
 
-        
 
-        
+
+
         private void LoadPrivateBinAssemblies(IMvcBuilder mvcBuilder)
         {
             var binPath = Path.Combine(ServerConfig.WebRoot, "privatebin");
@@ -494,7 +504,7 @@ namespace LiveReloadServer
             // if 
             UpdatePrivateBinAssemblies();
 
-            
+
             if (Directory.Exists(binPath))
             {
                 var files = Directory.GetFiles(binPath);
@@ -517,7 +527,7 @@ namespace LiveReloadServer
 
                 }
             }
-        
+
         }
 
 
@@ -535,13 +545,13 @@ namespace LiveReloadServer
                 {
                     try
                     {
-                        var updateFile = file.Replace("\\updates\\", "\\").Replace("/updates/","/");
+                        var updateFile = file.Replace("\\updates\\", "\\").Replace("/updates/", "/");
                         File.Copy(file, updateFile, true);
                         File.Delete(file);
-                        
+
                         ColorConsole.WriteLine("Assembly Updated: " + file, ConsoleColor.Green);
                     }
-                    catch(Exception ex) { 
+                    catch (Exception ex) {
                         ColorConsole.WriteLine("Assembly Update failed:  " + file + ". " + ex.Message, ConsoleColor.Red);
                     }
                 }
@@ -550,19 +560,19 @@ namespace LiveReloadServer
                 if (privateBinWatcher == null) // && File.Exists(Path.Combine(ServerConfig.WebRoot,"web.config")))
                 {
                     privateBinWatcher = new FileSystemWatcher(updatePath, filter: "*.dll");
-                    privateBinWatcher.EnableRaisingEvents = true;                    
+                    privateBinWatcher.EnableRaisingEvents = true;
 
                     privateBinWatcher.IncludeSubdirectories = false;
                     privateBinWatcher.NotifyFilter = NotifyFilters.LastWrite;
                     privateBinWatcher.Changed += OnPrivateBinPrivateBinIisWatcherOnChanged;
-                    privateBinWatcher.Created += OnPrivateBinPrivateBinIisWatcherOnChanged;                    
+                    privateBinWatcher.Created += OnPrivateBinPrivateBinIisWatcherOnChanged;
                 }
             }
         }
 
         private void OnPrivateBinPrivateBinIisWatcherOnChanged(object sender, FileSystemEventArgs args)
         {
-            var file = Path.Combine(ServerConfig.WebRoot, "web.config");   
+            var file = Path.Combine(ServerConfig.WebRoot, "web.config");
             Console.WriteLine("Trying to update Assemblies by touching web.config: " + file);
             var fi = new FileInfo(file);
             if (!fi.Exists)
@@ -571,11 +581,11 @@ namespace LiveReloadServer
             Console.WriteLine("updating: " + file);
 
             // trigger IIS to recycle
-            fi.LastWriteTime = DateTime.Now;                        
+            fi.LastWriteTime = DateTime.Now;
         }
 
-    #endif
-    #endregion
+#endif  
+        #endregion
 
 
 
@@ -611,8 +621,8 @@ namespace LiveReloadServer
         {
             string cmdLine = null;
             try
-            {                
-                cmdLine = ServerConfig.EditorLaunchCommand.Replace("%1", ServerConfig.WebRoot);                               
+            {
+                cmdLine = ServerConfig.EditorLaunchCommand.Replace("%1", ServerConfig.WebRoot);
                 ShellUtils.ExecuteCommandLine(cmdLine);
             }
             catch (Exception ex)
@@ -648,25 +658,25 @@ namespace LiveReloadServer
                         exec = location.Replace(".dll", ".exe");
                     else
                     {
-                        exec = Path.Combine(Environment.ExpandEnvironmentVariables("%USERPROFILE%"), ".dotnet", "tools", "LiveReloadServer.exe");                        
+                        exec = Path.Combine(Environment.ExpandEnvironmentVariables("%USERPROFILE%"), ".dotnet", "tools", "LiveReloadServer.exe");
                         if (!File.Exists(exec))
-                            exec = location;    
-                    }                        
+                            exec = location;
+                    }
 
                     var key = @"HKEY_CURRENT_USER\Software\Classes\Directory\shell\LiveReloadServer";
                     var value = "Open as Live Reload Web Site";
                     Microsoft.Win32.Registry.SetValue(key, "", value);
 
                     value = Path.GetDirectoryName(location) + "\\LiveReload.ico";
-                    Microsoft.Win32.Registry.SetValue( key, "Icon", value);
+                    Microsoft.Win32.Registry.SetValue(key, "Icon", value);
 
                     key = @"HKEY_CURRENT_USER\Software\Classes\Directory\shell\LiveReloadServer\command";
                     value = "\"" + exec + "\" \"%1\"";
-                    Microsoft.Win32.Registry.SetValue( key, "", value);
+                    Microsoft.Win32.Registry.SetValue(key, "", value);
 
                     ColorConsole.WriteSuccess("Registered LiveReloadServer from Windows Explorer.");
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     ColorConsole.WriteError("Failed to register LiveReloadServer in Windows Explorer. " + ex.Message);
                 }
@@ -674,7 +684,7 @@ namespace LiveReloadServer
             else
             {
                 try
-                {         
+                {
                     var keyPath = @"Software\Classes\Directory\shell";
                     using (var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(keyPath, writable: true))
                     {
@@ -735,7 +745,7 @@ namespace LiveReloadServer
                 }
                 else
                 {
-                    await Status404Page(context,isFallback: true);
+                    await Status404Page(context, isFallback: true);
                 }
             }
 
@@ -779,8 +789,31 @@ page or resource also does not exist.</p>
 </body></html>");
             await context.Response.CompleteAsync();
         }
-    }
 
-    #endregion
+
+
+        #endregion
+
+
+
+        public const string ViewImportsTemplate =
+            """
+            @using System.Xml
+            @using System.Xml.Linq
+            @using System.IO
+            @using System.Net.Http
+            @using System.Net
+            @using System.Text
+            @using System.Text.Json
+            @using System.Text.RegularExpressions   
+            @using System.Globalization
+            
+            @using Newtonsoft.Json
+            @using Newtonsoft.Json.Linq
+            @using Westwind.Utilities
+            
+            @addTagHelper *, Westwind.AspNetCore.Markdown
+            """;
+    }
 }
 
