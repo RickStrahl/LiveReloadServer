@@ -316,127 +316,26 @@ dotnet dev-certs https --trust
 > The only way to use --useSsl at the moment is via the built-in .NET dev certificates. If you're running the standalone versions and you want to run with `https://` you have to install the .NET SDK to get the certificates installed.
 
 
-## Markdown File Rendering
-You can enable Markdown support in this server by setting `-useMarkdown`. This serves HTML content directly off any `.md` or `.markdown` files in the Web root. The server provides default templates for the HTML styling, but you can override the rendering behavior with a **custom Razor template** that provides the chrome around the rendered Markdown, additional styling and syntax coloring.
+## Razor Pages (.cshtml) Support
+One very useful feature of LiveReloadServer is the ability to run **loose Razor Pages** - meaning `.cshtml` files that are self contained and don't reference externally compiled code. Razor pages in LiveReloadServer are runtime compiled, so they can be updated while the server is running providing features similar to updating static content or classic ASP.NET Pages.
 
-This can be very useful if you are building documentation Web sites, so you can easily 'run' the documentation and see the Markdown rendered. Because `.md` files are effectively mapped you can even navigate naturally between Markdown pages if they are linked in the Markdown as is often the case for GitHub doc. 
+You can create **single file, inline Razor content in Razor pages** as well as use Layout, Partials, _ViewStart etc. in the traditional Razor Pages project hierarchy. As long as **all code is contained inside of `.cshtml` Razor pages** all of Razor's features are supported.
 
-And a real useful feature: **Changes in Markdown also auto-refresh as soon as you change the markdown**.
+This feature is not meant to compete with full ASP.NET Web Sites but rather is geared to mostly static sites that need a few dynamic features. I call this **Web Sites with Benefits** :smile: 
 
-If you make a change to the Markdown document, the browser is refreshed and immediately shows that change if you are viewing the Markdown page. If you create a custom Markdown Razor template, changes in that template (or the original if you use that) are also detected and cause an immediate refresh.
-
-Markdown support is not enabled by default and has to be turned on via the `--UseMarkdown True` command line switch. Once set any `.md` in the browser either by the `.md` or simply without an extension. Additional Markdown extensions to monitor can also be added.
-  
-To access `README.md` in the WebRoot you can use:
-
-* https://localhost:5200/README.md  
-* https://localhost:5200/README
-
-### Customizing Markdown Templates and Styling
-Default styling for Markdown comes from a Razor template that is provided as part of the distribution in the install folder's `./templates/markdown-themes` directory. This folder is hoisted as `~/markdown-themes` into the Web site, which makes the default CSS and script resources available to the Web site. This folder by default is routed back to the launch (not Web) root and is used for all sites you run through this server.
-
-There are several ways you can customize the Markdown styling and supporting resources:
-
-* Copy the existing `markdown-themes` folder into your Web root and modify
-* Create and point to a custom Razor template in your site
-
-### Copy the Existing `markdown-themes` Folder
-You can copy the `markdown-themes` folder into your Website either manually or more easily via the `--CopyMarkdownResources True` command line flag. When you use this flag, the `markdown-themes` folder will be copied from the launch root into your Web root **if it doesn't exist already**. 
-
-Once moved to the new location in your web root folder, you can modify the `__MarkdownPageTemplate.cshtml` page and customize the rendering. For example, you can add a Layout page (if Razor support is enabled) to add site wide styling or you can modify the page theme and syntax coloring theme.
-
-More on customization below.
-
-### Using a custom Markdown Template
-The template used for Markdown rendering is an MVC View template that is passed a `MarkdownModel` that contains the rendered markdown and a few other useful bits of information like the path, file name and title of the document. 
-
-You can override the template used by using the `--MarkdownPageTemplate` command line switch:
-
-```ps
-LiveReloadServer ./website/site1 -UseMarkdown --MarkdownPageTemplate ~/MyMarkdownTemplate.cshtml
-```
-
-> Note although you can completely replace the stock template, keep in mind that there's a bit of styling and scripts are required in order to render Markdown. For example, code snippets coloring needs a JavaScript library and text styling may require some custom CSS. It'll render without but it won't look pretty without a bit of styling.
-
-To give you an idea what a template should look like, here's the default template:
-
-```html
-@model Westwind.AspNetCore.Markdown.MarkdownModel
-<html>
-<head>
-    @if (!string.IsNullOrEmpty(Model.BasePath))
-    {
-        <base href="@Model.BasePath" />
-    }
-    <title>@Model.Title</title>
-    <!-- *** Markdown Themes: Github, Dharkan, Westwind, Medium, Blackout -->
-    <link rel="stylesheet" href="~/markdown-themes/Dharkan/theme.css" />
-    <link rel="stylesheet" href="~/markdown-themes/scripts/fontawesome/css/font-awesome.min.css" />
-    <style>   
-        pre > code {
-            white-space: pre;
-        }
-    </style>
-</head>
-<body>
-    <div id="MainContent">        
-        @Model.RenderedMarkdown
-    </div>
-
-    <script src="~/markdown-themes/scripts/highlightjs/highlight.pack.js"></script>
-    <script src="~/markdown-themes/scripts/highlightjs-badge.min.js"></script>
-    
-<!-- *** Code Syntax Themes: vs2015, vs, github, monokai, monokai-sublime, twilight -->
-<link href="~/markdown-themes/scripts/highlightjs/styles/vs2015.css" rel="stylesheet" />
-    <script>
-        setTimeout(function () {
-            var pres = document.querySelectorAll("pre>code");
-            for (var i = 0; i < pres.length; i++) {
-                hljs.highlightBlock(pres[i]);
-            }
-        });
-
-    </script>
-</body>
-</html>
-```
-
-The model is passed as `MarkdownModel` and it contains the `.RenderedMarkdown` property which is the rendered HTML output (as an `HtmlString`). There's also the `.Title` which is parsed from the document based on a header if present. The model also contains the original Markdown and a YAML header if it was present.
-
-### Default Theme Overrides
-If you stick with the default theming you can override:
-
-* The overall render theme 
-    ```html
-    <!-- *** Markdown Themes: Github, Dharkan, Westwind, Medium, Blackout -->
-    <link rel="stylesheet" href="~/markdown-themes/Dharkan/theme.css" />
-    ```    
-* The syntax coloring
-    ```html
-    <!-- *** Code Syntax Themes: vs2015, vs, github, monokai, monokai-sublime, twilight -->
-    <link href="~/markdown-themes/scripts/highlightjs/styles/vs2015.css" rel="stylesheet" />
-    ```
-
-### Completely Custom CSS Markup
-You can create any HTML and CSS to render your Markdown of course if you prefer. The `markdown-themes` themes can give you a good start of things that you typically have to support in Markdown content so they offer a good starting point for your own themes. Pick a theme and customize, or if you are keen - go ahead and start completely clean.
-
-## Razor Files
-LiveReloadServer has **basic Razor Pages support**, which means you can create **single file, inline Razor content in Razor pages** as well as use Layout, Partials, ViewStart etc. in the traditional Razor Pages project hierarchy. As long as **all code is inside of `.cshtml` Razor pages** all of Razor's features are supported.
-
-> #### Slow First Time Razor Startup
-> First time Razor Page startup can be slow. Cold start requires the Razor Runtime to load the compiler and related resources so the very first page hit can take a few seconds before the Razor page renders. Subsequent page compilation is faster but still 'laggy' (few hundred ms), and previously compiled pages run very fast at pre-compiled speed.
+Razor Pages actually have very good support embedding logic as you can inline classes in Razor Pages to use within that page. LiveReloadServer also supports importing NuGet Packages and loose .NET assemblies for more complex logic. So it's possible to do fairly complex code, but to be clear, this is not recommended. If you're doing heavy lifting using code, you're better off creating an ASP.NET Web site. It's also easy to port from loose pages to an ASP.NET Razor Pages project later and continue to use the existing layout and logic.
 
 ### No Compiled C# Code
-However, there's **no support for code behind razor models** or  **loose C# `.cs` file compilation** as runtime compilation outside of Razor is not supported. All dynamic compilable code has to live in Razor `.shtml` content.
+There's **no support for code behind razor models** or  **loose C# `.cs` file compilation** as runtime compilation outside of Razor is not supported at all. All dynamic compilable code has to live in Razor `.cshtml` content.
 
 ### Load External Code
 Although LiveReloadServer supports code only directly in Razor pages, it is possible to load external libraries in two ways:
 
 * NuGet Packages in `PrivateBin\NugetPackages.json`
-* Loose Assemblies in `PrivateBin`
+* Loose `.dll` Assemblies in `PrivateBin`
 
 ### NuGet Package Support
-You can load NuGet packages into your project by referencing online or local folder NuGet package sources. 
+You can load NuGet packages into your project by referencing online or local folder NuGet package sources.
 
 NuGet configuration is configured in a `<WebRoot>/PrivateBin/NuGetPackages.json` file in your WebRoot that looks like this:
 
@@ -483,83 +382,7 @@ This allows for quick hotswapping of binary code which is especially useful in h
 
 This provides a very quick and easy way to create small .NET assemblies and use them in your Web sites.
 
-## Error Page Display
-There are two ways you can display error information:
-
-* Use the default ASP.NET Developer Error Page
-* Use a custom Error Page
-
-Both require that you explicitly create a `/Error.cshtml` file.
-
-LiveReloadServer by default use ASP.NET Developer error page as this server is primarily meant as a development server. You can disable that behavior by using the `--DetailedErrors False` flag which triggers the `/Error.cshtml` page. 
-
-> Note: If you don't have an `/Errors.cshtml` file any compilation or runtime errors in the server will result in a `404` error as it tries to redirect to the `/error` route that doesn't exist.
-
-> If you host your server in IIS or another Web Server, make sure to set the `LIVERELOADSERVER_DETAILEDERRORS` value to `false` to avoid displaying a developer error page to users.
-
-### Developer Error Page
-The developer error page is internal to ASP.NET, but unfortunately it still requires a physical `/Error.cshtml` in order for the routing to fire properly.
-
-A minimal page looks like this (or you can copy the code from a stock Razor Pages application by combining everything into a single file.)
-
-The minimal error page looks like this:
-
-```html
-@page
-<h1>An error occurred</h1>
-@function {
-   // IMPORTANT: must have a function block in order for error page to work!
-}
-```
-
-> This page is never actually displayed, but **it has to have that `@function { }` section** in order to work.
-
-The default error page is very detailed and works well for development environments, but if you plan on using LiveReloadServer for some sort of production app you probably want to run with `--DetailedErrors False`.
-
-### Custom Error Page
-If you want to create custom error page you can create a custom `Error.cshtml` page which uses the standard ASP.NET error behavior.
-
-You can create an error page and return error information like this using the HttpContext features to retrieve an `IExceptionHandlerPathFeature`
-
-```html
-@page
-
-<html>
-<body>
-<h1>Razor Pages Error Page</h1>
-<hr/>
-<div style="font-size: 1.2em;margin: 20px;">
-    Yikes. Something went wrong...
-</div>
-@{
-            var errorHandler = HttpContext
-                .Features
-                .Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>();
-}
-<hr/>
-@if(errorHandler != null )
-{
-            var error = errorHandler.Error;
-            var message = error?.Message;
-            if (message == null)
-              message = "No Errors found.";
-
-            <text>            
-            @message     
-            </text>
-
-            <pre>
-            @error?.StackTrace
-            </pre>
-}
-</body>
-</html>
-```
-
-> @icon-info-circle Set Development Environment
-> Note you can set the Development Environment by setting the `LIVERELOADWEBSERVER_ENVIRONMENT` variable to `Production` or `Development`. In Development mode it will show the error information above. The default is production.
-
-## Using Razor Features
+## Using the Razor Features
 To serve a Razor page create a page that uses some .NET code using C# Razor syntax. For example here's a `hello.cshtml`:
 
 ```html
@@ -662,29 +485,300 @@ The first setting ensures that `.dll` files for .NET assemblies can be served by
 
 The second setting ensures that you can **refresh a client side page** which forces a server refresh. The page will rewrite the current 404 request by accessing the specified URL which typically will be `/index.html`. Since the URL stays the same the Blazor page should then navigate then to the desired client side URL on refresh.
 
-### SPA Client Side Routing Fallback: FolderNotFoundFallbackPath
-If you're using this server against a SPA application that uses **client side routing**, you may need to enable server side route fallback for extensionless Urls, so that client side routes not handled by the server can be served by the SPA home page - typically `index.html` - as a client side route. This is done via the `--FolderNotFoundFallbackPath` configuration switch which points to the SPA start URL. 
+### Error Page Display
+There are two ways you can display error information:
 
-By default this value is `null` and an invalid folder route causes a `404 - Not Found` response. But you can set this setting to a local url like `/index.html` or `/404NotFound.html`
+* Use the default ASP.NET Developer Error Page
+* Use a custom Error Page
 
-When this setting is enabled any extensionless URL fired against the server that isn't handled serves up the specified site relative Url.
+Both require that you explicitly create a `/Error.cshtml` file.
 
-You can do this with:
+LiveReloadServer by default use ASP.NET Developer error page as this server is primarily meant as a development server. You can disable that behavior by using the `--DetailedErrors False` flag which triggers the `/Error.cshtml` page. 
 
-```json
-"LiveReload": {
-    ...
-    "FolderNotFoundFallbackPath":  "/index.html"
+> Note: If you don't have an `/Errors.cshtml` file any compilation or runtime errors in the server will result in a `404` error as it tries to redirect to the `/error` route that doesn't exist.
+
+> If you host your server in IIS or another Web Server, make sure to set the `LIVERELOADSERVER_DETAILEDERRORS` value to `false` to avoid displaying a developer error page to users.
+
+#### Developer Error Page
+The developer error page is internal to ASP.NET, but unfortunately it still requires a physical `/Error.cshtml` in order for the routing to fire properly.
+
+A minimal page looks like this (or you can copy the code from a stock Razor Pages application by combining everything into a single file.)
+
+The minimal error page looks like this:
+
+```html
+@page
+<h1>An error occurred</h1>
+@function {
+   // IMPORTANT: must have a function block in order for error page to work!
 }
 ```
 
-or by starting with the `--FolderNotFoundFallbackPath /index.html` command line switch. With this flag in place a URL like this:
+> This page is never actually displayed, but **it has to have that `@function { }` section** in order to work.
 
-```text
-https://albumviewer.west-wind.com/albums
+The default error page is very detailed and works well for development environments, but if you plan on using LiveReloadServer for some sort of production app you probably want to run with `--DetailedErrors False`.
+
+#### Custom Error Page
+If you want to create custom error page you can create a custom `Error.cshtml` page which uses the standard ASP.NET error behavior.
+
+You can create an error page and return error information like this using the HttpContext features to retrieve an `IExceptionHandlerPathFeature`
+
+```html
+@page
+
+<html>
+<body>
+<h1>Razor Pages Error Page</h1>
+<hr/>
+<div style="font-size: 1.2em;margin: 20px;">
+    Yikes. Something went wrong...
+</div>
+@{
+            var errorHandler = HttpContext
+                .Features
+                .Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>();
+}
+<hr/>
+@if(errorHandler != null )
+{
+            var error = errorHandler.Error;
+            var message = error?.Message;
+            if (message == null)
+              message = "No Errors found.";
+
+            <text>            
+            @message     
+            </text>
+
+            <pre>
+            @error?.StackTrace
+            </pre>
+}
+</body>
+</html>
 ```
 
-If fired on the server automatically serves the content of `/index.html`. This allows the client side application to run **and** maintain the original client side path of `/albums` so that it can route to the correct page.
+> @icon-info-circle Set Development Environment
+> Note you can set the Development Environment by setting the `LIVERELOADWEBSERVER_ENVIRONMENT` variable to `Production` or `Development`. In Development mode it will show the error information above. The default is production.
+
+
+
+
+
+## Markdown Support
+You can enable Markdown support in this server by setting `-useMarkdown` which adds various Markdown Rendering features.
+
+* Markdown File Rendering for `.md` or `.markdown` files
+
+Inside of Razor Pages:
+
+* `Markdown.Parse()` and `ParseHtmlString()`
+* `Markdown.ParseFromFile()` and `MarkdownParseFromUrl()`
+* Markdown Tag Helper to allow you to embed markdown   
+  via inline`<markdown>This is **Markdown**</markdown>` tags
+
+
+### Markdown File Rendering
+This serves HTML content directly off any `.md` or `.markdown` files in the Web root. The server provides default templates for the HTML styling, but you can override the rendering behavior with a **custom Razor template** that provides the chrome around the rendered Markdown, additional styling and syntax coloring.
+
+This can be very useful if you are building documentation Web sites, so you can easily 'run' the documentation and see the Markdown rendered. Because `.md` files are effectively mapped you can even navigate naturally between Markdown pages if they are linked in the Markdown as is often the case for GitHub doc. 
+
+And a real useful feature: **Changes in Markdown also auto-refresh as soon as you change the markdown**.
+
+If you make a change to the Markdown document, the browser is refreshed and immediately shows that change if you are viewing the Markdown page. If you create a custom Markdown Razor template, changes in that template (or the original if you use that) are also detected and cause an immediate refresh.
+
+Markdown support is not enabled by default and has to be turned on via the `--UseMarkdown True` command line switch. Once set any `.md` in the browser either by the `.md` or simply without an extension. Additional Markdown extensions to monitor can also be added.
+  
+To access `README.md` in the WebRoot you can use:
+
+* https://localhost:5200/README.md  
+* https://localhost:5200/README
+
+### Markdown Render Features in Razor .cshtml Files
+If you're using the `-useRazor` option to enable `.cshtml` Razor pages that can execute .NET code, you can take advantage of a number of useful Markdown features.
+
+> In order to use these latter features in Razor Pages you'll need to add namespaces and tag helpers to the top of your Razor page or use a `_ViewImports.cshtml` in your site root.
+>
+> ```html 
+> @page
+> @using Westwind.AspNetCore.Markdown
+> @addTagHelper *, Westwind.AspNetCore.Markdown
+> ```
+
+You can use the following commands inline:
+
+#### Markdown to String
+
+```cs
+string html = Markdown.Parse(markdownText);
+```
+
+#### Markdown to Razor Html String
+
+```html
+<div>@Markdown.ParseHtmlString(Model.ProductInfoMarkdown)</div>
+```
+
+#### Parse Markdown to String from a File
+You can also convert Markdown using a file:
+
+```cs
+var html = Markdown.ParseFromFile("~/EmbeddedMarkdownContent.md");
+
+// async
+html = await Markdown.ParseFromFileAsync("~/EmbeddedMarkdownContent.md");
+```
+
+To embed in Razor Views:
+
+```html
+@Markdown.ParseHtmlStringFromFile("~/EmbeddedMarkdownContent.md")
+```
+
+
+#### Parse Markdown to String from a Url
+You can also load Markdown from a URL as long as it's openly accessible via a URL:
+
+```cs
+// sync
+parsedHtml = Markdown.ParseFromUrl("https://github.com/RickStrahl/Westwind.AspNetCore.Markdown/raw/master/readme.md")
+
+// async
+parsedHtml = await Markdown.ParseFromUrlAsync("https://github.com/RickStrahl/Westwind.AspNetCore.Markdown/raw/master/readme.md");
+```
+
+`HtmlString`  versions (ie. Markdown.ParseFromUrlHtmlString()`) are also available of these methods.
+
+### Markdown TagHelper
+The Markdown TagHelper allows you to embed static Markdown content into a `<markdown>` tag. The TagHelper supports both embedded content, or an attribute based value assignment or model binding via the `markdown` attribute.
+
+To get started with the Markdown TagHelper you need to do the following:
+
+* Register TagHelper in `_ViewImports.cshtml` or in the `@page` header
+* Place a `<markdown>` TagHelper on the page
+* Use `Markdown.ParseHtmlString()` in Razor Page expressions
+* Rock on!
+
+After installing the NuGet package **you have to register** the tag helper so MVC can find it. The easiest way to do this is to add it to the `_ViewImports.cshtml` file in your `Views\Shared` folder for MVC or the root for your `Pages` folder.
+
+```html
+@addTagHelper *, Westwind.AspNetCore.Markdown
+```
+
+#### Literal Markdown Content
+To use the literal content control you can simply place your Markdown text between the opening and closing `<markdown>` tags:
+
+```html
+<markdown>
+    #### This is Markdown text inside of a Markdown block
+
+    * Item 1
+    * Item 2
+ 
+    ### Dynamic Data is supported:
+    The current Time is: @DateTime.Now.ToString("HH:mm:ss")
+
+    ```cs
+    // this c# is a code block
+    for (int i = 0; i < lines.Length; i++)
+    {
+        line1 = lines[i];
+        if (!string.IsNullOrEmpty(line1))
+            break;
+    }
+    ```
+</markdown>
+```
+
+### Customizing Markdown Templates and Styling
+Default styling for Markdown comes from a Razor template that is provided as part of the distribution in the install folder's `./templates/markdown-themes` directory. This folder is hoisted as `~/markdown-themes` into the Web site, which makes the default CSS and script resources available to the Web site. This folder by default is routed back to the launch (not Web) root and is used for all sites you run through this server.
+
+There are several ways you can customize the Markdown styling and supporting resources:
+
+* Copy the existing `markdown-themes` folder into your Web root and modify
+* Create and point to a custom Razor template in your site
+
+### Copy the Existing `markdown-themes` Folder
+You can copy the `markdown-themes` folder into your Website either manually or more easily via the `--CopyMarkdownResources True` command line flag. When you use this flag, the `markdown-themes` folder will be copied from the launch root into your Web root **if it doesn't exist already**. 
+
+Once moved to the new location in your web root folder, you can modify the `__MarkdownPageTemplate.cshtml` page and customize the rendering. For example, you can add a Layout page (if Razor support is enabled) to add site wide styling or you can modify the page theme and syntax coloring theme.
+
+More on customization below.
+
+### Using a custom Markdown Template
+The template used for Markdown rendering is an MVC View template that is passed a `MarkdownModel` that contains the rendered markdown and a few other useful bits of information like the path, file name and title of the document. 
+
+You can override the template used by using the `--MarkdownPageTemplate` command line switch:
+
+```ps
+LiveReloadServer ./website/site1 -UseMarkdown --MarkdownPageTemplate ~/MyMarkdownTemplate.cshtml
+```
+
+> Note although you can completely replace the stock template, keep in mind that there's a bit of styling and scripts are required in order to render Markdown. For example, code snippets coloring needs a JavaScript library and text styling may require some custom CSS. It'll render without but it won't look pretty without a bit of styling.
+
+To give you an idea what a template should look like, here's the default template:
+
+```html
+@model Westwind.AspNetCore.Markdown.MarkdownModel
+<html>
+<head>
+    @if (!string.IsNullOrEmpty(Model.BasePath))
+    {
+        <base href="@Model.BasePath" />
+    }
+    <title>@Model.Title</title>
+    <!-- *** Markdown Themes: Github, Dharkan, Westwind, Medium, Blackout -->
+    <link rel="stylesheet" href="~/markdown-themes/Dharkan/theme.css" />
+    <link rel="stylesheet" href="~/markdown-themes/scripts/fontawesome/css/font-awesome.min.css" />
+    <style>   
+        pre > code {
+            white-space: pre;
+        }
+    </style>
+</head>
+<body>
+    <div id="MainContent">        
+        @Model.RenderedMarkdown
+    </div>
+
+    <script src="~/markdown-themes/scripts/highlightjs/highlight.pack.js"></script>
+    <script src="~/markdown-themes/scripts/highlightjs-badge.min.js"></script>
+    
+<!-- *** Code Syntax Themes: vs2015, vs, github, monokai, monokai-sublime, twilight -->
+<link href="~/markdown-themes/scripts/highlightjs/styles/vs2015.css" rel="stylesheet" />
+    <script>
+        setTimeout(function () {
+            var pres = document.querySelectorAll("pre>code");
+            for (var i = 0; i < pres.length; i++) {
+                hljs.highlightBlock(pres[i]);
+            }
+        });
+
+    </script>
+</body>
+</html>
+```
+
+The model is passed as `MarkdownModel` and it contains the `.RenderedMarkdown` property which is the rendered HTML output (as an `HtmlString`). There's also the `.Title` which is parsed from the document based on a header if present. The model also contains the original Markdown and a YAML header if it was present.
+
+### Default Theme Overrides
+If you stick with the default theming you can override:
+
+* The overall render theme 
+    ```html
+    <!-- *** Markdown Themes: Github, Dharkan, Westwind, Medium, Blackout -->
+    <link rel="stylesheet" href="~/markdown-themes/Dharkan/theme.css" />
+    ```    
+* The syntax coloring
+    ```html
+    <!-- *** Code Syntax Themes: vs2015, vs, github, monokai, monokai-sublime, twilight -->
+    <link href="~/markdown-themes/scripts/highlightjs/styles/vs2015.css" rel="stylesheet" />
+    ```
+
+### Completely Custom CSS Markup
+You can create any HTML and CSS to render your Markdown of course if you prefer. The `markdown-themes` themes can give you a good start of things that you typically have to support in Markdown content so they offer a good starting point for your own themes. Pick a theme and customize, or if you are keen - go ahead and start completely clean.
+
+
 
 
 ## Running LiveReloadServer in a Web Server
@@ -734,6 +828,31 @@ Finally you need to configure the site to point at the Web folder and set any cu
 
 
 Notice that I'm using a relative path for Server application - you can also specify a full path if necessary. Note that multiple Web sites can share the single server instance, with each pointing their private `web.config` at the shared `LiveReloadServer` folder and `dll`.
+
+
+### SPA Client Side Routing Fallback: FolderNotFoundFallbackPath
+If you're using this server against a SPA application that uses **client side routing**, you may need to enable server side route fallback for extensionless Urls, so that client side routes not handled by the server can be served by the SPA home page - typically `index.html` - as a client side route. This is done via the `--FolderNotFoundFallbackPath` configuration switch which points to the SPA start URL. 
+
+By default this value is `null` and an invalid folder route causes a `404 - Not Found` response. But you can set this setting to a local url like `/index.html` or `/404NotFound.html`
+
+When this setting is enabled any extensionless URL fired against the server that isn't handled serves up the specified site relative Url.
+
+You can do this with:
+
+```json
+"LiveReload": {
+    ...
+    "FolderNotFoundFallbackPath":  "/index.html"
+}
+```
+
+or by starting with the `--FolderNotFoundFallbackPath /index.html` command line switch. With this flag in place a URL like this:
+
+```text
+https://albumviewer.west-wind.com/albums
+```
+
+If fired on the server automatically serves the content of `/index.html`. This allows the client side application to run **and** maintain the original client side path of `/albums` so that it can route to the correct page.
 
 ## More Features?
 The primary goal of LiveReload server is as a local server, not a hosted do-it-all Web Server solution, but for 'static site with privileges' scenarios it works very well.
